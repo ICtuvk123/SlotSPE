@@ -1,0 +1,206 @@
+{
+  "curator": "Codex-assisted computational pathology curation; independent genitourinary-pathologist review pending",
+  "review_date": "2026-07-18",
+  "pathologist_reviewed": false,
+  "criteria": [
+    "Core events must be directly observable in one 448x448 H&E patch at 20x.",
+    "Core size must be 20-25 and invasion must not dominate the distribution.",
+    "ISUP consensus features receive priority when locally observable.",
+    "Cohort-supported architecture and cytology are retained only when visually separable.",
+    "Anatomic and boundary-dependent diagnoses are isolated in a context catalog.",
+    "Lower-specificity, redundant, or strongly artifact-sensitive events remain reserve candidates.",
+    "All decisions remain pending independent genitourinary-pathologist review."
+  ],
+  "decisions": [
+    {
+      "event_id": "compact_small_nest_architecture",
+      "decision": "core",
+      "reason": "Patch-local cohort-defined architecture; retained as the representative compact nested pattern."
+    },
+    {
+      "event_id": "large_nest_architecture",
+      "decision": "reserve",
+      "reason": "Patch-observable but likely to overlap compact nested and solid patterns under text encoding."
+    },
+    {
+      "event_id": "thick_trabecular_insular_architecture",
+      "decision": "core",
+      "reason": "Distinct cord-and-island architecture with direct patch observability and cohort support."
+    },
+    {
+      "event_id": "solid_sheet_architecture",
+      "decision": "core",
+      "reason": "Distinct loss of partitioned architecture with cohort evidence for advanced phenotypic evolution."
+    },
+    {
+      "event_id": "microcystic_architecture",
+      "decision": "core",
+      "reason": "Repeated microcysts are locally visible and distinguishable with explicit artifact exclusions."
+    },
+    {
+      "event_id": "tubular_acinar_architecture",
+      "decision": "core",
+      "reason": "True tumor-lined lumina define a separable patch-local architecture."
+    },
+    {
+      "event_id": "hemorrhagic_follicular_architecture",
+      "decision": "reserve",
+      "reason": "Cohort-described but particularly sensitive to operative hemorrhage, processing, and congestion."
+    },
+    {
+      "event_id": "alveolar_architecture",
+      "decision": "reserve",
+      "reason": "Valid morphology but high expected redundancy with nested architecture and delicate capillary network."
+    },
+    {
+      "event_id": "papillary_pseudopapillary_architecture",
+      "decision": "core",
+      "reason": "Fibrovascular projections are patch-local and visually distinct from tubular or nested growth."
+    },
+    {
+      "event_id": "prominent_nucleoli",
+      "decision": "core",
+      "reason": "Directly patch-visible consensus basis of WHO/ISUP nucleolar grading."
+    },
+    {
+      "event_id": "extreme_nuclear_pleomorphism",
+      "decision": "core",
+      "reason": "Directly visible consensus grade-four morphology with explicit degenerative-artifact exclusions."
+    },
+    {
+      "event_id": "sarcomatoid_differentiation",
+      "decision": "core",
+      "reason": "Consensus reportable morphology with a distinctive malignant spindle-cell phenotype."
+    },
+    {
+      "event_id": "rhabdoid_differentiation",
+      "decision": "core",
+      "reason": "Consensus reportable morphology with a defined patch-local cytologic constellation."
+    },
+    {
+      "event_id": "degenerative_tumor_giant_cells",
+      "decision": "reserve",
+      "reason": "Cohort-supported but vulnerable to macrophage and degeneration confounding; syncytial type retained instead."
+    },
+    {
+      "event_id": "syncytial_tumor_giant_cells",
+      "decision": "core",
+      "reason": "Viable multinucleated malignant cells provide a more specific giant-cell phenotype than degenerative forms."
+    },
+    {
+      "event_id": "scant_cytoplasm_phenotype",
+      "decision": "core",
+      "reason": "Patch-local cohort-defined cytology that is distinct from classic clear or eosinophilic cells."
+    },
+    {
+      "event_id": "abundant_eosinophilic_cytoplasm",
+      "decision": "core",
+      "reason": "Patch-local cohort-defined phenotypic shift with explicit rhabdoid and fixation exclusions."
+    },
+    {
+      "event_id": "cytoplasmic_hyaline_globules",
+      "decision": "core",
+      "reason": "Specific intracellular inclusion pattern separable from architecture and stromal material."
+    },
+    {
+      "event_id": "cytoplasmic_spindling",
+      "decision": "reserve",
+      "reason": "Likely text and visual overlap with sarcomatoid differentiation despite a narrower definition."
+    },
+    {
+      "event_id": "brisk_mitotic_activity",
+      "decision": "core",
+      "reason": "Direct patch-visible proliferation signal retained as an explicitly exploratory event."
+    },
+    {
+      "event_id": "atypical_mitotic_figures",
+      "decision": "core",
+      "reason": "Morphologically distinct abnormal division pattern retained as an exploratory local event."
+    },
+    {
+      "event_id": "coagulative_tumor_necrosis",
+      "decision": "core",
+      "reason": "Consensus prognostic parameter with a locally observable viable-to-necrotic transition."
+    },
+    {
+      "event_id": "delicate_capillary_network",
+      "decision": "core",
+      "reason": "Directly observable vascular phenotype retained as a morphology-grounding anchor."
+    },
+    {
+      "event_id": "microvascular_tumor_invasion",
+      "decision": "core",
+      "reason": "Only invasion event in the core; a convincing endothelial-lined lumen is locally testable."
+    },
+    {
+      "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+      "decision": "core",
+      "reason": "Locally testable immune access to viable tumor with cohort-defined spatial semantics."
+    },
+    {
+      "event_id": "septal_lymphoplasmacytic_infiltrate",
+      "decision": "reserve",
+      "reason": "Patch-observable but expected to overlap intratumoral inflammation when septal boundaries are incomplete."
+    },
+    {
+      "event_id": "peritumoral_lymphoid_aggregates",
+      "decision": "context",
+      "reason": "Requires confirmation that the lymphoid aggregate lies outside a genuine tumor boundary."
+    },
+    {
+      "event_id": "intratumoral_neutrophil_infiltrate",
+      "decision": "core",
+      "reason": "Directly visible segmented neutrophils in viable tumor with dedicated ccRCC cohort evidence."
+    },
+    {
+      "event_id": "scar_like_stromal_regression",
+      "decision": "core",
+      "reason": "Cohort-described local tumor-stroma state retained with a required within-patch tumor transition."
+    },
+    {
+      "event_id": "desmoplastic_stromal_response",
+      "decision": "reserve",
+      "reason": "Locally visible but lower ccRCC specificity and potentially confounded by native renal fibrosis."
+    },
+    {
+      "event_id": "hyalinized_fibrotic_stroma",
+      "decision": "reserve",
+      "reason": "Locally visible but lower specificity and likely semantic overlap with scar-like regression."
+    },
+    {
+      "event_id": "infiltrative_renal_parenchymal_growth",
+      "decision": "context",
+      "reason": "A true tumor-parenchyma boundary must be established across adjacent fields or WSI context."
+    },
+    {
+      "event_id": "tumor_budding_at_invasive_front",
+      "decision": "context",
+      "reason": "Requires a verified advancing front and is vulnerable to fragmentation and inflammatory-cell mimics."
+    },
+    {
+      "event_id": "immune_exclusion_at_tumor_margin",
+      "decision": "context",
+      "reason": "Spatial exclusion cannot be inferred reliably without sufficient tumor-margin context."
+    },
+    {
+      "event_id": "pseudocapsule_penetration",
+      "decision": "context",
+      "reason": "An isolated fibrous band cannot be identified reliably as the tumor pseudocapsule."
+    },
+    {
+      "event_id": "renal_sinus_invasion",
+      "decision": "context",
+      "reason": "Requires gross hilar orientation and directed renal-sinus interface sampling."
+    },
+    {
+      "event_id": "perinephric_adipose_invasion",
+      "decision": "context",
+      "reason": "Tumor plus fat in one patch cannot establish perinephric rather than sinus or intratumoral location."
+    },
+    {
+      "event_id": "venous_tumor_thrombus",
+      "decision": "context",
+      "reason": "Major-vein identity and wall or margin relationship require gross and WSI orientation."
+    }
+  ]
+}

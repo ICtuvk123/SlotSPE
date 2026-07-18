@@ -1,0 +1,5128 @@
+{
+  "generated_at": "2026-07-18T07:15:37.453280+00:00",
+  "v0": {
+    "path": "assets/event_bank/tcga_kirc/conch_event_bank.pt",
+    "ontology_version": "legacy_v0",
+    "review_status": "machine_checked_pending_expert_review",
+    "num_events": 30
+  },
+  "v2": {
+    "path": "assets/event_bank/tcga_kirc/v2/conch_event_bank_v2.pt",
+    "ontology_version": "tcga_kirc_v2",
+    "review_status": "machine_curated_pending_pathologist_review",
+    "num_events": 22
+  },
+  "embedding_comparison": {
+    "redundancy_threshold": 0.85,
+    "within_v0_top_pairs": [
+      {
+        "left_event_id": "microvascular_tumor_invasion",
+        "right_event_id": "venous_tumor_thrombus",
+        "score": 0.8733315467834473
+      },
+      {
+        "left_event_id": "clear_cell_nested_alveolar_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.8392839431762695
+      },
+      {
+        "left_event_id": "venous_tumor_thrombus",
+        "right_event_id": "renal_sinus_invasion",
+        "score": 0.7893519401550293
+      },
+      {
+        "left_event_id": "intratumoral_lymphocyte_infiltration",
+        "right_event_id": "peritumoral_lymphoid_aggregates",
+        "score": 0.7883380651473999
+      },
+      {
+        "left_event_id": "intratumoral_lymphocyte_infiltration",
+        "right_event_id": "immune_exclusion_at_tumor_margin",
+        "score": 0.786270022392273
+      },
+      {
+        "left_event_id": "clear_cell_nested_alveolar_architecture",
+        "right_event_id": "acinar_tubular_differentiation",
+        "score": 0.779242992401123
+      },
+      {
+        "left_event_id": "acinar_tubular_differentiation",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.7688420414924622
+      },
+      {
+        "left_event_id": "intratumoral_hemorrhage",
+        "right_event_id": "venous_tumor_thrombus",
+        "score": 0.7525739669799805
+      },
+      {
+        "left_event_id": "renal_sinus_invasion",
+        "right_event_id": "infiltrative_small_nests_and_cords",
+        "score": 0.7482134699821472
+      },
+      {
+        "left_event_id": "renal_parenchymal_infiltration",
+        "right_event_id": "infiltrative_small_nests_and_cords",
+        "score": 0.745141863822937
+      },
+      {
+        "left_event_id": "peritumoral_lymphoid_aggregates",
+        "right_event_id": "immune_exclusion_at_tumor_margin",
+        "score": 0.7407951354980469
+      },
+      {
+        "left_event_id": "perinephric_adipose_invasion",
+        "right_event_id": "renal_sinus_invasion",
+        "score": 0.7385610342025757
+      },
+      {
+        "left_event_id": "cystic_degenerative_change",
+        "right_event_id": "renal_sinus_invasion",
+        "score": 0.7349978685379028
+      },
+      {
+        "left_event_id": "renal_parenchymal_infiltration",
+        "right_event_id": "renal_sinus_invasion",
+        "score": 0.732344925403595
+      },
+      {
+        "left_event_id": "tumor_budding_at_invasive_front",
+        "right_event_id": "desmoplastic_stromal_response",
+        "score": 0.7319162487983704
+      },
+      {
+        "left_event_id": "brisk_mitotic_activity",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.7317548990249634
+      },
+      {
+        "left_event_id": "pseudocapsule_penetration",
+        "right_event_id": "perinephric_adipose_invasion",
+        "score": 0.7260135412216187
+      },
+      {
+        "left_event_id": "delicate_capillary_network",
+        "right_event_id": "edematous_myxoid_stroma",
+        "score": 0.7233525514602661
+      },
+      {
+        "left_event_id": "microvascular_tumor_invasion",
+        "right_event_id": "renal_sinus_invasion",
+        "score": 0.7219680547714233
+      },
+      {
+        "left_event_id": "fibrous_tumor_pseudocapsule",
+        "right_event_id": "renal_parenchymal_infiltration",
+        "score": 0.7214632034301758
+      },
+      {
+        "left_event_id": "compact_eosinophilic_tumor_component",
+        "right_event_id": "rhabdoid_differentiation",
+        "score": 0.7169525027275085
+      },
+      {
+        "left_event_id": "fibrous_tumor_pseudocapsule",
+        "right_event_id": "infiltrative_small_nests_and_cords",
+        "score": 0.7157151699066162
+      },
+      {
+        "left_event_id": "pseudocapsule_penetration",
+        "right_event_id": "renal_sinus_invasion",
+        "score": 0.7148371934890747
+      },
+      {
+        "left_event_id": "fibrous_tumor_pseudocapsule",
+        "right_event_id": "hyalinized_fibrotic_stroma",
+        "score": 0.7143307328224182
+      },
+      {
+        "left_event_id": "venous_tumor_thrombus",
+        "right_event_id": "renal_parenchymal_infiltration",
+        "score": 0.7138733863830566
+      }
+    ],
+    "within_v2_top_pairs": [
+      {
+        "left_event_id": "brisk_mitotic_activity",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.7938450574874878
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "syncytial_tumor_giant_cells",
+        "score": 0.7815666794776917
+      },
+      {
+        "left_event_id": "abundant_eosinophilic_cytoplasm",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.7659147381782532
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.7605056166648865
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.7561261653900146
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "brisk_mitotic_activity",
+        "score": 0.7438846826553345
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.7235708832740784
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "solid_sheet_architecture",
+        "score": 0.716376781463623
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.7124515175819397
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "papillary_pseudopapillary_architecture",
+        "score": 0.708547830581665
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.7079359292984009
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "tubular_acinar_architecture",
+        "score": 0.707560658454895
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.707383930683136
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.7009344100952148
+      },
+      {
+        "left_event_id": "tubular_acinar_architecture",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.7008566856384277
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.700070321559906
+      },
+      {
+        "left_event_id": "cytoplasmic_hyaline_globules",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.691179633140564
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "tubular_acinar_architecture",
+        "score": 0.6899949312210083
+      },
+      {
+        "left_event_id": "tubular_acinar_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.6898729801177979
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.684420108795166
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "brisk_mitotic_activity",
+        "score": 0.6830406188964844
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "microcystic_architecture",
+        "score": 0.68121337890625
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.6778939962387085
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.6669083833694458
+      },
+      {
+        "left_event_id": "tubular_acinar_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.6594631671905518
+      }
+    ],
+    "within_v2_flagged_pairs": [],
+    "v2_nearest_v0": [
+      {
+        "v2_event_id": "rhabdoid_differentiation",
+        "v0_event_id": "rhabdoid_differentiation",
+        "cosine_similarity": 0.9076589941978455
+      },
+      {
+        "v2_event_id": "coagulative_tumor_necrosis",
+        "v0_event_id": "coagulative_tumor_necrosis",
+        "cosine_similarity": 0.8999984860420227
+      },
+      {
+        "v2_event_id": "microvascular_tumor_invasion",
+        "v0_event_id": "microvascular_tumor_invasion",
+        "cosine_similarity": 0.8918068408966064
+      },
+      {
+        "v2_event_id": "delicate_capillary_network",
+        "v0_event_id": "delicate_capillary_network",
+        "cosine_similarity": 0.8825479745864868
+      },
+      {
+        "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+        "v0_event_id": "intratumoral_lymphocyte_infiltration",
+        "cosine_similarity": 0.8700841665267944
+      },
+      {
+        "v2_event_id": "sarcomatoid_differentiation",
+        "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+        "cosine_similarity": 0.8646278381347656
+      },
+      {
+        "v2_event_id": "prominent_nucleoli",
+        "v0_event_id": "prominent_nucleolar_morphology",
+        "cosine_similarity": 0.8370715379714966
+      },
+      {
+        "v2_event_id": "brisk_mitotic_activity",
+        "v0_event_id": "atypical_mitotic_figures",
+        "cosine_similarity": 0.8332201242446899
+      },
+      {
+        "v2_event_id": "intratumoral_neutrophil_infiltrate",
+        "v0_event_id": "neutrophil_rich_inflammation",
+        "cosine_similarity": 0.820647120475769
+      },
+      {
+        "v2_event_id": "atypical_mitotic_figures",
+        "v0_event_id": "atypical_mitotic_figures",
+        "cosine_similarity": 0.8181023597717285
+      },
+      {
+        "v2_event_id": "scar_like_stromal_regression",
+        "v0_event_id": "hyalinized_fibrotic_stroma",
+        "cosine_similarity": 0.8016870021820068
+      },
+      {
+        "v2_event_id": "tubular_acinar_architecture",
+        "v0_event_id": "acinar_tubular_differentiation",
+        "cosine_similarity": 0.7775960564613342
+      },
+      {
+        "v2_event_id": "microcystic_architecture",
+        "v0_event_id": "cystic_degenerative_change",
+        "cosine_similarity": 0.757102370262146
+      },
+      {
+        "v2_event_id": "papillary_pseudopapillary_architecture",
+        "v0_event_id": "papillary_growth_pattern",
+        "cosine_similarity": 0.7525646686553955
+      },
+      {
+        "v2_event_id": "extreme_nuclear_pleomorphism",
+        "v0_event_id": "marked_tumor_cell_pleomorphism",
+        "cosine_similarity": 0.7497432231903076
+      },
+      {
+        "v2_event_id": "abundant_eosinophilic_cytoplasm",
+        "v0_event_id": "compact_eosinophilic_tumor_component",
+        "cosine_similarity": 0.7494845986366272
+      },
+      {
+        "v2_event_id": "solid_sheet_architecture",
+        "v0_event_id": "clear_cell_nested_alveolar_architecture",
+        "cosine_similarity": 0.7356299161911011
+      },
+      {
+        "v2_event_id": "cytoplasmic_hyaline_globules",
+        "v0_event_id": "prominent_nucleolar_morphology",
+        "cosine_similarity": 0.7321562767028809
+      },
+      {
+        "v2_event_id": "scant_cytoplasm_phenotype",
+        "v0_event_id": "delicate_capillary_network",
+        "cosine_similarity": 0.7305814623832703
+      },
+      {
+        "v2_event_id": "syncytial_tumor_giant_cells",
+        "v0_event_id": "marked_tumor_cell_pleomorphism",
+        "cosine_similarity": 0.7290891408920288
+      },
+      {
+        "v2_event_id": "compact_small_nest_architecture",
+        "v0_event_id": "pseudocapsule_penetration",
+        "cosine_similarity": 0.6773279905319214
+      },
+      {
+        "v2_event_id": "thick_trabecular_insular_architecture",
+        "v0_event_id": "infiltrative_small_nests_and_cords",
+        "cosine_similarity": 0.6545466184616089
+      }
+    ]
+  },
+  "activation_sensitivity": [
+    {
+      "feature_dir": "/data0/lfy_data/Pathology/CONCH/kirc/pt_files",
+      "threshold_mode": "global",
+      "threshold_label": null,
+      "score_threshold": 0.2,
+      "event_score_thresholds": null,
+      "min_slide_patch_fraction": 0.01,
+      "min_patient_patch_fraction": 0.01,
+      "num_slides": 542,
+      "num_patients": 535,
+      "num_patches": 2653350,
+      "v2_summary": {
+        "min_patch_activation_frequency": 0.11008310317993164,
+        "median_patch_activation_frequency": 0.6318849921226501,
+        "max_patch_activation_frequency": 0.8752320408821106,
+        "median_patient_coverage": 0.9981308579444885,
+        "max_within_v2_activation_jaccard": 0.8912877805799766
+      },
+      "events": [
+        {
+          "bank": "v0",
+          "event_id": "clear_cell_nested_alveolar_architecture",
+          "activated_patches": 2070140,
+          "patch_activation_frequency": 0.7801986336708069,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "acinar_tubular_differentiation",
+          "activated_patches": 2165297,
+          "patch_activation_frequency": 0.8160615563392639,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "papillary_growth_pattern",
+          "activated_patches": 1964223,
+          "patch_activation_frequency": 0.7402803897857666,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "compact_eosinophilic_tumor_component",
+          "activated_patches": 2010542,
+          "patch_activation_frequency": 0.7577372193336487,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 1584654,
+          "patch_activation_frequency": 0.5972276329994202,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "sarcomatoid_spindle_cell_transformation",
+          "activated_patches": 584168,
+          "patch_activation_frequency": 0.22016243636608124,
+          "covered_slides": 518,
+          "slide_coverage": 0.955719530582428,
+          "covered_patients": 512,
+          "patient_coverage": 0.9570093750953674
+        },
+        {
+          "bank": "v0",
+          "event_id": "prominent_nucleolar_morphology",
+          "activated_patches": 2453405,
+          "patch_activation_frequency": 0.9246442914009094,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "marked_tumor_cell_pleomorphism",
+          "activated_patches": 1738720,
+          "patch_activation_frequency": 0.6552923917770386,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v0",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 1741825,
+          "patch_activation_frequency": 0.6564626097679138,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v0",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 1821706,
+          "patch_activation_frequency": 0.6865683197975159,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 2028654,
+          "patch_activation_frequency": 0.764563262462616,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_hemorrhage",
+          "activated_patches": 1790258,
+          "patch_activation_frequency": 0.6747161149978638,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "cystic_degenerative_change",
+          "activated_patches": 1399405,
+          "patch_activation_frequency": 0.527410626411438,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 2399856,
+          "patch_activation_frequency": 0.9044626355171204,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 1802577,
+          "patch_activation_frequency": 0.6793588995933533,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "venous_tumor_thrombus",
+          "activated_patches": 2274440,
+          "patch_activation_frequency": 0.8571956157684326,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "fibrous_tumor_pseudocapsule",
+          "activated_patches": 2185597,
+          "patch_activation_frequency": 0.8237122893333435,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "pseudocapsule_penetration",
+          "activated_patches": 1260391,
+          "patch_activation_frequency": 0.4750187397003174,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_parenchymal_infiltration",
+          "activated_patches": 1855505,
+          "patch_activation_frequency": 0.6993065476417542,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "perinephric_adipose_invasion",
+          "activated_patches": 1295334,
+          "patch_activation_frequency": 0.48818814754486084,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_sinus_invasion",
+          "activated_patches": 1019485,
+          "patch_activation_frequency": 0.38422560691833496,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "infiltrative_small_nests_and_cords",
+          "activated_patches": 1664599,
+          "patch_activation_frequency": 0.6273574829101562,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "tumor_budding_at_invasive_front",
+          "activated_patches": 624429,
+          "patch_activation_frequency": 0.2353360801935196,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_lymphocyte_infiltration",
+          "activated_patches": 1903948,
+          "patch_activation_frequency": 0.717563807964325,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "peritumoral_lymphoid_aggregates",
+          "activated_patches": 659131,
+          "patch_activation_frequency": 0.24841465055942535,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "immune_exclusion_at_tumor_margin",
+          "activated_patches": 1591724,
+          "patch_activation_frequency": 0.5998921990394592,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "neutrophil_rich_inflammation",
+          "activated_patches": 1100188,
+          "patch_activation_frequency": 0.4146411120891571,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        },
+        {
+          "bank": "v0",
+          "event_id": "desmoplastic_stromal_response",
+          "activated_patches": 932043,
+          "patch_activation_frequency": 0.35127028822898865,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        },
+        {
+          "bank": "v0",
+          "event_id": "hyalinized_fibrotic_stroma",
+          "activated_patches": 2388133,
+          "patch_activation_frequency": 0.9000445008277893,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "edematous_myxoid_stroma",
+          "activated_patches": 2384540,
+          "patch_activation_frequency": 0.8986903429031372,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "compact_small_nest_architecture",
+          "activated_patches": 1310873,
+          "patch_activation_frequency": 0.4940445125102997,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        },
+        {
+          "bank": "v2",
+          "event_id": "thick_trabecular_insular_architecture",
+          "activated_patches": 1224113,
+          "patch_activation_frequency": 0.46134620904922485,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v2",
+          "event_id": "solid_sheet_architecture",
+          "activated_patches": 1676612,
+          "patch_activation_frequency": 0.6318849921226501,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "microcystic_architecture",
+          "activated_patches": 1826361,
+          "patch_activation_frequency": 0.6883226633071899,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "tubular_acinar_architecture",
+          "activated_patches": 1696224,
+          "patch_activation_frequency": 0.639276385307312,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "papillary_pseudopapillary_architecture",
+          "activated_patches": 1150259,
+          "patch_activation_frequency": 0.43351197242736816,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "prominent_nucleoli",
+          "activated_patches": 2322297,
+          "patch_activation_frequency": 0.8752320408821106,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "extreme_nuclear_pleomorphism",
+          "activated_patches": 917250,
+          "patch_activation_frequency": 0.3456950783729553,
+          "covered_slides": 534,
+          "slide_coverage": 0.9852398633956909,
+          "covered_patients": 527,
+          "patient_coverage": 0.9850467443466187
+        },
+        {
+          "bank": "v2",
+          "event_id": "sarcomatoid_differentiation",
+          "activated_patches": 292089,
+          "patch_activation_frequency": 0.11008310317993164,
+          "covered_slides": 395,
+          "slide_coverage": 0.7287822961807251,
+          "covered_patients": 391,
+          "patient_coverage": 0.7308411002159119
+        },
+        {
+          "bank": "v2",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 1133101,
+          "patch_activation_frequency": 0.42704543471336365,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v2",
+          "event_id": "syncytial_tumor_giant_cells",
+          "activated_patches": 324426,
+          "patch_activation_frequency": 0.12227033823728561,
+          "covered_slides": 353,
+          "slide_coverage": 0.6512914896011353,
+          "covered_patients": 350,
+          "patient_coverage": 0.6542056202888489
+        },
+        {
+          "bank": "v2",
+          "event_id": "scant_cytoplasm_phenotype",
+          "activated_patches": 1911301,
+          "patch_activation_frequency": 0.720335066318512,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "abundant_eosinophilic_cytoplasm",
+          "activated_patches": 1940299,
+          "patch_activation_frequency": 0.7312638759613037,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "cytoplasmic_hyaline_globules",
+          "activated_patches": 2095038,
+          "patch_activation_frequency": 0.7895822525024414,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 1552600,
+          "patch_activation_frequency": 0.5851470828056335,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v2",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 878013,
+          "patch_activation_frequency": 0.33090734481811523,
+          "covered_slides": 525,
+          "slide_coverage": 0.9686346650123596,
+          "covered_patients": 518,
+          "patient_coverage": 0.968224287033081
+        },
+        {
+          "bank": "v2",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 1868472,
+          "patch_activation_frequency": 0.7041935920715332,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 1937089,
+          "patch_activation_frequency": 0.7300540804862976,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 2112993,
+          "patch_activation_frequency": 0.7963491678237915,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "activated_patches": 1495957,
+          "patch_activation_frequency": 0.5637993216514587,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_neutrophil_infiltrate",
+          "activated_patches": 1798405,
+          "patch_activation_frequency": 0.6777865886688232,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "scar_like_stromal_regression",
+          "activated_patches": 1783553,
+          "patch_activation_frequency": 0.6721891164779663,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        }
+      ],
+      "within_v2_top_activation_jaccard": [
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.8912877805799766
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.8876570635748163
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8750189495574406
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8712162495425689
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.8711540377378515
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.8701118087101568
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8685550366729884
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.8572560367303192
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.8534906539618679
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.8465642848364042
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8355498642529653
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "brisk_mitotic_activity",
+          "score": 0.8230334097350028
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.8228000247951253
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.8212220147833211
+        },
+        {
+          "left_event_id": "tubular_acinar_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8182019716759246
+        },
+        {
+          "left_event_id": "tubular_acinar_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.8177189460679094
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "tubular_acinar_architecture",
+          "score": 0.8169736577414879
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.8165483078035027
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8081881126332457
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.7975458663983254
+        },
+        {
+          "left_event_id": "tubular_acinar_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.7967913069935896
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.7948101611581535
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.7940127822469077
+        },
+        {
+          "left_event_id": "tubular_acinar_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.7913226936712253
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "coagulative_tumor_necrosis",
+          "score": 0.7813936302813032
+        }
+      ],
+      "v2_nearest_v0_activation": [
+        {
+          "v2_event_id": "prominent_nucleoli",
+          "v0_event_id": "prominent_nucleolar_morphology",
+          "activation_jaccard": 0.9255760355657056
+        },
+        {
+          "v2_event_id": "abundant_eosinophilic_cytoplasm",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.9136321871259827
+        },
+        {
+          "v2_event_id": "microvascular_tumor_invasion",
+          "v0_event_id": "venous_tumor_thrombus",
+          "activation_jaccard": 0.9056515429823826
+        },
+        {
+          "v2_event_id": "cytoplasmic_hyaline_globules",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.904335612956373
+        },
+        {
+          "v2_event_id": "delicate_capillary_network",
+          "v0_event_id": "clear_cell_nested_alveolar_architecture",
+          "activation_jaccard": 0.8868896211462706
+        },
+        {
+          "v2_event_id": "coagulative_tumor_necrosis",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.884534070423298
+        },
+        {
+          "v2_event_id": "scant_cytoplasm_phenotype",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.8757349951932965
+        },
+        {
+          "v2_event_id": "microcystic_architecture",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.8655555382679505
+        },
+        {
+          "v2_event_id": "brisk_mitotic_activity",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.8507038677192709
+        },
+        {
+          "v2_event_id": "tubular_acinar_architecture",
+          "v0_event_id": "renal_parenchymal_infiltration",
+          "activation_jaccard": 0.8365562563246319
+        },
+        {
+          "v2_event_id": "solid_sheet_architecture",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.8336637582834209
+        },
+        {
+          "v2_event_id": "intratumoral_neutrophil_infiltrate",
+          "v0_event_id": "intratumoral_hemorrhage",
+          "activation_jaccard": 0.7767910190598413
+        },
+        {
+          "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "v0_event_id": "intratumoral_lymphocyte_infiltration",
+          "activation_jaccard": 0.7555317576823442
+        },
+        {
+          "v2_event_id": "scar_like_stromal_regression",
+          "v0_event_id": "hyalinized_fibrotic_stroma",
+          "activation_jaccard": 0.7271458877419719
+        },
+        {
+          "v2_event_id": "rhabdoid_differentiation",
+          "v0_event_id": "rhabdoid_differentiation",
+          "activation_jaccard": 0.7087790622371054
+        },
+        {
+          "v2_event_id": "compact_small_nest_architecture",
+          "v0_event_id": "renal_parenchymal_infiltration",
+          "activation_jaccard": 0.6739461768429845
+        },
+        {
+          "v2_event_id": "thick_trabecular_insular_architecture",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.6609246156301537
+        },
+        {
+          "v2_event_id": "papillary_pseudopapillary_architecture",
+          "v0_event_id": "cystic_degenerative_change",
+          "activation_jaccard": 0.5854354521480507
+        },
+        {
+          "v2_event_id": "extreme_nuclear_pleomorphism",
+          "v0_event_id": "rhabdoid_differentiation",
+          "activation_jaccard": 0.5075561468712491
+        },
+        {
+          "v2_event_id": "atypical_mitotic_figures",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.5005237839135049
+        },
+        {
+          "v2_event_id": "sarcomatoid_differentiation",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.48144009197112375
+        },
+        {
+          "v2_event_id": "syncytial_tumor_giant_cells",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.31338998804555696
+        }
+      ]
+    },
+    {
+      "feature_dir": "/data0/lfy_data/Pathology/CONCH/kirc/pt_files",
+      "threshold_mode": "global",
+      "threshold_label": null,
+      "score_threshold": 0.3,
+      "event_score_thresholds": null,
+      "min_slide_patch_fraction": 0.01,
+      "min_patient_patch_fraction": 0.01,
+      "num_slides": 542,
+      "num_patients": 535,
+      "num_patches": 2653350,
+      "v2_summary": {
+        "min_patch_activation_frequency": 0.029857350513339043,
+        "median_patch_activation_frequency": 0.2916211485862732,
+        "max_patch_activation_frequency": 0.7250140309333801,
+        "median_patient_coverage": 0.9757009148597717,
+        "max_within_v2_activation_jaccard": 0.8446484600901374
+      },
+      "events": [
+        {
+          "bank": "v0",
+          "event_id": "clear_cell_nested_alveolar_architecture",
+          "activated_patches": 1849680,
+          "patch_activation_frequency": 0.697111189365387,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v0",
+          "event_id": "acinar_tubular_differentiation",
+          "activated_patches": 1922342,
+          "patch_activation_frequency": 0.7244961857795715,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "papillary_growth_pattern",
+          "activated_patches": 1535016,
+          "patch_activation_frequency": 0.5785199999809265,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "compact_eosinophilic_tumor_component",
+          "activated_patches": 1717457,
+          "patch_activation_frequency": 0.6472787261009216,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v0",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 746316,
+          "patch_activation_frequency": 0.28127309679985046,
+          "covered_slides": 529,
+          "slide_coverage": 0.9760147333145142,
+          "covered_patients": 522,
+          "patient_coverage": 0.9757009148597717
+        },
+        {
+          "bank": "v0",
+          "event_id": "sarcomatoid_spindle_cell_transformation",
+          "activated_patches": 167409,
+          "patch_activation_frequency": 0.06309344619512558,
+          "covered_slides": 302,
+          "slide_coverage": 0.5571955442428589,
+          "covered_patients": 300,
+          "patient_coverage": 0.5607476830482483
+        },
+        {
+          "bank": "v0",
+          "event_id": "prominent_nucleolar_morphology",
+          "activated_patches": 2118902,
+          "patch_activation_frequency": 0.7985761165618896,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "marked_tumor_cell_pleomorphism",
+          "activated_patches": 806627,
+          "patch_activation_frequency": 0.3040032386779785,
+          "covered_slides": 517,
+          "slide_coverage": 0.9538745284080505,
+          "covered_patients": 511,
+          "patient_coverage": 0.9551401734352112
+        },
+        {
+          "bank": "v0",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 940681,
+          "patch_activation_frequency": 0.35452577471733093,
+          "covered_slides": 533,
+          "slide_coverage": 0.9833948612213135,
+          "covered_patients": 526,
+          "patient_coverage": 0.9831775426864624
+        },
+        {
+          "bank": "v0",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 1114501,
+          "patch_activation_frequency": 0.4200354218482971,
+          "covered_slides": 533,
+          "slide_coverage": 0.9833948612213135,
+          "covered_patients": 526,
+          "patient_coverage": 0.9831775426864624
+        },
+        {
+          "bank": "v0",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 1124675,
+          "patch_activation_frequency": 0.4238698184490204,
+          "covered_slides": 538,
+          "slide_coverage": 0.9926199316978455,
+          "covered_patients": 531,
+          "patient_coverage": 0.9925233721733093
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_hemorrhage",
+          "activated_patches": 1031990,
+          "patch_activation_frequency": 0.3889385163784027,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        },
+        {
+          "bank": "v0",
+          "event_id": "cystic_degenerative_change",
+          "activated_patches": 597554,
+          "patch_activation_frequency": 0.2252073734998703,
+          "covered_slides": 538,
+          "slide_coverage": 0.9926199316978455,
+          "covered_patients": 531,
+          "patient_coverage": 0.9925233721733093
+        },
+        {
+          "bank": "v0",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 2065090,
+          "patch_activation_frequency": 0.7782953381538391,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 985243,
+          "patch_activation_frequency": 0.3713203966617584,
+          "covered_slides": 537,
+          "slide_coverage": 0.990774929523468,
+          "covered_patients": 530,
+          "patient_coverage": 0.9906542301177979
+        },
+        {
+          "bank": "v0",
+          "event_id": "venous_tumor_thrombus",
+          "activated_patches": 1758190,
+          "patch_activation_frequency": 0.6626302599906921,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "fibrous_tumor_pseudocapsule",
+          "activated_patches": 1740201,
+          "patch_activation_frequency": 0.6558505296707153,
+          "covered_slides": 538,
+          "slide_coverage": 0.9926199316978455,
+          "covered_patients": 531,
+          "patient_coverage": 0.9925233721733093
+        },
+        {
+          "bank": "v0",
+          "event_id": "pseudocapsule_penetration",
+          "activated_patches": 469955,
+          "patch_activation_frequency": 0.17711760103702545,
+          "covered_slides": 520,
+          "slide_coverage": 0.9594095945358276,
+          "covered_patients": 513,
+          "patient_coverage": 0.9588785171508789
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_parenchymal_infiltration",
+          "activated_patches": 1093084,
+          "patch_activation_frequency": 0.41196373105049133,
+          "covered_slides": 535,
+          "slide_coverage": 0.9870848655700684,
+          "covered_patients": 528,
+          "patient_coverage": 0.9869158864021301
+        },
+        {
+          "bank": "v0",
+          "event_id": "perinephric_adipose_invasion",
+          "activated_patches": 427907,
+          "patch_activation_frequency": 0.16127046942710876,
+          "covered_slides": 510,
+          "slide_coverage": 0.9409593939781189,
+          "covered_patients": 503,
+          "patient_coverage": 0.9401869177818298
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_sinus_invasion",
+          "activated_patches": 302437,
+          "patch_activation_frequency": 0.11398307979106903,
+          "covered_slides": 515,
+          "slide_coverage": 0.9501845240592957,
+          "covered_patients": 508,
+          "patient_coverage": 0.949532687664032
+        },
+        {
+          "bank": "v0",
+          "event_id": "infiltrative_small_nests_and_cords",
+          "activated_patches": 678258,
+          "patch_activation_frequency": 0.2556232810020447,
+          "covered_slides": 525,
+          "slide_coverage": 0.9686346650123596,
+          "covered_patients": 518,
+          "patient_coverage": 0.968224287033081
+        },
+        {
+          "bank": "v0",
+          "event_id": "tumor_budding_at_invasive_front",
+          "activated_patches": 153629,
+          "patch_activation_frequency": 0.05790001153945923,
+          "covered_slides": 471,
+          "slide_coverage": 0.8690037131309509,
+          "covered_patients": 465,
+          "patient_coverage": 0.8691588640213013
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_lymphocyte_infiltration",
+          "activated_patches": 1404849,
+          "patch_activation_frequency": 0.5294623970985413,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v0",
+          "event_id": "peritumoral_lymphoid_aggregates",
+          "activated_patches": 147414,
+          "patch_activation_frequency": 0.05555769056081772,
+          "covered_slides": 470,
+          "slide_coverage": 0.8671586513519287,
+          "covered_patients": 464,
+          "patient_coverage": 0.8672897219657898
+        },
+        {
+          "bank": "v0",
+          "event_id": "immune_exclusion_at_tumor_margin",
+          "activated_patches": 583340,
+          "patch_activation_frequency": 0.21985037624835968,
+          "covered_slides": 536,
+          "slide_coverage": 0.9889298677444458,
+          "covered_patients": 530,
+          "patient_coverage": 0.9906542301177979
+        },
+        {
+          "bank": "v0",
+          "event_id": "neutrophil_rich_inflammation",
+          "activated_patches": 327265,
+          "patch_activation_frequency": 0.12334030866622925,
+          "covered_slides": 508,
+          "slide_coverage": 0.937269389629364,
+          "covered_patients": 502,
+          "patient_coverage": 0.9383177757263184
+        },
+        {
+          "bank": "v0",
+          "event_id": "desmoplastic_stromal_response",
+          "activated_patches": 308456,
+          "patch_activation_frequency": 0.11625152826309204,
+          "covered_slides": 515,
+          "slide_coverage": 0.9501845240592957,
+          "covered_patients": 508,
+          "patient_coverage": 0.949532687664032
+        },
+        {
+          "bank": "v0",
+          "event_id": "hyalinized_fibrotic_stroma",
+          "activated_patches": 1641309,
+          "patch_activation_frequency": 0.6185799241065979,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v0",
+          "event_id": "edematous_myxoid_stroma",
+          "activated_patches": 1949888,
+          "patch_activation_frequency": 0.7348778247833252,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "compact_small_nest_architecture",
+          "activated_patches": 347746,
+          "patch_activation_frequency": 0.13105922937393188,
+          "covered_slides": 503,
+          "slide_coverage": 0.9280442595481873,
+          "covered_patients": 498,
+          "patient_coverage": 0.9308411478996277
+        },
+        {
+          "bank": "v2",
+          "event_id": "thick_trabecular_insular_architecture",
+          "activated_patches": 366302,
+          "patch_activation_frequency": 0.13805265724658966,
+          "covered_slides": 455,
+          "slide_coverage": 0.839483380317688,
+          "covered_patients": 451,
+          "patient_coverage": 0.8429906368255615
+        },
+        {
+          "bank": "v2",
+          "event_id": "solid_sheet_architecture",
+          "activated_patches": 1309398,
+          "patch_activation_frequency": 0.493488609790802,
+          "covered_slides": 537,
+          "slide_coverage": 0.990774929523468,
+          "covered_patients": 530,
+          "patient_coverage": 0.9906542301177979
+        },
+        {
+          "bank": "v2",
+          "event_id": "microcystic_architecture",
+          "activated_patches": 1411029,
+          "patch_activation_frequency": 0.5317915081977844,
+          "covered_slides": 536,
+          "slide_coverage": 0.9889298677444458,
+          "covered_patients": 529,
+          "patient_coverage": 0.9887850284576416
+        },
+        {
+          "bank": "v2",
+          "event_id": "tubular_acinar_architecture",
+          "activated_patches": 1002303,
+          "patch_activation_frequency": 0.3777500092983246,
+          "covered_slides": 527,
+          "slide_coverage": 0.9723247289657593,
+          "covered_patients": 520,
+          "patient_coverage": 0.9719626307487488
+        },
+        {
+          "bank": "v2",
+          "event_id": "papillary_pseudopapillary_architecture",
+          "activated_patches": 427712,
+          "patch_activation_frequency": 0.1611969769001007,
+          "covered_slides": 522,
+          "slide_coverage": 0.9630996584892273,
+          "covered_patients": 515,
+          "patient_coverage": 0.9626168012619019
+        },
+        {
+          "bank": "v2",
+          "event_id": "prominent_nucleoli",
+          "activated_patches": 1923716,
+          "patch_activation_frequency": 0.7250140309333801,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "extreme_nuclear_pleomorphism",
+          "activated_patches": 230246,
+          "patch_activation_frequency": 0.08677558600902557,
+          "covered_slides": 399,
+          "slide_coverage": 0.7361623644828796,
+          "covered_patients": 394,
+          "patient_coverage": 0.7364485859870911
+        },
+        {
+          "bank": "v2",
+          "event_id": "sarcomatoid_differentiation",
+          "activated_patches": 79222,
+          "patch_activation_frequency": 0.029857350513339043,
+          "covered_slides": 130,
+          "slide_coverage": 0.2398523986339569,
+          "covered_patients": 129,
+          "patient_coverage": 0.24112150073051453
+        },
+        {
+          "bank": "v2",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 362061,
+          "patch_activation_frequency": 0.13645429909229279,
+          "covered_slides": 473,
+          "slide_coverage": 0.8726937174797058,
+          "covered_patients": 466,
+          "patient_coverage": 0.8710280656814575
+        },
+        {
+          "bank": "v2",
+          "event_id": "syncytial_tumor_giant_cells",
+          "activated_patches": 84700,
+          "patch_activation_frequency": 0.031921908259391785,
+          "covered_slides": 176,
+          "slide_coverage": 0.3247232437133789,
+          "covered_patients": 173,
+          "patient_coverage": 0.3233644962310791
+        },
+        {
+          "bank": "v2",
+          "event_id": "scant_cytoplasm_phenotype",
+          "activated_patches": 1541689,
+          "patch_activation_frequency": 0.5810348987579346,
+          "covered_slides": 541,
+          "slide_coverage": 0.9981549978256226,
+          "covered_patients": 534,
+          "patient_coverage": 0.9981308579444885
+        },
+        {
+          "bank": "v2",
+          "event_id": "abundant_eosinophilic_cytoplasm",
+          "activated_patches": 1651237,
+          "patch_activation_frequency": 0.622321605682373,
+          "covered_slides": 537,
+          "slide_coverage": 0.990774929523468,
+          "covered_patients": 530,
+          "patient_coverage": 0.9906542301177979
+        },
+        {
+          "bank": "v2",
+          "event_id": "cytoplasmic_hyaline_globules",
+          "activated_patches": 1749726,
+          "patch_activation_frequency": 0.6594403386116028,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        },
+        {
+          "bank": "v2",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 653295,
+          "patch_activation_frequency": 0.24621516466140747,
+          "covered_slides": 516,
+          "slide_coverage": 0.9520295262336731,
+          "covered_patients": 509,
+          "patient_coverage": 0.9514018893241882
+        },
+        {
+          "bank": "v2",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 104242,
+          "patch_activation_frequency": 0.039286937564611435,
+          "covered_slides": 341,
+          "slide_coverage": 0.6291512846946716,
+          "covered_patients": 338,
+          "patient_coverage": 0.6317756772041321
+        },
+        {
+          "bank": "v2",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 949600,
+          "patch_activation_frequency": 0.3578872084617615,
+          "covered_slides": 534,
+          "slide_coverage": 0.9852398633956909,
+          "covered_patients": 527,
+          "patient_coverage": 0.9850467443466187
+        },
+        {
+          "bank": "v2",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 1538130,
+          "patch_activation_frequency": 0.579693615436554,
+          "covered_slides": 538,
+          "slide_coverage": 0.9926199316978455,
+          "covered_patients": 531,
+          "patient_coverage": 0.9925233721733093
+        },
+        {
+          "bank": "v2",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 1310729,
+          "patch_activation_frequency": 0.4939902424812317,
+          "covered_slides": 542,
+          "slide_coverage": 1.0,
+          "covered_patients": 535,
+          "patient_coverage": 1.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "activated_patches": 535782,
+          "patch_activation_frequency": 0.20192661881446838,
+          "covered_slides": 528,
+          "slide_coverage": 0.9741697311401367,
+          "covered_patients": 522,
+          "patient_coverage": 0.9757009148597717
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_neutrophil_infiltrate",
+          "activated_patches": 975337,
+          "patch_activation_frequency": 0.36758700013160706,
+          "covered_slides": 535,
+          "slide_coverage": 0.9870848655700684,
+          "covered_patients": 529,
+          "patient_coverage": 0.9887850284576416
+        },
+        {
+          "bank": "v2",
+          "event_id": "scar_like_stromal_regression",
+          "activated_patches": 773773,
+          "patch_activation_frequency": 0.2916211485862732,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        }
+      ],
+      "within_v2_top_activation_jaccard": [
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.8446484600901374
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.8208613769202641
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.8198167224650224
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.8195756337550733
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.8157875498044376
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.7968159870836062
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.7926779143208756
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.7891059261462542
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.7733803306895073
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.7614341328581151
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.760482132637288
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.7602966053752135
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.7503915365437064
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.7442259573185909
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.7408764611667207
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.7277871557050091
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.7234684696965566
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "prominent_nucleoli",
+          "score": 0.6957612389004322
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "microcystic_architecture",
+          "score": 0.687553270548009
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "prominent_nucleoli",
+          "score": 0.6604024164089016
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.6489972196198458
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.55047672604211
+        },
+        {
+          "left_event_id": "tubular_acinar_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.548182451829362
+        },
+        {
+          "left_event_id": "tubular_acinar_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.5432882352833972
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "tubular_acinar_architecture",
+          "score": 0.5378339214914108
+        }
+      ],
+      "v2_nearest_v0_activation": [
+        {
+          "v2_event_id": "abundant_eosinophilic_cytoplasm",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.8979851584248841
+        },
+        {
+          "v2_event_id": "prominent_nucleoli",
+          "v0_event_id": "prominent_nucleolar_morphology",
+          "activation_jaccard": 0.8778270517187481
+        },
+        {
+          "v2_event_id": "cytoplasmic_hyaline_globules",
+          "v0_event_id": "acinar_tubular_differentiation",
+          "activation_jaccard": 0.8433484064769003
+        },
+        {
+          "v2_event_id": "scant_cytoplasm_phenotype",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.8371953670252016
+        },
+        {
+          "v2_event_id": "delicate_capillary_network",
+          "v0_event_id": "clear_cell_nested_alveolar_architecture",
+          "activation_jaccard": 0.8022413308819775
+        },
+        {
+          "v2_event_id": "solid_sheet_architecture",
+          "v0_event_id": "intratumoral_lymphocyte_infiltration",
+          "activation_jaccard": 0.7714658100357393
+        },
+        {
+          "v2_event_id": "microcystic_architecture",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.7705411422743844
+        },
+        {
+          "v2_event_id": "microvascular_tumor_invasion",
+          "v0_event_id": "microvascular_tumor_invasion",
+          "activation_jaccard": 0.735048250950283
+        },
+        {
+          "v2_event_id": "coagulative_tumor_necrosis",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.7341450017849126
+        },
+        {
+          "v2_event_id": "brisk_mitotic_activity",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.5900136858947502
+        },
+        {
+          "v2_event_id": "tubular_acinar_architecture",
+          "v0_event_id": "renal_parenchymal_infiltration",
+          "activation_jaccard": 0.5705629671936637
+        },
+        {
+          "v2_event_id": "intratumoral_neutrophil_infiltrate",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.5366072637205439
+        },
+        {
+          "v2_event_id": "rhabdoid_differentiation",
+          "v0_event_id": "rhabdoid_differentiation",
+          "activation_jaccard": 0.47321012022250136
+        },
+        {
+          "v2_event_id": "sarcomatoid_differentiation",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.44919352469371565
+        },
+        {
+          "v2_event_id": "scar_like_stromal_regression",
+          "v0_event_id": "hyalinized_fibrotic_stroma",
+          "activation_jaccard": 0.4448236686985243
+        },
+        {
+          "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "v0_event_id": "immune_exclusion_at_tumor_margin",
+          "activation_jaccard": 0.420636462074157
+        },
+        {
+          "v2_event_id": "papillary_pseudopapillary_architecture",
+          "v0_event_id": "cystic_degenerative_change",
+          "activation_jaccard": 0.3992144596202767
+        },
+        {
+          "v2_event_id": "thick_trabecular_insular_architecture",
+          "v0_event_id": "pseudocapsule_penetration",
+          "activation_jaccard": 0.3436092134268215
+        },
+        {
+          "v2_event_id": "compact_small_nest_architecture",
+          "v0_event_id": "pseudocapsule_penetration",
+          "activation_jaccard": 0.31126723070706036
+        },
+        {
+          "v2_event_id": "extreme_nuclear_pleomorphism",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.26278969330140806
+        },
+        {
+          "v2_event_id": "syncytial_tumor_giant_cells",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.20390718641510155
+        },
+        {
+          "v2_event_id": "atypical_mitotic_figures",
+          "v0_event_id": "pseudocapsule_penetration",
+          "activation_jaccard": 0.12984199445111272
+        }
+      ]
+    },
+    {
+      "feature_dir": "/data0/lfy_data/Pathology/CONCH/kirc/pt_files",
+      "threshold_mode": "global",
+      "threshold_label": null,
+      "score_threshold": 0.4,
+      "event_score_thresholds": null,
+      "min_slide_patch_fraction": 0.01,
+      "min_patient_patch_fraction": 0.01,
+      "num_slides": 542,
+      "num_patients": 535,
+      "num_patches": 2653350,
+      "v2_summary": {
+        "min_patch_activation_frequency": 0.0014468502486124635,
+        "median_patch_activation_frequency": 0.06822243332862854,
+        "max_patch_activation_frequency": 0.45886296033859253,
+        "median_patient_coverage": 0.672897219657898,
+        "max_within_v2_activation_jaccard": 0.7054881996398283
+      },
+      "events": [
+        {
+          "bank": "v0",
+          "event_id": "clear_cell_nested_alveolar_architecture",
+          "activated_patches": 1505045,
+          "patch_activation_frequency": 0.5672244429588318,
+          "covered_slides": 538,
+          "slide_coverage": 0.9926199316978455,
+          "covered_patients": 531,
+          "patient_coverage": 0.9925233721733093
+        },
+        {
+          "bank": "v0",
+          "event_id": "acinar_tubular_differentiation",
+          "activated_patches": 1619705,
+          "patch_activation_frequency": 0.6104377508163452,
+          "covered_slides": 540,
+          "slide_coverage": 0.9963099360466003,
+          "covered_patients": 533,
+          "patient_coverage": 0.9962616562843323
+        },
+        {
+          "bank": "v0",
+          "event_id": "papillary_growth_pattern",
+          "activated_patches": 845459,
+          "patch_activation_frequency": 0.31863832473754883,
+          "covered_slides": 532,
+          "slide_coverage": 0.9815497994422913,
+          "covered_patients": 525,
+          "patient_coverage": 0.9813084006309509
+        },
+        {
+          "bank": "v0",
+          "event_id": "compact_eosinophilic_tumor_component",
+          "activated_patches": 1307256,
+          "patch_activation_frequency": 0.4926813244819641,
+          "covered_slides": 534,
+          "slide_coverage": 0.9852398633956909,
+          "covered_patients": 527,
+          "patient_coverage": 0.9850467443466187
+        },
+        {
+          "bank": "v0",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 188802,
+          "patch_activation_frequency": 0.0711560845375061,
+          "covered_slides": 341,
+          "slide_coverage": 0.6291512846946716,
+          "covered_patients": 337,
+          "patient_coverage": 0.6299065351486206
+        },
+        {
+          "bank": "v0",
+          "event_id": "sarcomatoid_spindle_cell_transformation",
+          "activated_patches": 36817,
+          "patch_activation_frequency": 0.013875667005777359,
+          "covered_slides": 76,
+          "slide_coverage": 0.14022140204906464,
+          "covered_patients": 76,
+          "patient_coverage": 0.14205607771873474
+        },
+        {
+          "bank": "v0",
+          "event_id": "prominent_nucleolar_morphology",
+          "activated_patches": 1778178,
+          "patch_activation_frequency": 0.6701633930206299,
+          "covered_slides": 539,
+          "slide_coverage": 0.9944649338722229,
+          "covered_patients": 532,
+          "patient_coverage": 0.9943925142288208
+        },
+        {
+          "bank": "v0",
+          "event_id": "marked_tumor_cell_pleomorphism",
+          "activated_patches": 156623,
+          "patch_activation_frequency": 0.059028398245573044,
+          "covered_slides": 278,
+          "slide_coverage": 0.5129151344299316,
+          "covered_patients": 278,
+          "patient_coverage": 0.5196261405944824
+        },
+        {
+          "bank": "v0",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 129483,
+          "patch_activation_frequency": 0.048799820244312286,
+          "covered_slides": 346,
+          "slide_coverage": 0.6383763551712036,
+          "covered_patients": 344,
+          "patient_coverage": 0.6429906487464905
+        },
+        {
+          "bank": "v0",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 247708,
+          "patch_activation_frequency": 0.09335669875144958,
+          "covered_slides": 440,
+          "slide_coverage": 0.8118081092834473,
+          "covered_patients": 436,
+          "patient_coverage": 0.8149532675743103
+        },
+        {
+          "bank": "v0",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 341304,
+          "patch_activation_frequency": 0.1286313533782959,
+          "covered_slides": 487,
+          "slide_coverage": 0.8985239863395691,
+          "covered_patients": 481,
+          "patient_coverage": 0.8990654349327087
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_hemorrhage",
+          "activated_patches": 383627,
+          "patch_activation_frequency": 0.144582137465477,
+          "covered_slides": 510,
+          "slide_coverage": 0.9409593939781189,
+          "covered_patients": 505,
+          "patient_coverage": 0.9439252614974976
+        },
+        {
+          "bank": "v0",
+          "event_id": "cystic_degenerative_change",
+          "activated_patches": 135678,
+          "patch_activation_frequency": 0.05113460496068001,
+          "covered_slides": 429,
+          "slide_coverage": 0.7915129065513611,
+          "covered_patients": 423,
+          "patient_coverage": 0.790654182434082
+        },
+        {
+          "bank": "v0",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 1697536,
+          "patch_activation_frequency": 0.6397708654403687,
+          "covered_slides": 538,
+          "slide_coverage": 0.9926199316978455,
+          "covered_patients": 531,
+          "patient_coverage": 0.9925233721733093
+        },
+        {
+          "bank": "v0",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 337915,
+          "patch_activation_frequency": 0.12735410034656525,
+          "covered_slides": 517,
+          "slide_coverage": 0.9538745284080505,
+          "covered_patients": 510,
+          "patient_coverage": 0.9532710313796997
+        },
+        {
+          "bank": "v0",
+          "event_id": "venous_tumor_thrombus",
+          "activated_patches": 869225,
+          "patch_activation_frequency": 0.3275952935218811,
+          "covered_slides": 535,
+          "slide_coverage": 0.9870848655700684,
+          "covered_patients": 528,
+          "patient_coverage": 0.9869158864021301
+        },
+        {
+          "bank": "v0",
+          "event_id": "fibrous_tumor_pseudocapsule",
+          "activated_patches": 1042605,
+          "patch_activation_frequency": 0.39293912053108215,
+          "covered_slides": 527,
+          "slide_coverage": 0.9723247289657593,
+          "covered_patients": 520,
+          "patient_coverage": 0.9719626307487488
+        },
+        {
+          "bank": "v0",
+          "event_id": "pseudocapsule_penetration",
+          "activated_patches": 45708,
+          "patch_activation_frequency": 0.017226524651050568,
+          "covered_slides": 260,
+          "slide_coverage": 0.4797047972679138,
+          "covered_patients": 258,
+          "patient_coverage": 0.48224300146102905
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_parenchymal_infiltration",
+          "activated_patches": 191510,
+          "patch_activation_frequency": 0.07217667996883392,
+          "covered_slides": 421,
+          "slide_coverage": 0.776752769947052,
+          "covered_patients": 415,
+          "patient_coverage": 0.7757009267807007
+        },
+        {
+          "bank": "v0",
+          "event_id": "perinephric_adipose_invasion",
+          "activated_patches": 30771,
+          "patch_activation_frequency": 0.011597037315368652,
+          "covered_slides": 185,
+          "slide_coverage": 0.3413284122943878,
+          "covered_patients": 183,
+          "patient_coverage": 0.3420560657978058
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_sinus_invasion",
+          "activated_patches": 37943,
+          "patch_activation_frequency": 0.014300036244094372,
+          "covered_slides": 256,
+          "slide_coverage": 0.4723247289657593,
+          "covered_patients": 252,
+          "patient_coverage": 0.47102802991867065
+        },
+        {
+          "bank": "v0",
+          "event_id": "infiltrative_small_nests_and_cords",
+          "activated_patches": 84180,
+          "patch_activation_frequency": 0.0317259319126606,
+          "covered_slides": 331,
+          "slide_coverage": 0.6107010841369629,
+          "covered_patients": 330,
+          "patient_coverage": 0.6168224215507507
+        },
+        {
+          "bank": "v0",
+          "event_id": "tumor_budding_at_invasive_front",
+          "activated_patches": 24553,
+          "patch_activation_frequency": 0.009253584779798985,
+          "covered_slides": 140,
+          "slide_coverage": 0.25830256938934326,
+          "covered_patients": 139,
+          "patient_coverage": 0.2598130702972412
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_lymphocyte_infiltration",
+          "activated_patches": 618780,
+          "patch_activation_frequency": 0.2332070767879486,
+          "covered_slides": 510,
+          "slide_coverage": 0.9409593939781189,
+          "covered_patients": 503,
+          "patient_coverage": 0.9401869177818298
+        },
+        {
+          "bank": "v0",
+          "event_id": "peritumoral_lymphoid_aggregates",
+          "activated_patches": 23860,
+          "patch_activation_frequency": 0.008992405608296394,
+          "covered_slides": 131,
+          "slide_coverage": 0.24169741570949554,
+          "covered_patients": 130,
+          "patient_coverage": 0.2429906576871872
+        },
+        {
+          "bank": "v0",
+          "event_id": "immune_exclusion_at_tumor_margin",
+          "activated_patches": 95161,
+          "patch_activation_frequency": 0.03586447238922119,
+          "covered_slides": 343,
+          "slide_coverage": 0.6328413486480713,
+          "covered_patients": 342,
+          "patient_coverage": 0.6392523646354675
+        },
+        {
+          "bank": "v0",
+          "event_id": "neutrophil_rich_inflammation",
+          "activated_patches": 51943,
+          "patch_activation_frequency": 0.019576383754611015,
+          "covered_slides": 191,
+          "slide_coverage": 0.35239851474761963,
+          "covered_patients": 191,
+          "patient_coverage": 0.3570093512535095
+        },
+        {
+          "bank": "v0",
+          "event_id": "desmoplastic_stromal_response",
+          "activated_patches": 58235,
+          "patch_activation_frequency": 0.021947726607322693,
+          "covered_slides": 283,
+          "slide_coverage": 0.5221402049064636,
+          "covered_patients": 281,
+          "patient_coverage": 0.5252336263656616
+        },
+        {
+          "bank": "v0",
+          "event_id": "hyalinized_fibrotic_stroma",
+          "activated_patches": 606344,
+          "patch_activation_frequency": 0.22852016985416412,
+          "covered_slides": 529,
+          "slide_coverage": 0.9760147333145142,
+          "covered_patients": 522,
+          "patient_coverage": 0.9757009148597717
+        },
+        {
+          "bank": "v0",
+          "event_id": "edematous_myxoid_stroma",
+          "activated_patches": 1177868,
+          "patch_activation_frequency": 0.44391730427742004,
+          "covered_slides": 537,
+          "slide_coverage": 0.990774929523468,
+          "covered_patients": 530,
+          "patient_coverage": 0.9906542301177979
+        },
+        {
+          "bank": "v2",
+          "event_id": "compact_small_nest_architecture",
+          "activated_patches": 12784,
+          "patch_activation_frequency": 0.004818059969693422,
+          "covered_slides": 48,
+          "slide_coverage": 0.08856088668107986,
+          "covered_patients": 48,
+          "patient_coverage": 0.08971962332725525
+        },
+        {
+          "bank": "v2",
+          "event_id": "thick_trabecular_insular_architecture",
+          "activated_patches": 28081,
+          "patch_activation_frequency": 0.010583224706351757,
+          "covered_slides": 104,
+          "slide_coverage": 0.19188192486763,
+          "covered_patients": 102,
+          "patient_coverage": 0.1906542032957077
+        },
+        {
+          "bank": "v2",
+          "event_id": "solid_sheet_architecture",
+          "activated_patches": 784967,
+          "patch_activation_frequency": 0.29583996534347534,
+          "covered_slides": 500,
+          "slide_coverage": 0.9225092530250549,
+          "covered_patients": 494,
+          "patient_coverage": 0.9233644604682922
+        },
+        {
+          "bank": "v2",
+          "event_id": "microcystic_architecture",
+          "activated_patches": 706627,
+          "patch_activation_frequency": 0.2663150429725647,
+          "covered_slides": 505,
+          "slide_coverage": 0.9317343235015869,
+          "covered_patients": 498,
+          "patient_coverage": 0.9308411478996277
+        },
+        {
+          "bank": "v2",
+          "event_id": "tubular_acinar_architecture",
+          "activated_patches": 181018,
+          "patch_activation_frequency": 0.06822243332862854,
+          "covered_slides": 365,
+          "slide_coverage": 0.6734317541122437,
+          "covered_patients": 360,
+          "patient_coverage": 0.672897219657898
+        },
+        {
+          "bank": "v2",
+          "event_id": "papillary_pseudopapillary_architecture",
+          "activated_patches": 98000,
+          "patch_activation_frequency": 0.036934442818164825,
+          "covered_slides": 285,
+          "slide_coverage": 0.5258302688598633,
+          "covered_patients": 279,
+          "patient_coverage": 0.5214953422546387
+        },
+        {
+          "bank": "v2",
+          "event_id": "prominent_nucleoli",
+          "activated_patches": 1156366,
+          "patch_activation_frequency": 0.4358136057853699,
+          "covered_slides": 536,
+          "slide_coverage": 0.9889298677444458,
+          "covered_patients": 529,
+          "patient_coverage": 0.9887850284576416
+        },
+        {
+          "bank": "v2",
+          "event_id": "extreme_nuclear_pleomorphism",
+          "activated_patches": 27394,
+          "patch_activation_frequency": 0.010324306786060333,
+          "covered_slides": 100,
+          "slide_coverage": 0.18450184166431427,
+          "covered_patients": 100,
+          "patient_coverage": 0.18691588938236237
+        },
+        {
+          "bank": "v2",
+          "event_id": "sarcomatoid_differentiation",
+          "activated_patches": 16515,
+          "patch_activation_frequency": 0.006224207114428282,
+          "covered_slides": 30,
+          "slide_coverage": 0.05535055324435234,
+          "covered_patients": 30,
+          "patient_coverage": 0.05607476457953453
+        },
+        {
+          "bank": "v2",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 56091,
+          "patch_activation_frequency": 0.021139690652489662,
+          "covered_slides": 180,
+          "slide_coverage": 0.33210331201553345,
+          "covered_patients": 177,
+          "patient_coverage": 0.3308411240577698
+        },
+        {
+          "bank": "v2",
+          "event_id": "syncytial_tumor_giant_cells",
+          "activated_patches": 11148,
+          "patch_activation_frequency": 0.004201481118798256,
+          "covered_slides": 51,
+          "slide_coverage": 0.09409593790769577,
+          "covered_patients": 51,
+          "patient_coverage": 0.09532710164785385
+        },
+        {
+          "bank": "v2",
+          "event_id": "scant_cytoplasm_phenotype",
+          "activated_patches": 1123112,
+          "patch_activation_frequency": 0.4232807457447052,
+          "covered_slides": 523,
+          "slide_coverage": 0.9649446606636047,
+          "covered_patients": 516,
+          "patient_coverage": 0.9644860029220581
+        },
+        {
+          "bank": "v2",
+          "event_id": "abundant_eosinophilic_cytoplasm",
+          "activated_patches": 1217524,
+          "patch_activation_frequency": 0.45886296033859253,
+          "covered_slides": 531,
+          "slide_coverage": 0.9797047972679138,
+          "covered_patients": 524,
+          "patient_coverage": 0.9794392585754395
+        },
+        {
+          "bank": "v2",
+          "event_id": "cytoplasmic_hyaline_globules",
+          "activated_patches": 978352,
+          "patch_activation_frequency": 0.3687233030796051,
+          "covered_slides": 532,
+          "slide_coverage": 0.9815497994422913,
+          "covered_patients": 525,
+          "patient_coverage": 0.9813084006309509
+        },
+        {
+          "bank": "v2",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 73313,
+          "patch_activation_frequency": 0.027630353346467018,
+          "covered_slides": 227,
+          "slide_coverage": 0.4188191890716553,
+          "covered_patients": 224,
+          "patient_coverage": 0.41869157552719116
+        },
+        {
+          "bank": "v2",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 3839,
+          "patch_activation_frequency": 0.0014468502486124635,
+          "covered_slides": 7,
+          "slide_coverage": 0.012915128841996193,
+          "covered_patients": 7,
+          "patient_coverage": 0.013084111735224724
+        },
+        {
+          "bank": "v2",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 265809,
+          "patch_activation_frequency": 0.10017864406108856,
+          "covered_slides": 446,
+          "slide_coverage": 0.8228782415390015,
+          "covered_patients": 440,
+          "patient_coverage": 0.822429895401001
+        },
+        {
+          "bank": "v2",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 1000156,
+          "patch_activation_frequency": 0.37694084644317627,
+          "covered_slides": 511,
+          "slide_coverage": 0.9428044557571411,
+          "covered_patients": 504,
+          "patient_coverage": 0.9420560598373413
+        },
+        {
+          "bank": "v2",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 511144,
+          "patch_activation_frequency": 0.1926410049200058,
+          "covered_slides": 529,
+          "slide_coverage": 0.9760147333145142,
+          "covered_patients": 522,
+          "patient_coverage": 0.9757009148597717
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "activated_patches": 80253,
+          "patch_activation_frequency": 0.030245915055274963,
+          "covered_slides": 288,
+          "slide_coverage": 0.5313653349876404,
+          "covered_patients": 285,
+          "patient_coverage": 0.5327102541923523
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_neutrophil_infiltrate",
+          "activated_patches": 307473,
+          "patch_activation_frequency": 0.1158810555934906,
+          "covered_slides": 478,
+          "slide_coverage": 0.8819188475608826,
+          "covered_patients": 474,
+          "patient_coverage": 0.8859813213348389
+        },
+        {
+          "bank": "v2",
+          "event_id": "scar_like_stromal_regression",
+          "activated_patches": 192296,
+          "patch_activation_frequency": 0.07247291505336761,
+          "covered_slides": 457,
+          "slide_coverage": 0.8431734442710876,
+          "covered_patients": 455,
+          "patient_coverage": 0.8504672646522522
+        }
+      ],
+      "within_v2_top_activation_jaccard": [
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.7054881996398283
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.6641209217009235
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.6340259336199551
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.6188585822677845
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.563469875719278
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.5570109027042324
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.5357527139422432
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.5340249200884578
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.5319598402932376
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.5300102103291957
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.5249955845281867
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.5202445699586734
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.4746488128736588
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.43398408961766377
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "prominent_nucleoli",
+          "score": 0.42934356452920375
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.4202734771456515
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.4108993252542885
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "prominent_nucleoli",
+          "score": 0.39908034341055465
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "microcystic_architecture",
+          "score": 0.38825119294591326
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.37121598670595635
+        },
+        {
+          "left_event_id": "coagulative_tumor_necrosis",
+          "right_event_id": "intratumoral_neutrophil_infiltrate",
+          "score": 0.3302132399006891
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.32936806505261473
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.2985313784259264
+        },
+        {
+          "left_event_id": "delicate_capillary_network",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.26807976492739566
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.23318832038140835
+        }
+      ],
+      "v2_nearest_v0_activation": [
+        {
+          "v2_event_id": "abundant_eosinophilic_cytoplasm",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.7976924873402941
+        },
+        {
+          "v2_event_id": "scant_cytoplasm_phenotype",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.7146505640910589
+        },
+        {
+          "v2_event_id": "delicate_capillary_network",
+          "v0_event_id": "fibrous_tumor_pseudocapsule",
+          "activation_jaccard": 0.6602157476436888
+        },
+        {
+          "v2_event_id": "prominent_nucleoli",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.6462526302987699
+        },
+        {
+          "v2_event_id": "microvascular_tumor_invasion",
+          "v0_event_id": "microvascular_tumor_invasion",
+          "activation_jaccard": 0.627681702026505
+        },
+        {
+          "v2_event_id": "coagulative_tumor_necrosis",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.6197843713231469
+        },
+        {
+          "v2_event_id": "microcystic_architecture",
+          "v0_event_id": "edematous_myxoid_stroma",
+          "activation_jaccard": 0.5566632716531238
+        },
+        {
+          "v2_event_id": "solid_sheet_architecture",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.5495090164851075
+        },
+        {
+          "v2_event_id": "cytoplasmic_hyaline_globules",
+          "v0_event_id": "prominent_nucleolar_morphology",
+          "activation_jaccard": 0.5294028874412783
+        },
+        {
+          "v2_event_id": "sarcomatoid_differentiation",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.43446569299873583
+        },
+        {
+          "v2_event_id": "intratumoral_neutrophil_infiltrate",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.3657083073710446
+        },
+        {
+          "v2_event_id": "brisk_mitotic_activity",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.34177583697234354
+        },
+        {
+          "v2_event_id": "scar_like_stromal_regression",
+          "v0_event_id": "hyalinized_fibrotic_stroma",
+          "activation_jaccard": 0.28504285675209057
+        },
+        {
+          "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "v0_event_id": "immune_exclusion_at_tumor_margin",
+          "activation_jaccard": 0.2842186950919527
+        },
+        {
+          "v2_event_id": "rhabdoid_differentiation",
+          "v0_event_id": "rhabdoid_differentiation",
+          "activation_jaccard": 0.2793624424035357
+        },
+        {
+          "v2_event_id": "tubular_acinar_architecture",
+          "v0_event_id": "renal_parenchymal_infiltration",
+          "activation_jaccard": 0.2200352391744339
+        },
+        {
+          "v2_event_id": "papillary_pseudopapillary_architecture",
+          "v0_event_id": "cystic_degenerative_change",
+          "activation_jaccard": 0.2134515222798627
+        },
+        {
+          "v2_event_id": "thick_trabecular_insular_architecture",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.1252320964378553
+        },
+        {
+          "v2_event_id": "extreme_nuclear_pleomorphism",
+          "v0_event_id": "marked_tumor_cell_pleomorphism",
+          "activation_jaccard": 0.11958360204913544
+        },
+        {
+          "v2_event_id": "syncytial_tumor_giant_cells",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.07249066475862531
+        },
+        {
+          "v2_event_id": "compact_small_nest_architecture",
+          "v0_event_id": "pseudocapsule_penetration",
+          "activation_jaccard": 0.06271802325581395
+        },
+        {
+          "v2_event_id": "atypical_mitotic_figures",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.024867972971934167
+        }
+      ]
+    },
+    {
+      "feature_dir": "/data0/lfy_data/Pathology/CONCH/kirc/pt_files",
+      "threshold_mode": "global",
+      "threshold_label": null,
+      "score_threshold": 0.5,
+      "event_score_thresholds": null,
+      "min_slide_patch_fraction": 0.01,
+      "min_patient_patch_fraction": 0.01,
+      "num_slides": 542,
+      "num_patients": 535,
+      "num_patches": 2653350,
+      "v2_summary": {
+        "min_patch_activation_frequency": 3.6934441595803946e-05,
+        "median_patch_activation_frequency": 0.0035204552114009857,
+        "max_patch_activation_frequency": 0.16270601749420166,
+        "median_patient_coverage": 0.08224298804998398,
+        "max_within_v2_activation_jaccard": 0.36676878681266556
+      },
+      "events": [
+        {
+          "bank": "v0",
+          "event_id": "clear_cell_nested_alveolar_architecture",
+          "activated_patches": 1070484,
+          "patch_activation_frequency": 0.4034461975097656,
+          "covered_slides": 521,
+          "slide_coverage": 0.9612545967102051,
+          "covered_patients": 515,
+          "patient_coverage": 0.9626168012619019
+        },
+        {
+          "bank": "v0",
+          "event_id": "acinar_tubular_differentiation",
+          "activated_patches": 954881,
+          "patch_activation_frequency": 0.3598775267601013,
+          "covered_slides": 527,
+          "slide_coverage": 0.9723247289657593,
+          "covered_patients": 520,
+          "patient_coverage": 0.9719626307487488
+        },
+        {
+          "bank": "v0",
+          "event_id": "papillary_growth_pattern",
+          "activated_patches": 235413,
+          "patch_activation_frequency": 0.08872293680906296,
+          "covered_slides": 409,
+          "slide_coverage": 0.7546125650405884,
+          "covered_patients": 407,
+          "patient_coverage": 0.7607476711273193
+        },
+        {
+          "bank": "v0",
+          "event_id": "compact_eosinophilic_tumor_component",
+          "activated_patches": 422862,
+          "patch_activation_frequency": 0.159369096159935,
+          "covered_slides": 487,
+          "slide_coverage": 0.8985239863395691,
+          "covered_patients": 481,
+          "patient_coverage": 0.8990654349327087
+        },
+        {
+          "bank": "v0",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 17330,
+          "patch_activation_frequency": 0.0065313661471009254,
+          "covered_slides": 72,
+          "slide_coverage": 0.1328413337469101,
+          "covered_patients": 71,
+          "patient_coverage": 0.1327102780342102
+        },
+        {
+          "bank": "v0",
+          "event_id": "sarcomatoid_spindle_cell_transformation",
+          "activated_patches": 8446,
+          "patch_activation_frequency": 0.003183145774528384,
+          "covered_slides": 13,
+          "slide_coverage": 0.02398524060845375,
+          "covered_patients": 13,
+          "patient_coverage": 0.02429906465113163
+        },
+        {
+          "bank": "v0",
+          "event_id": "prominent_nucleolar_morphology",
+          "activated_patches": 1091915,
+          "patch_activation_frequency": 0.41152316331863403,
+          "covered_slides": 524,
+          "slide_coverage": 0.9667896628379822,
+          "covered_patients": 517,
+          "patient_coverage": 0.9663551449775696
+        },
+        {
+          "bank": "v0",
+          "event_id": "marked_tumor_cell_pleomorphism",
+          "activated_patches": 9127,
+          "patch_activation_frequency": 0.0034398024436086416,
+          "covered_slides": 30,
+          "slide_coverage": 0.05535055324435234,
+          "covered_patients": 30,
+          "patient_coverage": 0.05607476457953453
+        },
+        {
+          "bank": "v0",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 5168,
+          "patch_activation_frequency": 0.0019477264722809196,
+          "covered_slides": 20,
+          "slide_coverage": 0.036900367587804794,
+          "covered_patients": 20,
+          "patient_coverage": 0.037383176386356354
+        },
+        {
+          "bank": "v0",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 12423,
+          "patch_activation_frequency": 0.004682005848735571,
+          "covered_slides": 62,
+          "slide_coverage": 0.11439114063978195,
+          "covered_patients": 62,
+          "patient_coverage": 0.115887850522995
+        },
+        {
+          "bank": "v0",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 59088,
+          "patch_activation_frequency": 0.02226920612156391,
+          "covered_slides": 198,
+          "slide_coverage": 0.36531364917755127,
+          "covered_patients": 197,
+          "patient_coverage": 0.36822429299354553
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_hemorrhage",
+          "activated_patches": 100845,
+          "patch_activation_frequency": 0.03800667077302933,
+          "covered_slides": 307,
+          "slide_coverage": 0.5664206743240356,
+          "covered_patients": 305,
+          "patient_coverage": 0.5700934529304504
+        },
+        {
+          "bank": "v0",
+          "event_id": "cystic_degenerative_change",
+          "activated_patches": 8948,
+          "patch_activation_frequency": 0.0033723406959325075,
+          "covered_slides": 55,
+          "slide_coverage": 0.10147601366043091,
+          "covered_patients": 55,
+          "patient_coverage": 0.10280373692512512
+        },
+        {
+          "bank": "v0",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 1316184,
+          "patch_activation_frequency": 0.49604612588882446,
+          "covered_slides": 532,
+          "slide_coverage": 0.9815497994422913,
+          "covered_patients": 525,
+          "patient_coverage": 0.9813084006309509
+        },
+        {
+          "bank": "v0",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 56675,
+          "patch_activation_frequency": 0.021359790116548538,
+          "covered_slides": 294,
+          "slide_coverage": 0.5424354076385498,
+          "covered_patients": 290,
+          "patient_coverage": 0.5420560836791992
+        },
+        {
+          "bank": "v0",
+          "event_id": "venous_tumor_thrombus",
+          "activated_patches": 242491,
+          "patch_activation_frequency": 0.09139050543308258,
+          "covered_slides": 485,
+          "slide_coverage": 0.8948339223861694,
+          "covered_patients": 478,
+          "patient_coverage": 0.8934579491615295
+        },
+        {
+          "bank": "v0",
+          "event_id": "fibrous_tumor_pseudocapsule",
+          "activated_patches": 257468,
+          "patch_activation_frequency": 0.09703506529331207,
+          "covered_slides": 452,
+          "slide_coverage": 0.8339483141899109,
+          "covered_patients": 446,
+          "patient_coverage": 0.8336448669433594
+        },
+        {
+          "bank": "v0",
+          "event_id": "pseudocapsule_penetration",
+          "activated_patches": 823,
+          "patch_activation_frequency": 0.00031017392757348716,
+          "covered_slides": 1,
+          "slide_coverage": 0.0018450184725224972,
+          "covered_patients": 0,
+          "patient_coverage": 0.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_parenchymal_infiltration",
+          "activated_patches": 6259,
+          "patch_activation_frequency": 0.002358904806897044,
+          "covered_slides": 27,
+          "slide_coverage": 0.049815498292446136,
+          "covered_patients": 27,
+          "patient_coverage": 0.05046728998422623
+        },
+        {
+          "bank": "v0",
+          "event_id": "perinephric_adipose_invasion",
+          "activated_patches": 734,
+          "patch_activation_frequency": 0.0002766314137261361,
+          "covered_slides": 1,
+          "slide_coverage": 0.0018450184725224972,
+          "covered_patients": 1,
+          "patient_coverage": 0.0018691589357331395
+        },
+        {
+          "bank": "v0",
+          "event_id": "renal_sinus_invasion",
+          "activated_patches": 1322,
+          "patch_activation_frequency": 0.000498238077852875,
+          "covered_slides": 0,
+          "slide_coverage": 0.0,
+          "covered_patients": 0,
+          "patient_coverage": 0.0
+        },
+        {
+          "bank": "v0",
+          "event_id": "infiltrative_small_nests_and_cords",
+          "activated_patches": 2017,
+          "patch_activation_frequency": 0.0007601710967719555,
+          "covered_slides": 7,
+          "slide_coverage": 0.012915128841996193,
+          "covered_patients": 7,
+          "patient_coverage": 0.013084111735224724
+        },
+        {
+          "bank": "v0",
+          "event_id": "tumor_budding_at_invasive_front",
+          "activated_patches": 2275,
+          "patch_activation_frequency": 0.0008574067032895982,
+          "covered_slides": 9,
+          "slide_coverage": 0.016605166718363762,
+          "covered_patients": 9,
+          "patient_coverage": 0.01682242937386036
+        },
+        {
+          "bank": "v0",
+          "event_id": "intratumoral_lymphocyte_infiltration",
+          "activated_patches": 75053,
+          "patch_activation_frequency": 0.028286129236221313,
+          "covered_slides": 254,
+          "slide_coverage": 0.468634694814682,
+          "covered_patients": 253,
+          "patient_coverage": 0.4728972017765045
+        },
+        {
+          "bank": "v0",
+          "event_id": "peritumoral_lymphoid_aggregates",
+          "activated_patches": 2241,
+          "patch_activation_frequency": 0.0008445926941931248,
+          "covered_slides": 3,
+          "slide_coverage": 0.0055350554175674915,
+          "covered_patients": 3,
+          "patient_coverage": 0.005607476457953453
+        },
+        {
+          "bank": "v0",
+          "event_id": "immune_exclusion_at_tumor_margin",
+          "activated_patches": 8556,
+          "patch_activation_frequency": 0.0032246029004454613,
+          "covered_slides": 41,
+          "slide_coverage": 0.07564575970172882,
+          "covered_patients": 41,
+          "patient_coverage": 0.07663551717996597
+        },
+        {
+          "bank": "v0",
+          "event_id": "neutrophil_rich_inflammation",
+          "activated_patches": 3436,
+          "patch_activation_frequency": 0.0012949667870998383,
+          "covered_slides": 16,
+          "slide_coverage": 0.029520295560359955,
+          "covered_patients": 16,
+          "patient_coverage": 0.029906542971730232
+        },
+        {
+          "bank": "v0",
+          "event_id": "desmoplastic_stromal_response",
+          "activated_patches": 4945,
+          "patch_activation_frequency": 0.001863681711256504,
+          "covered_slides": 24,
+          "slide_coverage": 0.04428044334053993,
+          "covered_patients": 23,
+          "patient_coverage": 0.042990654706954956
+        },
+        {
+          "bank": "v0",
+          "event_id": "hyalinized_fibrotic_stroma",
+          "activated_patches": 108416,
+          "patch_activation_frequency": 0.040860045701265335,
+          "covered_slides": 377,
+          "slide_coverage": 0.6955719590187073,
+          "covered_patients": 375,
+          "patient_coverage": 0.7009345889091492
+        },
+        {
+          "bank": "v0",
+          "event_id": "edematous_myxoid_stroma",
+          "activated_patches": 381486,
+          "patch_activation_frequency": 0.14377522468566895,
+          "covered_slides": 496,
+          "slide_coverage": 0.9151291251182556,
+          "covered_patients": 490,
+          "patient_coverage": 0.9158878326416016
+        },
+        {
+          "bank": "v2",
+          "event_id": "compact_small_nest_architecture",
+          "activated_patches": 98,
+          "patch_activation_frequency": 3.6934441595803946e-05,
+          "covered_slides": 0,
+          "slide_coverage": 0.0,
+          "covered_patients": 0,
+          "patient_coverage": 0.0
+        },
+        {
+          "bank": "v2",
+          "event_id": "thick_trabecular_insular_architecture",
+          "activated_patches": 843,
+          "patch_activation_frequency": 0.0003177115577273071,
+          "covered_slides": 3,
+          "slide_coverage": 0.0055350554175674915,
+          "covered_patients": 3,
+          "patient_coverage": 0.005607476457953453
+        },
+        {
+          "bank": "v2",
+          "event_id": "solid_sheet_architecture",
+          "activated_patches": 74881,
+          "patch_activation_frequency": 0.028221305459737778,
+          "covered_slides": 238,
+          "slide_coverage": 0.43911439180374146,
+          "covered_patients": 238,
+          "patient_coverage": 0.4448598027229309
+        },
+        {
+          "bank": "v2",
+          "event_id": "microcystic_architecture",
+          "activated_patches": 113477,
+          "patch_activation_frequency": 0.042767446488142014,
+          "covered_slides": 347,
+          "slide_coverage": 0.6402214169502258,
+          "covered_patients": 344,
+          "patient_coverage": 0.6429906487464905
+        },
+        {
+          "bank": "v2",
+          "event_id": "tubular_acinar_architecture",
+          "activated_patches": 8867,
+          "patch_activation_frequency": 0.0033418131060898304,
+          "covered_slides": 34,
+          "slide_coverage": 0.06273062527179718,
+          "covered_patients": 31,
+          "patient_coverage": 0.0579439252614975
+        },
+        {
+          "bank": "v2",
+          "event_id": "papillary_pseudopapillary_architecture",
+          "activated_patches": 9341,
+          "patch_activation_frequency": 0.0035204552114009857,
+          "covered_slides": 45,
+          "slide_coverage": 0.08302582800388336,
+          "covered_patients": 44,
+          "patient_coverage": 0.08224298804998398
+        },
+        {
+          "bank": "v2",
+          "event_id": "prominent_nucleoli",
+          "activated_patches": 237773,
+          "patch_activation_frequency": 0.08961237967014313,
+          "covered_slides": 441,
+          "slide_coverage": 0.8136531114578247,
+          "covered_patients": 435,
+          "patient_coverage": 0.8130841255187988
+        },
+        {
+          "bank": "v2",
+          "event_id": "extreme_nuclear_pleomorphism",
+          "activated_patches": 1627,
+          "patch_activation_frequency": 0.0006131870904937387,
+          "covered_slides": 11,
+          "slide_coverage": 0.02029520273208618,
+          "covered_patients": 11,
+          "patient_coverage": 0.020560747012495995
+        },
+        {
+          "bank": "v2",
+          "event_id": "sarcomatoid_differentiation",
+          "activated_patches": 2405,
+          "patch_activation_frequency": 0.0009064013138413429,
+          "covered_slides": 7,
+          "slide_coverage": 0.012915128841996193,
+          "covered_patients": 7,
+          "patient_coverage": 0.013084111735224724
+        },
+        {
+          "bank": "v2",
+          "event_id": "rhabdoid_differentiation",
+          "activated_patches": 2728,
+          "patch_activation_frequency": 0.0010281342547386885,
+          "covered_slides": 16,
+          "slide_coverage": 0.029520295560359955,
+          "covered_patients": 16,
+          "patient_coverage": 0.029906542971730232
+        },
+        {
+          "bank": "v2",
+          "event_id": "syncytial_tumor_giant_cells",
+          "activated_patches": 603,
+          "patch_activation_frequency": 0.00022725987946614623,
+          "covered_slides": 2,
+          "slide_coverage": 0.0036900369450449944,
+          "covered_patients": 2,
+          "patient_coverage": 0.003738317871466279
+        },
+        {
+          "bank": "v2",
+          "event_id": "scant_cytoplasm_phenotype",
+          "activated_patches": 392542,
+          "patch_activation_frequency": 0.14794203639030457,
+          "covered_slides": 440,
+          "slide_coverage": 0.8118081092834473,
+          "covered_patients": 434,
+          "patient_coverage": 0.8112149238586426
+        },
+        {
+          "bank": "v2",
+          "event_id": "abundant_eosinophilic_cytoplasm",
+          "activated_patches": 431716,
+          "patch_activation_frequency": 0.16270601749420166,
+          "covered_slides": 475,
+          "slide_coverage": 0.8763837814331055,
+          "covered_patients": 469,
+          "patient_coverage": 0.8766354918479919
+        },
+        {
+          "bank": "v2",
+          "event_id": "cytoplasmic_hyaline_globules",
+          "activated_patches": 289693,
+          "patch_activation_frequency": 0.10918009281158447,
+          "covered_slides": 438,
+          "slide_coverage": 0.8081181049346924,
+          "covered_patients": 431,
+          "patient_coverage": 0.8056074976921082
+        },
+        {
+          "bank": "v2",
+          "event_id": "brisk_mitotic_activity",
+          "activated_patches": 2466,
+          "patch_activation_frequency": 0.0009293911280110478,
+          "covered_slides": 11,
+          "slide_coverage": 0.02029520273208618,
+          "covered_patients": 11,
+          "patient_coverage": 0.020560747012495995
+        },
+        {
+          "bank": "v2",
+          "event_id": "atypical_mitotic_figures",
+          "activated_patches": 190,
+          "patch_activation_frequency": 7.160758832469583e-05,
+          "covered_slides": 1,
+          "slide_coverage": 0.0018450184725224972,
+          "covered_patients": 1,
+          "patient_coverage": 0.0018691589357331395
+        },
+        {
+          "bank": "v2",
+          "event_id": "coagulative_tumor_necrosis",
+          "activated_patches": 37702,
+          "patch_activation_frequency": 0.014209207147359848,
+          "covered_slides": 147,
+          "slide_coverage": 0.2712177038192749,
+          "covered_patients": 146,
+          "patient_coverage": 0.2728971838951111
+        },
+        {
+          "bank": "v2",
+          "event_id": "delicate_capillary_network",
+          "activated_patches": 298961,
+          "patch_activation_frequency": 0.11267303675413132,
+          "covered_slides": 428,
+          "slide_coverage": 0.7896679043769836,
+          "covered_patients": 424,
+          "patient_coverage": 0.7925233840942383
+        },
+        {
+          "bank": "v2",
+          "event_id": "microvascular_tumor_invasion",
+          "activated_patches": 111346,
+          "patch_activation_frequency": 0.04196430742740631,
+          "covered_slides": 418,
+          "slide_coverage": 0.7712177038192749,
+          "covered_patients": 411,
+          "patient_coverage": 0.76822429895401
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "activated_patches": 8071,
+          "patch_activation_frequency": 0.003041815012693405,
+          "covered_slides": 32,
+          "slide_coverage": 0.05904059112071991,
+          "covered_patients": 32,
+          "patient_coverage": 0.059813085943460464
+        },
+        {
+          "bank": "v2",
+          "event_id": "intratumoral_neutrophil_infiltrate",
+          "activated_patches": 52859,
+          "patch_activation_frequency": 0.01992160826921463,
+          "covered_slides": 198,
+          "slide_coverage": 0.36531364917755127,
+          "covered_patients": 197,
+          "patient_coverage": 0.36822429299354553
+        },
+        {
+          "bank": "v2",
+          "event_id": "scar_like_stromal_regression",
+          "activated_patches": 20368,
+          "patch_activation_frequency": 0.007676333654671907,
+          "covered_slides": 111,
+          "slide_coverage": 0.20479704439640045,
+          "covered_patients": 110,
+          "patient_coverage": 0.20560747385025024
+        }
+      ],
+      "within_v2_top_activation_jaccard": [
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.36676878681266556
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.3485666750787464
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.3034086023099619
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.2807622334411653
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.2112161123609705
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.1733175351054555
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.17305854513185737
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.1717165685349512
+        },
+        {
+          "left_event_id": "coagulative_tumor_necrosis",
+          "right_event_id": "intratumoral_neutrophil_infiltrate",
+          "score": 0.16875524295024844
+        },
+        {
+          "left_event_id": "cytoplasmic_hyaline_globules",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.1554556114819798
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.14860515480684455
+        },
+        {
+          "left_event_id": "abundant_eosinophilic_cytoplasm",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.13717497980661036
+        },
+        {
+          "left_event_id": "delicate_capillary_network",
+          "right_event_id": "microvascular_tumor_invasion",
+          "score": 0.1368521674078384
+        },
+        {
+          "left_event_id": "prominent_nucleoli",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.1363640461025065
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "scant_cytoplasm_phenotype",
+          "score": 0.13579271952354455
+        },
+        {
+          "left_event_id": "scant_cytoplasm_phenotype",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.12216348336414656
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "prominent_nucleoli",
+          "score": 0.1196432442081373
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "delicate_capillary_network",
+          "score": 0.11601289629231595
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "cytoplasmic_hyaline_globules",
+          "score": 0.11111417327174716
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.10746592980906702
+        },
+        {
+          "left_event_id": "microcystic_architecture",
+          "right_event_id": "abundant_eosinophilic_cytoplasm",
+          "score": 0.10742483856617924
+        },
+        {
+          "left_event_id": "solid_sheet_architecture",
+          "right_event_id": "prominent_nucleoli",
+          "score": 0.10573780927725672
+        },
+        {
+          "left_event_id": "extreme_nuclear_pleomorphism",
+          "right_event_id": "syncytial_tumor_giant_cells",
+          "score": 0.10177865612648221
+        },
+        {
+          "left_event_id": "extreme_nuclear_pleomorphism",
+          "right_event_id": "rhabdoid_differentiation",
+          "score": 0.1011378002528445
+        },
+        {
+          "left_event_id": "coagulative_tumor_necrosis",
+          "right_event_id": "scar_like_stromal_regression",
+          "score": 0.09995643361809331
+        }
+      ],
+      "v2_nearest_v0_activation": [
+        {
+          "v2_event_id": "abundant_eosinophilic_cytoplasm",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.4731233397631151
+        },
+        {
+          "v2_event_id": "coagulative_tumor_necrosis",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.46958792627007984
+        },
+        {
+          "v2_event_id": "microvascular_tumor_invasion",
+          "v0_event_id": "microvascular_tumor_invasion",
+          "activation_jaccard": 0.46380157513242265
+        },
+        {
+          "v2_event_id": "scant_cytoplasm_phenotype",
+          "v0_event_id": "acinar_tubular_differentiation",
+          "activation_jaccard": 0.36468766363261623
+        },
+        {
+          "v2_event_id": "delicate_capillary_network",
+          "v0_event_id": "fibrous_tumor_pseudocapsule",
+          "activation_jaccard": 0.31307579762129506
+        },
+        {
+          "v2_event_id": "sarcomatoid_differentiation",
+          "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+          "activation_jaccard": 0.278995756718529
+        },
+        {
+          "v2_event_id": "cytoplasmic_hyaline_globules",
+          "v0_event_id": "venous_tumor_thrombus",
+          "activation_jaccard": 0.27602172323258967
+        },
+        {
+          "v2_event_id": "prominent_nucleoli",
+          "v0_event_id": "compact_eosinophilic_tumor_component",
+          "activation_jaccard": 0.27441486314173114
+        },
+        {
+          "v2_event_id": "microcystic_architecture",
+          "v0_event_id": "edematous_myxoid_stroma",
+          "activation_jaccard": 0.2477136144554016
+        },
+        {
+          "v2_event_id": "brisk_mitotic_activity",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.22163546167386783
+        },
+        {
+          "v2_event_id": "intratumoral_neutrophil_infiltrate",
+          "v0_event_id": "coagulative_tumor_necrosis",
+          "activation_jaccard": 0.20404190328686972
+        },
+        {
+          "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+          "v0_event_id": "immune_exclusion_at_tumor_margin",
+          "activation_jaccard": 0.18917179230439135
+        },
+        {
+          "v2_event_id": "scar_like_stromal_regression",
+          "v0_event_id": "hyalinized_fibrotic_stroma",
+          "activation_jaccard": 0.15106987719204162
+        },
+        {
+          "v2_event_id": "rhabdoid_differentiation",
+          "v0_event_id": "rhabdoid_differentiation",
+          "activation_jaccard": 0.14082584461380956
+        },
+        {
+          "v2_event_id": "solid_sheet_architecture",
+          "v0_event_id": "intratumoral_lymphocyte_infiltration",
+          "activation_jaccard": 0.1338879225591772
+        },
+        {
+          "v2_event_id": "tubular_acinar_architecture",
+          "v0_event_id": "renal_parenchymal_infiltration",
+          "activation_jaccard": 0.08632576845733984
+        },
+        {
+          "v2_event_id": "extreme_nuclear_pleomorphism",
+          "v0_event_id": "marked_tumor_cell_pleomorphism",
+          "activation_jaccard": 0.0696240302367217
+        },
+        {
+          "v2_event_id": "papillary_pseudopapillary_architecture",
+          "v0_event_id": "cystic_degenerative_change",
+          "activation_jaccard": 0.06121620053382848
+        },
+        {
+          "v2_event_id": "thick_trabecular_insular_architecture",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.03691564602380542
+        },
+        {
+          "v2_event_id": "syncytial_tumor_giant_cells",
+          "v0_event_id": "marked_tumor_cell_pleomorphism",
+          "activation_jaccard": 0.021736847632048723
+        },
+        {
+          "v2_event_id": "atypical_mitotic_figures",
+          "v0_event_id": "brisk_mitotic_activity",
+          "activation_jaccard": 0.015157256536566882
+        },
+        {
+          "v2_event_id": "compact_small_nest_architecture",
+          "v0_event_id": "pseudocapsule_penetration",
+          "activation_jaccard": 0.0054585152838427945
+        }
+      ]
+    }
+  ],
+  "activation_comparison": {
+    "feature_dir": "/data0/lfy_data/Pathology/CONCH/kirc/pt_files",
+    "threshold_mode": "global",
+    "threshold_label": null,
+    "score_threshold": 0.5,
+    "event_score_thresholds": null,
+    "min_slide_patch_fraction": 0.01,
+    "min_patient_patch_fraction": 0.01,
+    "num_slides": 542,
+    "num_patients": 535,
+    "num_patches": 2653350,
+    "v2_summary": {
+      "min_patch_activation_frequency": 3.6934441595803946e-05,
+      "median_patch_activation_frequency": 0.0035204552114009857,
+      "max_patch_activation_frequency": 0.16270601749420166,
+      "median_patient_coverage": 0.08224298804998398,
+      "max_within_v2_activation_jaccard": 0.36676878681266556
+    },
+    "events": [
+      {
+        "bank": "v0",
+        "event_id": "clear_cell_nested_alveolar_architecture",
+        "activated_patches": 1070484,
+        "patch_activation_frequency": 0.4034461975097656,
+        "covered_slides": 521,
+        "slide_coverage": 0.9612545967102051,
+        "covered_patients": 515,
+        "patient_coverage": 0.9626168012619019
+      },
+      {
+        "bank": "v0",
+        "event_id": "acinar_tubular_differentiation",
+        "activated_patches": 954881,
+        "patch_activation_frequency": 0.3598775267601013,
+        "covered_slides": 527,
+        "slide_coverage": 0.9723247289657593,
+        "covered_patients": 520,
+        "patient_coverage": 0.9719626307487488
+      },
+      {
+        "bank": "v0",
+        "event_id": "papillary_growth_pattern",
+        "activated_patches": 235413,
+        "patch_activation_frequency": 0.08872293680906296,
+        "covered_slides": 409,
+        "slide_coverage": 0.7546125650405884,
+        "covered_patients": 407,
+        "patient_coverage": 0.7607476711273193
+      },
+      {
+        "bank": "v0",
+        "event_id": "compact_eosinophilic_tumor_component",
+        "activated_patches": 422862,
+        "patch_activation_frequency": 0.159369096159935,
+        "covered_slides": 487,
+        "slide_coverage": 0.8985239863395691,
+        "covered_patients": 481,
+        "patient_coverage": 0.8990654349327087
+      },
+      {
+        "bank": "v0",
+        "event_id": "rhabdoid_differentiation",
+        "activated_patches": 17330,
+        "patch_activation_frequency": 0.0065313661471009254,
+        "covered_slides": 72,
+        "slide_coverage": 0.1328413337469101,
+        "covered_patients": 71,
+        "patient_coverage": 0.1327102780342102
+      },
+      {
+        "bank": "v0",
+        "event_id": "sarcomatoid_spindle_cell_transformation",
+        "activated_patches": 8446,
+        "patch_activation_frequency": 0.003183145774528384,
+        "covered_slides": 13,
+        "slide_coverage": 0.02398524060845375,
+        "covered_patients": 13,
+        "patient_coverage": 0.02429906465113163
+      },
+      {
+        "bank": "v0",
+        "event_id": "prominent_nucleolar_morphology",
+        "activated_patches": 1091915,
+        "patch_activation_frequency": 0.41152316331863403,
+        "covered_slides": 524,
+        "slide_coverage": 0.9667896628379822,
+        "covered_patients": 517,
+        "patient_coverage": 0.9663551449775696
+      },
+      {
+        "bank": "v0",
+        "event_id": "marked_tumor_cell_pleomorphism",
+        "activated_patches": 9127,
+        "patch_activation_frequency": 0.0034398024436086416,
+        "covered_slides": 30,
+        "slide_coverage": 0.05535055324435234,
+        "covered_patients": 30,
+        "patient_coverage": 0.05607476457953453
+      },
+      {
+        "bank": "v0",
+        "event_id": "brisk_mitotic_activity",
+        "activated_patches": 5168,
+        "patch_activation_frequency": 0.0019477264722809196,
+        "covered_slides": 20,
+        "slide_coverage": 0.036900367587804794,
+        "covered_patients": 20,
+        "patient_coverage": 0.037383176386356354
+      },
+      {
+        "bank": "v0",
+        "event_id": "atypical_mitotic_figures",
+        "activated_patches": 12423,
+        "patch_activation_frequency": 0.004682005848735571,
+        "covered_slides": 62,
+        "slide_coverage": 0.11439114063978195,
+        "covered_patients": 62,
+        "patient_coverage": 0.115887850522995
+      },
+      {
+        "bank": "v0",
+        "event_id": "coagulative_tumor_necrosis",
+        "activated_patches": 59088,
+        "patch_activation_frequency": 0.02226920612156391,
+        "covered_slides": 198,
+        "slide_coverage": 0.36531364917755127,
+        "covered_patients": 197,
+        "patient_coverage": 0.36822429299354553
+      },
+      {
+        "bank": "v0",
+        "event_id": "intratumoral_hemorrhage",
+        "activated_patches": 100845,
+        "patch_activation_frequency": 0.03800667077302933,
+        "covered_slides": 307,
+        "slide_coverage": 0.5664206743240356,
+        "covered_patients": 305,
+        "patient_coverage": 0.5700934529304504
+      },
+      {
+        "bank": "v0",
+        "event_id": "cystic_degenerative_change",
+        "activated_patches": 8948,
+        "patch_activation_frequency": 0.0033723406959325075,
+        "covered_slides": 55,
+        "slide_coverage": 0.10147601366043091,
+        "covered_patients": 55,
+        "patient_coverage": 0.10280373692512512
+      },
+      {
+        "bank": "v0",
+        "event_id": "delicate_capillary_network",
+        "activated_patches": 1316184,
+        "patch_activation_frequency": 0.49604612588882446,
+        "covered_slides": 532,
+        "slide_coverage": 0.9815497994422913,
+        "covered_patients": 525,
+        "patient_coverage": 0.9813084006309509
+      },
+      {
+        "bank": "v0",
+        "event_id": "microvascular_tumor_invasion",
+        "activated_patches": 56675,
+        "patch_activation_frequency": 0.021359790116548538,
+        "covered_slides": 294,
+        "slide_coverage": 0.5424354076385498,
+        "covered_patients": 290,
+        "patient_coverage": 0.5420560836791992
+      },
+      {
+        "bank": "v0",
+        "event_id": "venous_tumor_thrombus",
+        "activated_patches": 242491,
+        "patch_activation_frequency": 0.09139050543308258,
+        "covered_slides": 485,
+        "slide_coverage": 0.8948339223861694,
+        "covered_patients": 478,
+        "patient_coverage": 0.8934579491615295
+      },
+      {
+        "bank": "v0",
+        "event_id": "fibrous_tumor_pseudocapsule",
+        "activated_patches": 257468,
+        "patch_activation_frequency": 0.09703506529331207,
+        "covered_slides": 452,
+        "slide_coverage": 0.8339483141899109,
+        "covered_patients": 446,
+        "patient_coverage": 0.8336448669433594
+      },
+      {
+        "bank": "v0",
+        "event_id": "pseudocapsule_penetration",
+        "activated_patches": 823,
+        "patch_activation_frequency": 0.00031017392757348716,
+        "covered_slides": 1,
+        "slide_coverage": 0.0018450184725224972,
+        "covered_patients": 0,
+        "patient_coverage": 0.0
+      },
+      {
+        "bank": "v0",
+        "event_id": "renal_parenchymal_infiltration",
+        "activated_patches": 6259,
+        "patch_activation_frequency": 0.002358904806897044,
+        "covered_slides": 27,
+        "slide_coverage": 0.049815498292446136,
+        "covered_patients": 27,
+        "patient_coverage": 0.05046728998422623
+      },
+      {
+        "bank": "v0",
+        "event_id": "perinephric_adipose_invasion",
+        "activated_patches": 734,
+        "patch_activation_frequency": 0.0002766314137261361,
+        "covered_slides": 1,
+        "slide_coverage": 0.0018450184725224972,
+        "covered_patients": 1,
+        "patient_coverage": 0.0018691589357331395
+      },
+      {
+        "bank": "v0",
+        "event_id": "renal_sinus_invasion",
+        "activated_patches": 1322,
+        "patch_activation_frequency": 0.000498238077852875,
+        "covered_slides": 0,
+        "slide_coverage": 0.0,
+        "covered_patients": 0,
+        "patient_coverage": 0.0
+      },
+      {
+        "bank": "v0",
+        "event_id": "infiltrative_small_nests_and_cords",
+        "activated_patches": 2017,
+        "patch_activation_frequency": 0.0007601710967719555,
+        "covered_slides": 7,
+        "slide_coverage": 0.012915128841996193,
+        "covered_patients": 7,
+        "patient_coverage": 0.013084111735224724
+      },
+      {
+        "bank": "v0",
+        "event_id": "tumor_budding_at_invasive_front",
+        "activated_patches": 2275,
+        "patch_activation_frequency": 0.0008574067032895982,
+        "covered_slides": 9,
+        "slide_coverage": 0.016605166718363762,
+        "covered_patients": 9,
+        "patient_coverage": 0.01682242937386036
+      },
+      {
+        "bank": "v0",
+        "event_id": "intratumoral_lymphocyte_infiltration",
+        "activated_patches": 75053,
+        "patch_activation_frequency": 0.028286129236221313,
+        "covered_slides": 254,
+        "slide_coverage": 0.468634694814682,
+        "covered_patients": 253,
+        "patient_coverage": 0.4728972017765045
+      },
+      {
+        "bank": "v0",
+        "event_id": "peritumoral_lymphoid_aggregates",
+        "activated_patches": 2241,
+        "patch_activation_frequency": 0.0008445926941931248,
+        "covered_slides": 3,
+        "slide_coverage": 0.0055350554175674915,
+        "covered_patients": 3,
+        "patient_coverage": 0.005607476457953453
+      },
+      {
+        "bank": "v0",
+        "event_id": "immune_exclusion_at_tumor_margin",
+        "activated_patches": 8556,
+        "patch_activation_frequency": 0.0032246029004454613,
+        "covered_slides": 41,
+        "slide_coverage": 0.07564575970172882,
+        "covered_patients": 41,
+        "patient_coverage": 0.07663551717996597
+      },
+      {
+        "bank": "v0",
+        "event_id": "neutrophil_rich_inflammation",
+        "activated_patches": 3436,
+        "patch_activation_frequency": 0.0012949667870998383,
+        "covered_slides": 16,
+        "slide_coverage": 0.029520295560359955,
+        "covered_patients": 16,
+        "patient_coverage": 0.029906542971730232
+      },
+      {
+        "bank": "v0",
+        "event_id": "desmoplastic_stromal_response",
+        "activated_patches": 4945,
+        "patch_activation_frequency": 0.001863681711256504,
+        "covered_slides": 24,
+        "slide_coverage": 0.04428044334053993,
+        "covered_patients": 23,
+        "patient_coverage": 0.042990654706954956
+      },
+      {
+        "bank": "v0",
+        "event_id": "hyalinized_fibrotic_stroma",
+        "activated_patches": 108416,
+        "patch_activation_frequency": 0.040860045701265335,
+        "covered_slides": 377,
+        "slide_coverage": 0.6955719590187073,
+        "covered_patients": 375,
+        "patient_coverage": 0.7009345889091492
+      },
+      {
+        "bank": "v0",
+        "event_id": "edematous_myxoid_stroma",
+        "activated_patches": 381486,
+        "patch_activation_frequency": 0.14377522468566895,
+        "covered_slides": 496,
+        "slide_coverage": 0.9151291251182556,
+        "covered_patients": 490,
+        "patient_coverage": 0.9158878326416016
+      },
+      {
+        "bank": "v2",
+        "event_id": "compact_small_nest_architecture",
+        "activated_patches": 98,
+        "patch_activation_frequency": 3.6934441595803946e-05,
+        "covered_slides": 0,
+        "slide_coverage": 0.0,
+        "covered_patients": 0,
+        "patient_coverage": 0.0
+      },
+      {
+        "bank": "v2",
+        "event_id": "thick_trabecular_insular_architecture",
+        "activated_patches": 843,
+        "patch_activation_frequency": 0.0003177115577273071,
+        "covered_slides": 3,
+        "slide_coverage": 0.0055350554175674915,
+        "covered_patients": 3,
+        "patient_coverage": 0.005607476457953453
+      },
+      {
+        "bank": "v2",
+        "event_id": "solid_sheet_architecture",
+        "activated_patches": 74881,
+        "patch_activation_frequency": 0.028221305459737778,
+        "covered_slides": 238,
+        "slide_coverage": 0.43911439180374146,
+        "covered_patients": 238,
+        "patient_coverage": 0.4448598027229309
+      },
+      {
+        "bank": "v2",
+        "event_id": "microcystic_architecture",
+        "activated_patches": 113477,
+        "patch_activation_frequency": 0.042767446488142014,
+        "covered_slides": 347,
+        "slide_coverage": 0.6402214169502258,
+        "covered_patients": 344,
+        "patient_coverage": 0.6429906487464905
+      },
+      {
+        "bank": "v2",
+        "event_id": "tubular_acinar_architecture",
+        "activated_patches": 8867,
+        "patch_activation_frequency": 0.0033418131060898304,
+        "covered_slides": 34,
+        "slide_coverage": 0.06273062527179718,
+        "covered_patients": 31,
+        "patient_coverage": 0.0579439252614975
+      },
+      {
+        "bank": "v2",
+        "event_id": "papillary_pseudopapillary_architecture",
+        "activated_patches": 9341,
+        "patch_activation_frequency": 0.0035204552114009857,
+        "covered_slides": 45,
+        "slide_coverage": 0.08302582800388336,
+        "covered_patients": 44,
+        "patient_coverage": 0.08224298804998398
+      },
+      {
+        "bank": "v2",
+        "event_id": "prominent_nucleoli",
+        "activated_patches": 237773,
+        "patch_activation_frequency": 0.08961237967014313,
+        "covered_slides": 441,
+        "slide_coverage": 0.8136531114578247,
+        "covered_patients": 435,
+        "patient_coverage": 0.8130841255187988
+      },
+      {
+        "bank": "v2",
+        "event_id": "extreme_nuclear_pleomorphism",
+        "activated_patches": 1627,
+        "patch_activation_frequency": 0.0006131870904937387,
+        "covered_slides": 11,
+        "slide_coverage": 0.02029520273208618,
+        "covered_patients": 11,
+        "patient_coverage": 0.020560747012495995
+      },
+      {
+        "bank": "v2",
+        "event_id": "sarcomatoid_differentiation",
+        "activated_patches": 2405,
+        "patch_activation_frequency": 0.0009064013138413429,
+        "covered_slides": 7,
+        "slide_coverage": 0.012915128841996193,
+        "covered_patients": 7,
+        "patient_coverage": 0.013084111735224724
+      },
+      {
+        "bank": "v2",
+        "event_id": "rhabdoid_differentiation",
+        "activated_patches": 2728,
+        "patch_activation_frequency": 0.0010281342547386885,
+        "covered_slides": 16,
+        "slide_coverage": 0.029520295560359955,
+        "covered_patients": 16,
+        "patient_coverage": 0.029906542971730232
+      },
+      {
+        "bank": "v2",
+        "event_id": "syncytial_tumor_giant_cells",
+        "activated_patches": 603,
+        "patch_activation_frequency": 0.00022725987946614623,
+        "covered_slides": 2,
+        "slide_coverage": 0.0036900369450449944,
+        "covered_patients": 2,
+        "patient_coverage": 0.003738317871466279
+      },
+      {
+        "bank": "v2",
+        "event_id": "scant_cytoplasm_phenotype",
+        "activated_patches": 392542,
+        "patch_activation_frequency": 0.14794203639030457,
+        "covered_slides": 440,
+        "slide_coverage": 0.8118081092834473,
+        "covered_patients": 434,
+        "patient_coverage": 0.8112149238586426
+      },
+      {
+        "bank": "v2",
+        "event_id": "abundant_eosinophilic_cytoplasm",
+        "activated_patches": 431716,
+        "patch_activation_frequency": 0.16270601749420166,
+        "covered_slides": 475,
+        "slide_coverage": 0.8763837814331055,
+        "covered_patients": 469,
+        "patient_coverage": 0.8766354918479919
+      },
+      {
+        "bank": "v2",
+        "event_id": "cytoplasmic_hyaline_globules",
+        "activated_patches": 289693,
+        "patch_activation_frequency": 0.10918009281158447,
+        "covered_slides": 438,
+        "slide_coverage": 0.8081181049346924,
+        "covered_patients": 431,
+        "patient_coverage": 0.8056074976921082
+      },
+      {
+        "bank": "v2",
+        "event_id": "brisk_mitotic_activity",
+        "activated_patches": 2466,
+        "patch_activation_frequency": 0.0009293911280110478,
+        "covered_slides": 11,
+        "slide_coverage": 0.02029520273208618,
+        "covered_patients": 11,
+        "patient_coverage": 0.020560747012495995
+      },
+      {
+        "bank": "v2",
+        "event_id": "atypical_mitotic_figures",
+        "activated_patches": 190,
+        "patch_activation_frequency": 7.160758832469583e-05,
+        "covered_slides": 1,
+        "slide_coverage": 0.0018450184725224972,
+        "covered_patients": 1,
+        "patient_coverage": 0.0018691589357331395
+      },
+      {
+        "bank": "v2",
+        "event_id": "coagulative_tumor_necrosis",
+        "activated_patches": 37702,
+        "patch_activation_frequency": 0.014209207147359848,
+        "covered_slides": 147,
+        "slide_coverage": 0.2712177038192749,
+        "covered_patients": 146,
+        "patient_coverage": 0.2728971838951111
+      },
+      {
+        "bank": "v2",
+        "event_id": "delicate_capillary_network",
+        "activated_patches": 298961,
+        "patch_activation_frequency": 0.11267303675413132,
+        "covered_slides": 428,
+        "slide_coverage": 0.7896679043769836,
+        "covered_patients": 424,
+        "patient_coverage": 0.7925233840942383
+      },
+      {
+        "bank": "v2",
+        "event_id": "microvascular_tumor_invasion",
+        "activated_patches": 111346,
+        "patch_activation_frequency": 0.04196430742740631,
+        "covered_slides": 418,
+        "slide_coverage": 0.7712177038192749,
+        "covered_patients": 411,
+        "patient_coverage": 0.76822429895401
+      },
+      {
+        "bank": "v2",
+        "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+        "activated_patches": 8071,
+        "patch_activation_frequency": 0.003041815012693405,
+        "covered_slides": 32,
+        "slide_coverage": 0.05904059112071991,
+        "covered_patients": 32,
+        "patient_coverage": 0.059813085943460464
+      },
+      {
+        "bank": "v2",
+        "event_id": "intratumoral_neutrophil_infiltrate",
+        "activated_patches": 52859,
+        "patch_activation_frequency": 0.01992160826921463,
+        "covered_slides": 198,
+        "slide_coverage": 0.36531364917755127,
+        "covered_patients": 197,
+        "patient_coverage": 0.36822429299354553
+      },
+      {
+        "bank": "v2",
+        "event_id": "scar_like_stromal_regression",
+        "activated_patches": 20368,
+        "patch_activation_frequency": 0.007676333654671907,
+        "covered_slides": 111,
+        "slide_coverage": 0.20479704439640045,
+        "covered_patients": 110,
+        "patient_coverage": 0.20560747385025024
+      }
+    ],
+    "within_v2_top_activation_jaccard": [
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.36676878681266556
+      },
+      {
+        "left_event_id": "abundant_eosinophilic_cytoplasm",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.3485666750787464
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.3034086023099619
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.2807622334411653
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.2112161123609705
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.1733175351054555
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.17305854513185737
+      },
+      {
+        "left_event_id": "cytoplasmic_hyaline_globules",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.1717165685349512
+      },
+      {
+        "left_event_id": "coagulative_tumor_necrosis",
+        "right_event_id": "intratumoral_neutrophil_infiltrate",
+        "score": 0.16875524295024844
+      },
+      {
+        "left_event_id": "cytoplasmic_hyaline_globules",
+        "right_event_id": "microvascular_tumor_invasion",
+        "score": 0.1554556114819798
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.14860515480684455
+      },
+      {
+        "left_event_id": "abundant_eosinophilic_cytoplasm",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.13717497980661036
+      },
+      {
+        "left_event_id": "delicate_capillary_network",
+        "right_event_id": "microvascular_tumor_invasion",
+        "score": 0.1368521674078384
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.1363640461025065
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.13579271952354455
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.12216348336414656
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "prominent_nucleoli",
+        "score": 0.1196432442081373
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.11601289629231595
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.11111417327174716
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.10746592980906702
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.10742483856617924
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "prominent_nucleoli",
+        "score": 0.10573780927725672
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "syncytial_tumor_giant_cells",
+        "score": 0.10177865612648221
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "rhabdoid_differentiation",
+        "score": 0.1011378002528445
+      },
+      {
+        "left_event_id": "coagulative_tumor_necrosis",
+        "right_event_id": "scar_like_stromal_regression",
+        "score": 0.09995643361809331
+      }
+    ],
+    "v2_nearest_v0_activation": [
+      {
+        "v2_event_id": "abundant_eosinophilic_cytoplasm",
+        "v0_event_id": "compact_eosinophilic_tumor_component",
+        "activation_jaccard": 0.4731233397631151
+      },
+      {
+        "v2_event_id": "coagulative_tumor_necrosis",
+        "v0_event_id": "coagulative_tumor_necrosis",
+        "activation_jaccard": 0.46958792627007984
+      },
+      {
+        "v2_event_id": "microvascular_tumor_invasion",
+        "v0_event_id": "microvascular_tumor_invasion",
+        "activation_jaccard": 0.46380157513242265
+      },
+      {
+        "v2_event_id": "scant_cytoplasm_phenotype",
+        "v0_event_id": "acinar_tubular_differentiation",
+        "activation_jaccard": 0.36468766363261623
+      },
+      {
+        "v2_event_id": "delicate_capillary_network",
+        "v0_event_id": "fibrous_tumor_pseudocapsule",
+        "activation_jaccard": 0.31307579762129506
+      },
+      {
+        "v2_event_id": "sarcomatoid_differentiation",
+        "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+        "activation_jaccard": 0.278995756718529
+      },
+      {
+        "v2_event_id": "cytoplasmic_hyaline_globules",
+        "v0_event_id": "venous_tumor_thrombus",
+        "activation_jaccard": 0.27602172323258967
+      },
+      {
+        "v2_event_id": "prominent_nucleoli",
+        "v0_event_id": "compact_eosinophilic_tumor_component",
+        "activation_jaccard": 0.27441486314173114
+      },
+      {
+        "v2_event_id": "microcystic_architecture",
+        "v0_event_id": "edematous_myxoid_stroma",
+        "activation_jaccard": 0.2477136144554016
+      },
+      {
+        "v2_event_id": "brisk_mitotic_activity",
+        "v0_event_id": "brisk_mitotic_activity",
+        "activation_jaccard": 0.22163546167386783
+      },
+      {
+        "v2_event_id": "intratumoral_neutrophil_infiltrate",
+        "v0_event_id": "coagulative_tumor_necrosis",
+        "activation_jaccard": 0.20404190328686972
+      },
+      {
+        "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+        "v0_event_id": "immune_exclusion_at_tumor_margin",
+        "activation_jaccard": 0.18917179230439135
+      },
+      {
+        "v2_event_id": "scar_like_stromal_regression",
+        "v0_event_id": "hyalinized_fibrotic_stroma",
+        "activation_jaccard": 0.15106987719204162
+      },
+      {
+        "v2_event_id": "rhabdoid_differentiation",
+        "v0_event_id": "rhabdoid_differentiation",
+        "activation_jaccard": 0.14082584461380956
+      },
+      {
+        "v2_event_id": "solid_sheet_architecture",
+        "v0_event_id": "intratumoral_lymphocyte_infiltration",
+        "activation_jaccard": 0.1338879225591772
+      },
+      {
+        "v2_event_id": "tubular_acinar_architecture",
+        "v0_event_id": "renal_parenchymal_infiltration",
+        "activation_jaccard": 0.08632576845733984
+      },
+      {
+        "v2_event_id": "extreme_nuclear_pleomorphism",
+        "v0_event_id": "marked_tumor_cell_pleomorphism",
+        "activation_jaccard": 0.0696240302367217
+      },
+      {
+        "v2_event_id": "papillary_pseudopapillary_architecture",
+        "v0_event_id": "cystic_degenerative_change",
+        "activation_jaccard": 0.06121620053382848
+      },
+      {
+        "v2_event_id": "thick_trabecular_insular_architecture",
+        "v0_event_id": "brisk_mitotic_activity",
+        "activation_jaccard": 0.03691564602380542
+      },
+      {
+        "v2_event_id": "syncytial_tumor_giant_cells",
+        "v0_event_id": "marked_tumor_cell_pleomorphism",
+        "activation_jaccard": 0.021736847632048723
+      },
+      {
+        "v2_event_id": "atypical_mitotic_figures",
+        "v0_event_id": "brisk_mitotic_activity",
+        "activation_jaccard": 0.015157256536566882
+      },
+      {
+        "v2_event_id": "compact_small_nest_architecture",
+        "v0_event_id": "pseudocapsule_penetration",
+        "activation_jaccard": 0.0054585152838427945
+      }
+    ]
+  },
+  "event_quantile_calibration": {
+    "quantile": 0.95,
+    "sample_per_slide": 256,
+    "sampled_patches": 138752,
+    "sampling": "deterministic evenly spaced patches per slide"
+  },
+  "event_quantile_activation": {
+    "feature_dir": "/data0/lfy_data/Pathology/CONCH/kirc/pt_files",
+    "threshold_mode": "per_event",
+    "threshold_label": "per_event_q0.950",
+    "score_threshold": null,
+    "event_score_thresholds": {
+      "clear_cell_nested_alveolar_architecture": 0.6238352656364441,
+      "acinar_tubular_differentiation": 0.5924199819564819,
+      "papillary_growth_pattern": 0.5408255457878113,
+      "compact_eosinophilic_tumor_component": 0.5473969578742981,
+      "rhabdoid_differentiation": 0.36408770084381104,
+      "sarcomatoid_spindle_cell_transformation": 0.3117704689502716,
+      "prominent_nucleolar_morphology": 0.5881182551383972,
+      "marked_tumor_cell_pleomorphism": 0.40160828828811646,
+      "brisk_mitotic_activity": 0.3787103295326233,
+      "atypical_mitotic_figures": 0.2905699908733368,
+      "coagulative_tumor_necrosis": 0.4387357532978058,
+      "intratumoral_hemorrhage": 0.4865500032901764,
+      "cystic_degenerative_change": 0.40951454639434814,
+      "delicate_capillary_network": 0.5371912717819214,
+      "microvascular_tumor_invasion": 0.4904763698577881,
+      "venous_tumor_thrombus": 0.533179521560669,
+      "fibrous_tumor_pseudocapsule": 0.5283865332603455,
+      "pseudocapsule_penetration": 0.36546775698661804,
+      "renal_parenchymal_infiltration": 0.41016334295272827,
+      "perinephric_adipose_invasion": 0.356143593788147,
+      "renal_sinus_invasion": 0.34354519844055176,
+      "infiltrative_small_nests_and_cords": 0.3801994025707245,
+      "tumor_budding_at_invasive_front": 0.3102808892726898,
+      "intratumoral_lymphocyte_infiltration": 0.4725632071495056,
+      "peritumoral_lymphoid_aggregates": 0.3062223494052887,
+      "immune_exclusion_at_tumor_margin": 0.3824165463447571,
+      "neutrophil_rich_inflammation": 0.3546581566333771,
+      "desmoplastic_stromal_response": 0.3540724813938141,
+      "hyalinized_fibrotic_stroma": 0.49034860730171204,
+      "edematous_myxoid_stroma": 0.5736512541770935,
+      "compact_small_nest_architecture": 0.3351001739501953,
+      "thick_trabecular_insular_architecture": 0.34249693155288696,
+      "solid_sheet_architecture": 0.48407602310180664,
+      "microcystic_architecture": 0.5008288025856018,
+      "tubular_acinar_architecture": 0.4085627794265747,
+      "papillary_pseudopapillary_architecture": 0.3950565457344055,
+      "prominent_nucleoli": 0.5227914452552795,
+      "extreme_nuclear_pleomorphism": 0.33067965507507324,
+      "sarcomatoid_differentiation": 0.25458449125289917,
+      "syncytial_tumor_giant_cells": 0.2664888799190521,
+      "scant_cytoplasm_phenotype": 0.5381324887275696,
+      "abundant_eosinophilic_cytoplasm": 0.560472309589386,
+      "cytoplasmic_hyaline_globules": 0.5399132370948792,
+      "intratumoral_lymphoplasmacytic_infiltrate": 0.3722684979438782,
+      "intratumoral_neutrophil_infiltrate": 0.452874094247818,
+      "scar_like_stromal_regression": 0.4205187261104584
+    },
+    "min_slide_patch_fraction": 0.01,
+    "min_patient_patch_fraction": 0.01,
+    "num_slides": 542,
+    "num_patients": 535,
+    "num_patches": 2653350,
+    "v2_summary": {
+      "min_patch_activation_frequency": 0.040374621748924255,
+      "median_patch_activation_frequency": 0.0502210408449173,
+      "max_patch_activation_frequency": 0.05571221187710762,
+      "median_patient_coverage": 0.6186915636062622,
+      "max_within_v2_activation_jaccard": 0.3751675063626448
+    },
+    "events": [
+      {
+        "bank": "v0",
+        "event_id": "clear_cell_nested_alveolar_architecture",
+        "activated_patches": 119279,
+        "patch_activation_frequency": 0.04495411366224289,
+        "covered_slides": 338,
+        "slide_coverage": 0.6236162185668945,
+        "covered_patients": 336,
+        "patient_coverage": 0.6280373930931091
+      },
+      {
+        "bank": "v0",
+        "event_id": "acinar_tubular_differentiation",
+        "activated_patches": 125004,
+        "patch_activation_frequency": 0.047111764550209045,
+        "covered_slides": 354,
+        "slide_coverage": 0.6531365513801575,
+        "covered_patients": 351,
+        "patient_coverage": 0.6560747623443604
+      },
+      {
+        "bank": "v0",
+        "event_id": "papillary_growth_pattern",
+        "activated_patches": 119835,
+        "patch_activation_frequency": 0.04516366124153137,
+        "covered_slides": 280,
+        "slide_coverage": 0.5166051387786865,
+        "covered_patients": 277,
+        "patient_coverage": 0.517756998538971
+      },
+      {
+        "bank": "v0",
+        "event_id": "compact_eosinophilic_tumor_component",
+        "activated_patches": 122513,
+        "patch_activation_frequency": 0.04617295041680336,
+        "covered_slides": 329,
+        "slide_coverage": 0.607011079788208,
+        "covered_patients": 327,
+        "patient_coverage": 0.6112149357795715
+      },
+      {
+        "bank": "v0",
+        "event_id": "rhabdoid_differentiation",
+        "activated_patches": 124712,
+        "patch_activation_frequency": 0.04700171574950218,
+        "covered_slides": 275,
+        "slide_coverage": 0.5073800683021545,
+        "covered_patients": 271,
+        "patient_coverage": 0.5065420269966125
+      },
+      {
+        "bank": "v0",
+        "event_id": "sarcomatoid_spindle_cell_transformation",
+        "activated_patches": 141473,
+        "patch_activation_frequency": 0.05331863462924957,
+        "covered_slides": 264,
+        "slide_coverage": 0.48708486557006836,
+        "covered_patients": 262,
+        "patient_coverage": 0.4897196292877197
+      },
+      {
+        "bank": "v0",
+        "event_id": "prominent_nucleolar_morphology",
+        "activated_patches": 146918,
+        "patch_activation_frequency": 0.0553707592189312,
+        "covered_slides": 364,
+        "slide_coverage": 0.6715866923332214,
+        "covered_patients": 359,
+        "patient_coverage": 0.6710280179977417
+      },
+      {
+        "bank": "v0",
+        "event_id": "marked_tumor_cell_pleomorphism",
+        "activated_patches": 151361,
+        "patch_activation_frequency": 0.05704524368047714,
+        "covered_slides": 273,
+        "slide_coverage": 0.5036900639533997,
+        "covered_patients": 273,
+        "patient_coverage": 0.5102803707122803
+      },
+      {
+        "bank": "v0",
+        "event_id": "brisk_mitotic_activity",
+        "activated_patches": 133896,
+        "patch_activation_frequency": 0.0504629984498024,
+        "covered_slides": 353,
+        "slide_coverage": 0.6512914896011353,
+        "covered_patients": 351,
+        "patient_coverage": 0.6560747623443604
+      },
+      {
+        "bank": "v0",
+        "event_id": "atypical_mitotic_figures",
+        "activated_patches": 131858,
+        "patch_activation_frequency": 0.04969491437077522,
+        "covered_slides": 343,
+        "slide_coverage": 0.6328413486480713,
+        "covered_patients": 338,
+        "patient_coverage": 0.6317756772041321
+      },
+      {
+        "bank": "v0",
+        "event_id": "coagulative_tumor_necrosis",
+        "activated_patches": 135946,
+        "patch_activation_frequency": 0.051235608756542206,
+        "covered_slides": 352,
+        "slide_coverage": 0.6494464874267578,
+        "covered_patients": 349,
+        "patient_coverage": 0.6523364782333374
+      },
+      {
+        "bank": "v0",
+        "event_id": "intratumoral_hemorrhage",
+        "activated_patches": 123730,
+        "patch_activation_frequency": 0.04663161560893059,
+        "covered_slides": 339,
+        "slide_coverage": 0.6254612803459167,
+        "covered_patients": 336,
+        "patient_coverage": 0.6280373930931091
+      },
+      {
+        "bank": "v0",
+        "event_id": "cystic_degenerative_change",
+        "activated_patches": 111921,
+        "patch_activation_frequency": 0.04218101501464844,
+        "covered_slides": 407,
+        "slide_coverage": 0.7509225010871887,
+        "covered_patients": 402,
+        "patient_coverage": 0.7514018416404724
+      },
+      {
+        "bank": "v0",
+        "event_id": "delicate_capillary_network",
+        "activated_patches": 133723,
+        "patch_activation_frequency": 0.05039779841899872,
+        "covered_slides": 315,
+        "slide_coverage": 0.5811808109283447,
+        "covered_patients": 315,
+        "patient_coverage": 0.5887850522994995
+      },
+      {
+        "bank": "v0",
+        "event_id": "microvascular_tumor_invasion",
+        "activated_patches": 132333,
+        "patch_activation_frequency": 0.04987393319606781,
+        "covered_slides": 437,
+        "slide_coverage": 0.8062730431556702,
+        "covered_patients": 430,
+        "patient_coverage": 0.8037382960319519
+      },
+      {
+        "bank": "v0",
+        "event_id": "venous_tumor_thrombus",
+        "activated_patches": 135644,
+        "patch_activation_frequency": 0.0511217899620533,
+        "covered_slides": 419,
+        "slide_coverage": 0.7730627059936523,
+        "covered_patients": 414,
+        "patient_coverage": 0.7738317847251892
+      },
+      {
+        "bank": "v0",
+        "event_id": "fibrous_tumor_pseudocapsule",
+        "activated_patches": 136247,
+        "patch_activation_frequency": 0.05134904757142067,
+        "covered_slides": 390,
+        "slide_coverage": 0.7195571660995483,
+        "covered_patients": 387,
+        "patient_coverage": 0.7233644723892212
+      },
+      {
+        "bank": "v0",
+        "event_id": "pseudocapsule_penetration",
+        "activated_patches": 122875,
+        "patch_activation_frequency": 0.04630938172340393,
+        "covered_slides": 424,
+        "slide_coverage": 0.7822878360748291,
+        "covered_patients": 418,
+        "patient_coverage": 0.7813084125518799
+      },
+      {
+        "bank": "v0",
+        "event_id": "renal_parenchymal_infiltration",
+        "activated_patches": 146705,
+        "patch_activation_frequency": 0.05529048293828964,
+        "covered_slides": 372,
+        "slide_coverage": 0.6863468885421753,
+        "covered_patients": 368,
+        "patient_coverage": 0.6878504753112793
+      },
+      {
+        "bank": "v0",
+        "event_id": "perinephric_adipose_invasion",
+        "activated_patches": 116924,
+        "patch_activation_frequency": 0.04406655579805374,
+        "covered_slides": 404,
+        "slide_coverage": 0.7453874349594116,
+        "covered_patients": 401,
+        "patient_coverage": 0.7495326995849609
+      },
+      {
+        "bank": "v0",
+        "event_id": "renal_sinus_invasion",
+        "activated_patches": 138443,
+        "patch_activation_frequency": 0.05217668414115906,
+        "covered_slides": 457,
+        "slide_coverage": 0.8431734442710876,
+        "covered_patients": 451,
+        "patient_coverage": 0.8429906368255615
+      },
+      {
+        "bank": "v0",
+        "event_id": "infiltrative_small_nests_and_cords",
+        "activated_patches": 141028,
+        "patch_activation_frequency": 0.05315092206001282,
+        "covered_slides": 408,
+        "slide_coverage": 0.7527675032615662,
+        "covered_patients": 402,
+        "patient_coverage": 0.7514018416404724
+      },
+      {
+        "bank": "v0",
+        "event_id": "tumor_budding_at_invasive_front",
+        "activated_patches": 129552,
+        "patch_activation_frequency": 0.04882582277059555,
+        "covered_slides": 429,
+        "slide_coverage": 0.7915129065513611,
+        "covered_patients": 425,
+        "patient_coverage": 0.7943925261497498
+      },
+      {
+        "bank": "v0",
+        "event_id": "intratumoral_lymphocyte_infiltration",
+        "activated_patches": 145177,
+        "patch_activation_frequency": 0.05471460521221161,
+        "covered_slides": 356,
+        "slide_coverage": 0.6568265557289124,
+        "covered_patients": 356,
+        "patient_coverage": 0.6654205322265625
+      },
+      {
+        "bank": "v0",
+        "event_id": "peritumoral_lymphoid_aggregates",
+        "activated_patches": 132809,
+        "patch_activation_frequency": 0.05005332827568054,
+        "covered_slides": 455,
+        "slide_coverage": 0.839483380317688,
+        "covered_patients": 450,
+        "patient_coverage": 0.84112149477005
+      },
+      {
+        "bank": "v0",
+        "event_id": "immune_exclusion_at_tumor_margin",
+        "activated_patches": 136827,
+        "patch_activation_frequency": 0.05156764015555382,
+        "covered_slides": 408,
+        "slide_coverage": 0.7527675032615662,
+        "covered_patients": 406,
+        "patient_coverage": 0.7588785290718079
+      },
+      {
+        "bank": "v0",
+        "event_id": "neutrophil_rich_inflammation",
+        "activated_patches": 131027,
+        "patch_activation_frequency": 0.04938172549009323,
+        "covered_slides": 356,
+        "slide_coverage": 0.6568265557289124,
+        "covered_patients": 354,
+        "patient_coverage": 0.6616822481155396
+      },
+      {
+        "bank": "v0",
+        "event_id": "desmoplastic_stromal_response",
+        "activated_patches": 135948,
+        "patch_activation_frequency": 0.051236361265182495,
+        "covered_slides": 437,
+        "slide_coverage": 0.8062730431556702,
+        "covered_patients": 431,
+        "patient_coverage": 0.8056074976921082
+      },
+      {
+        "bank": "v0",
+        "event_id": "hyalinized_fibrotic_stroma",
+        "activated_patches": 133992,
+        "patch_activation_frequency": 0.05049917846918106,
+        "covered_slides": 406,
+        "slide_coverage": 0.7490774989128113,
+        "covered_patients": 404,
+        "patient_coverage": 0.7551401853561401
+      },
+      {
+        "bank": "v0",
+        "event_id": "edematous_myxoid_stroma",
+        "activated_patches": 110771,
+        "patch_activation_frequency": 0.04174760356545448,
+        "covered_slides": 331,
+        "slide_coverage": 0.6107010841369629,
+        "covered_patients": 328,
+        "patient_coverage": 0.6130841374397278
+      },
+      {
+        "bank": "v2",
+        "event_id": "compact_small_nest_architecture",
+        "activated_patches": 133254,
+        "patch_activation_frequency": 0.0502210408449173,
+        "covered_slides": 385,
+        "slide_coverage": 0.7103320956230164,
+        "covered_patients": 383,
+        "patient_coverage": 0.7158878445625305
+      },
+      {
+        "bank": "v2",
+        "event_id": "thick_trabecular_insular_architecture",
+        "activated_patches": 137522,
+        "patch_activation_frequency": 0.05182957276701927,
+        "covered_slides": 342,
+        "slide_coverage": 0.6309962868690491,
+        "covered_patients": 339,
+        "patient_coverage": 0.6336448788642883
+      },
+      {
+        "bank": "v2",
+        "event_id": "solid_sheet_architecture",
+        "activated_patches": 132320,
+        "patch_activation_frequency": 0.04986903443932533,
+        "covered_slides": 336,
+        "slide_coverage": 0.6199262142181396,
+        "covered_patients": 334,
+        "patient_coverage": 0.6242990493774414
+      },
+      {
+        "bank": "v2",
+        "event_id": "microcystic_architecture",
+        "activated_patches": 110924,
+        "patch_activation_frequency": 0.04180526360869408,
+        "covered_slides": 345,
+        "slide_coverage": 0.6365313529968262,
+        "covered_patients": 342,
+        "patient_coverage": 0.6392523646354675
+      },
+      {
+        "bank": "v2",
+        "event_id": "tubular_acinar_architecture",
+        "activated_patches": 147824,
+        "patch_activation_frequency": 0.05571221187710762,
+        "covered_slides": 329,
+        "slide_coverage": 0.607011079788208,
+        "covered_patients": 324,
+        "patient_coverage": 0.6056074500083923
+      },
+      {
+        "bank": "v2",
+        "event_id": "papillary_pseudopapillary_architecture",
+        "activated_patches": 107128,
+        "patch_activation_frequency": 0.040374621748924255,
+        "covered_slides": 298,
+        "slide_coverage": 0.5498154759407043,
+        "covered_patients": 292,
+        "patient_coverage": 0.5457943677902222
+      },
+      {
+        "bank": "v2",
+        "event_id": "prominent_nucleoli",
+        "activated_patches": 132632,
+        "patch_activation_frequency": 0.049986619502305984,
+        "covered_slides": 372,
+        "slide_coverage": 0.6863468885421753,
+        "covered_patients": 366,
+        "patient_coverage": 0.6841121315956116
+      },
+      {
+        "bank": "v2",
+        "event_id": "extreme_nuclear_pleomorphism",
+        "activated_patches": 129714,
+        "patch_activation_frequency": 0.04888688027858734,
+        "covered_slides": 303,
+        "slide_coverage": 0.5590406060218811,
+        "covered_patients": 302,
+        "patient_coverage": 0.5644859671592712
+      },
+      {
+        "bank": "v2",
+        "event_id": "sarcomatoid_differentiation",
+        "activated_patches": 147616,
+        "patch_activation_frequency": 0.055633820593357086,
+        "covered_slides": 223,
+        "slide_coverage": 0.41143912076950073,
+        "covered_patients": 222,
+        "patient_coverage": 0.4149532616138458
+      },
+      {
+        "bank": "v2",
+        "event_id": "rhabdoid_differentiation",
+        "activated_patches": 122277,
+        "patch_activation_frequency": 0.04608400538563728,
+        "covered_slides": 281,
+        "slide_coverage": 0.5184502005577087,
+        "covered_patients": 277,
+        "patient_coverage": 0.517756998538971
+      },
+      {
+        "bank": "v2",
+        "event_id": "syncytial_tumor_giant_cells",
+        "activated_patches": 142154,
+        "patch_activation_frequency": 0.053575292229652405,
+        "covered_slides": 222,
+        "slide_coverage": 0.4095940887928009,
+        "covered_patients": 219,
+        "patient_coverage": 0.409345805644989
+      },
+      {
+        "bank": "v2",
+        "event_id": "scant_cytoplasm_phenotype",
+        "activated_patches": 130823,
+        "patch_activation_frequency": 0.049304839223623276,
+        "covered_slides": 327,
+        "slide_coverage": 0.6033210158348083,
+        "covered_patients": 324,
+        "patient_coverage": 0.6056074500083923
+      },
+      {
+        "bank": "v2",
+        "event_id": "abundant_eosinophilic_cytoplasm",
+        "activated_patches": 143356,
+        "patch_activation_frequency": 0.05402830243110657,
+        "covered_slides": 288,
+        "slide_coverage": 0.5313653349876404,
+        "covered_patients": 284,
+        "patient_coverage": 0.5308411121368408
+      },
+      {
+        "bank": "v2",
+        "event_id": "cytoplasmic_hyaline_globules",
+        "activated_patches": 146440,
+        "patch_activation_frequency": 0.05519060790538788,
+        "covered_slides": 318,
+        "slide_coverage": 0.5867158770561218,
+        "covered_patients": 312,
+        "patient_coverage": 0.5831775665283203
+      },
+      {
+        "bank": "v2",
+        "event_id": "brisk_mitotic_activity",
+        "activated_patches": 131724,
+        "patch_activation_frequency": 0.049644410610198975,
+        "covered_slides": 306,
+        "slide_coverage": 0.5645756721496582,
+        "covered_patients": 301,
+        "patient_coverage": 0.5626168251037598
+      },
+      {
+        "bank": "v2",
+        "event_id": "atypical_mitotic_figures",
+        "activated_patches": 137817,
+        "patch_activation_frequency": 0.05194075405597687,
+        "covered_slides": 374,
+        "slide_coverage": 0.6900368928909302,
+        "covered_patients": 370,
+        "patient_coverage": 0.6915887594223022
+      },
+      {
+        "bank": "v2",
+        "event_id": "coagulative_tumor_necrosis",
+        "activated_patches": 139141,
+        "patch_activation_frequency": 0.052439745515584946,
+        "covered_slides": 353,
+        "slide_coverage": 0.6512914896011353,
+        "covered_patients": 351,
+        "patient_coverage": 0.6560747623443604
+      },
+      {
+        "bank": "v2",
+        "event_id": "delicate_capillary_network",
+        "activated_patches": 127239,
+        "patch_activation_frequency": 0.047954097390174866,
+        "covered_slides": 334,
+        "slide_coverage": 0.61623615026474,
+        "covered_patients": 331,
+        "patient_coverage": 0.6186915636062622
+      },
+      {
+        "bank": "v2",
+        "event_id": "microvascular_tumor_invasion",
+        "activated_patches": 133957,
+        "patch_activation_frequency": 0.050485990941524506,
+        "covered_slides": 442,
+        "slide_coverage": 0.8154981732368469,
+        "covered_patients": 435,
+        "patient_coverage": 0.8130841255187988
+      },
+      {
+        "bank": "v2",
+        "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+        "activated_patches": 141579,
+        "patch_activation_frequency": 0.05335858464241028,
+        "covered_slides": 392,
+        "slide_coverage": 0.723247230052948,
+        "covered_patients": 388,
+        "patient_coverage": 0.7252336740493774
+      },
+      {
+        "bank": "v2",
+        "event_id": "intratumoral_neutrophil_infiltrate",
+        "activated_patches": 134674,
+        "patch_activation_frequency": 0.05075621232390404,
+        "covered_slides": 338,
+        "slide_coverage": 0.6236162185668945,
+        "covered_patients": 335,
+        "patient_coverage": 0.6261682510375977
+      },
+      {
+        "bank": "v2",
+        "event_id": "scar_like_stromal_regression",
+        "activated_patches": 132400,
+        "patch_activation_frequency": 0.049899183213710785,
+        "covered_slides": 417,
+        "slide_coverage": 0.7693727016448975,
+        "covered_patients": 414,
+        "patient_coverage": 0.7738317847251892
+      }
+    ],
+    "within_v2_top_activation_jaccard": [
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.3751675063626448
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "syncytial_tumor_giant_cells",
+        "score": 0.3395877782102893
+      },
+      {
+        "left_event_id": "brisk_mitotic_activity",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.33803103561252146
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.3116104246500352
+      },
+      {
+        "left_event_id": "abundant_eosinophilic_cytoplasm",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.2883028664912156
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.28259218110512874
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "rhabdoid_differentiation",
+        "score": 0.27796795837327126
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.2646356362701059
+      },
+      {
+        "left_event_id": "coagulative_tumor_necrosis",
+        "right_event_id": "intratumoral_neutrophil_infiltrate",
+        "score": 0.2609486530048354
+      },
+      {
+        "left_event_id": "rhabdoid_differentiation",
+        "right_event_id": "syncytial_tumor_giant_cells",
+        "score": 0.25876366198255835
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "solid_sheet_architecture",
+        "score": 0.24762811858482367
+      },
+      {
+        "left_event_id": "compact_small_nest_architecture",
+        "right_event_id": "thick_trabecular_insular_architecture",
+        "score": 0.2435120849043173
+      },
+      {
+        "left_event_id": "extreme_nuclear_pleomorphism",
+        "right_event_id": "sarcomatoid_differentiation",
+        "score": 0.24077794132779748
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.23516959097267207
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "cytoplasmic_hyaline_globules",
+        "score": 0.23175247721404454
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "delicate_capillary_network",
+        "score": 0.23155850167747602
+      },
+      {
+        "left_event_id": "thick_trabecular_insular_architecture",
+        "right_event_id": "microcystic_architecture",
+        "score": 0.22475881549693622
+      },
+      {
+        "left_event_id": "sarcomatoid_differentiation",
+        "right_event_id": "syncytial_tumor_giant_cells",
+        "score": 0.22314851944872416
+      },
+      {
+        "left_event_id": "scant_cytoplasm_phenotype",
+        "right_event_id": "atypical_mitotic_figures",
+        "score": 0.22152399487090876
+      },
+      {
+        "left_event_id": "solid_sheet_architecture",
+        "right_event_id": "brisk_mitotic_activity",
+        "score": 0.22039757994814174
+      },
+      {
+        "left_event_id": "cytoplasmic_hyaline_globules",
+        "right_event_id": "coagulative_tumor_necrosis",
+        "score": 0.2151400525063931
+      },
+      {
+        "left_event_id": "sarcomatoid_differentiation",
+        "right_event_id": "rhabdoid_differentiation",
+        "score": 0.2126207485285528
+      },
+      {
+        "left_event_id": "microcystic_architecture",
+        "right_event_id": "scant_cytoplasm_phenotype",
+        "score": 0.2094667273700589
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "abundant_eosinophilic_cytoplasm",
+        "score": 0.2090048493715968
+      },
+      {
+        "left_event_id": "prominent_nucleoli",
+        "right_event_id": "coagulative_tumor_necrosis",
+        "score": 0.2084493138989924
+      }
+    ],
+    "v2_nearest_v0_activation": [
+      {
+        "v2_event_id": "microvascular_tumor_invasion",
+        "v0_event_id": "microvascular_tumor_invasion",
+        "activation_jaccard": 0.6474059959663949
+      },
+      {
+        "v2_event_id": "coagulative_tumor_necrosis",
+        "v0_event_id": "coagulative_tumor_necrosis",
+        "activation_jaccard": 0.5982094096048152
+      },
+      {
+        "v2_event_id": "sarcomatoid_differentiation",
+        "v0_event_id": "sarcomatoid_spindle_cell_transformation",
+        "activation_jaccard": 0.5866052709570486
+      },
+      {
+        "v2_event_id": "delicate_capillary_network",
+        "v0_event_id": "delicate_capillary_network",
+        "activation_jaccard": 0.5441812576554613
+      },
+      {
+        "v2_event_id": "rhabdoid_differentiation",
+        "v0_event_id": "rhabdoid_differentiation",
+        "activation_jaccard": 0.531781224611301
+      },
+      {
+        "v2_event_id": "intratumoral_neutrophil_infiltrate",
+        "v0_event_id": "neutrophil_rich_inflammation",
+        "activation_jaccard": 0.5042631006839078
+      },
+      {
+        "v2_event_id": "atypical_mitotic_figures",
+        "v0_event_id": "atypical_mitotic_figures",
+        "activation_jaccard": 0.4684901519813114
+      },
+      {
+        "v2_event_id": "scar_like_stromal_regression",
+        "v0_event_id": "hyalinized_fibrotic_stroma",
+        "activation_jaccard": 0.4425611644807382
+      },
+      {
+        "v2_event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+        "v0_event_id": "peritumoral_lymphoid_aggregates",
+        "activation_jaccard": 0.4345434773516249
+      },
+      {
+        "v2_event_id": "brisk_mitotic_activity",
+        "v0_event_id": "atypical_mitotic_figures",
+        "activation_jaccard": 0.4161482006812589
+      },
+      {
+        "v2_event_id": "extreme_nuclear_pleomorphism",
+        "v0_event_id": "marked_tumor_cell_pleomorphism",
+        "activation_jaccard": 0.3358443039779478
+      },
+      {
+        "v2_event_id": "thick_trabecular_insular_architecture",
+        "v0_event_id": "delicate_capillary_network",
+        "activation_jaccard": 0.3159694932029226
+      },
+      {
+        "v2_event_id": "abundant_eosinophilic_cytoplasm",
+        "v0_event_id": "compact_eosinophilic_tumor_component",
+        "activation_jaccard": 0.3129009160267648
+      },
+      {
+        "v2_event_id": "syncytial_tumor_giant_cells",
+        "v0_event_id": "rhabdoid_differentiation",
+        "activation_jaccard": 0.3116386513319571
+      },
+      {
+        "v2_event_id": "microcystic_architecture",
+        "v0_event_id": "edematous_myxoid_stroma",
+        "activation_jaccard": 0.2786948597268365
+      },
+      {
+        "v2_event_id": "solid_sheet_architecture",
+        "v0_event_id": "brisk_mitotic_activity",
+        "activation_jaccard": 0.2736023269832461
+      },
+      {
+        "v2_event_id": "scant_cytoplasm_phenotype",
+        "v0_event_id": "delicate_capillary_network",
+        "activation_jaccard": 0.266006575389666
+      },
+      {
+        "v2_event_id": "prominent_nucleoli",
+        "v0_event_id": "prominent_nucleolar_morphology",
+        "activation_jaccard": 0.259461164173725
+      },
+      {
+        "v2_event_id": "cytoplasmic_hyaline_globules",
+        "v0_event_id": "prominent_nucleolar_morphology",
+        "activation_jaccard": 0.23556615058038646
+      },
+      {
+        "v2_event_id": "compact_small_nest_architecture",
+        "v0_event_id": "clear_cell_nested_alveolar_architecture",
+        "activation_jaccard": 0.22599547533279607
+      },
+      {
+        "v2_event_id": "tubular_acinar_architecture",
+        "v0_event_id": "acinar_tubular_differentiation",
+        "activation_jaccard": 0.22125335720680395
+      },
+      {
+        "v2_event_id": "papillary_pseudopapillary_architecture",
+        "v0_event_id": "papillary_growth_pattern",
+        "activation_jaccard": 0.2154282807186655
+      }
+    ]
+  },
+  "quality_checks": {
+    "embedding_redundancy_pass": true,
+    "activation_redundancy_threshold": 0.5,
+    "max_quantile_activation_jaccard": 0.3751675063626448,
+    "activation_overlap_pass": true,
+    "low_threshold_saturated": true,
+    "low_threshold": 0.2
+  }
+}

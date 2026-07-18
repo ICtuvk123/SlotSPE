@@ -1,0 +1,307 @@
+{
+  "cancer_type": "kidney renal clear cell carcinoma",
+  "dataset": "TCGA-KIRC",
+  "status": "unreviewed_llm_candidates",
+  "events": [
+    {
+      "event_id": "clear_cell_nested_alveolar_architecture",
+      "event_name": "Clear cell nested-alveolar architecture",
+      "category": "tumor_architecture",
+      "definition": "Tumor cells with optically clear cytoplasm arranged in compact nests or alveolar groups separated by delicate septa.",
+      "visual_cues": ["clear polygonal cells in rounded nests", "thin fibrovascular septa between alveolar groups"],
+      "exclusion_cues": ["diffuse sheets without nested borders", "predominantly eosinophilic granular cytoplasm"],
+      "prognostic_rationale": "Nested growth reflects the canonical organization of clear cell renal carcinoma and provides a reference state for recognizing divergent patterns.",
+      "prompt_templates": ["H&E histopathology image showing clear cell nested-alveolar architecture", "photomicrograph demonstrating nests of clear renal tumor cells separated by delicate septa, H&E stain", "histologic section characterized by rounded alveolar groups of optically clear polygonal cells", "microscopic H&E appearance of nested clear cell carcinoma in renal tissue"]
+    },
+    {
+      "event_id": "acinar_tubular_differentiation",
+      "event_name": "Acinar and tubular differentiation",
+      "category": "differentiation",
+      "definition": "Neoplastic clear cells form small acini or tubules with recognizable central lumina.",
+      "visual_cues": ["round gland-like lumina", "cuboidal clear cells lining small tubules"],
+      "exclusion_cues": ["true papillary fibrovascular cores", "solid nests lacking lumina"],
+      "prognostic_rationale": "Tubular differentiation records a distinct epithelial growth program within a morphologically heterogeneous tumor.",
+      "prompt_templates": ["H&E histopathology image showing acinar and tubular differentiation in renal clear cell carcinoma", "photomicrograph demonstrating small lumina lined by clear neoplastic cells, H&E stain", "histologic section characterized by compact acini and tubules among clear tumor cells", "microscopic H&E appearance of gland-forming clear cell renal carcinoma"]
+    },
+    {
+      "event_id": "papillary_growth_pattern",
+      "event_name": "Papillary growth pattern",
+      "category": "tumor_architecture",
+      "definition": "Tumor cells cover branching or rounded fibrovascular cores to create a localized papillary configuration.",
+      "visual_cues": ["fibrovascular cores with adherent tumor cells", "branching papillary fronds"],
+      "exclusion_cues": ["pseudopapillae caused only by cell dropout", "tubules without stromal cores"],
+      "prognostic_rationale": "A papillary component represents architectural divergence that may accompany intratumoral evolution.",
+      "prompt_templates": ["H&E histopathology image showing papillary growth in clear cell renal carcinoma", "photomicrograph demonstrating tumor-lined fibrovascular cores, H&E stain", "histologic section characterized by branching papillary fronds formed by renal tumor cells", "microscopic H&E appearance of a papillary component within clear cell carcinoma"]
+    },
+    {
+      "event_id": "compact_eosinophilic_tumor_component",
+      "event_name": "Compact eosinophilic tumor component",
+      "category": "differentiation",
+      "definition": "A localized tumor component is composed of compact cells with granular eosinophilic rather than optically clear cytoplasm.",
+      "visual_cues": ["densely eosinophilic granular cytoplasm", "compact cohesive tumor cell groups"],
+      "exclusion_cues": ["uniformly clear cytoplasm", "spindle-cell sarcomatoid morphology"],
+      "prognostic_rationale": "Eosinophilic change can mark a divergent cellular phenotype and increased morphologic heterogeneity.",
+      "prompt_templates": ["H&E histopathology image showing a compact eosinophilic component in renal carcinoma", "photomicrograph demonstrating cohesive tumor cells with granular pink cytoplasm, H&E stain", "histologic section characterized by eosinophilic renal tumor cells contrasting with clear cell areas", "microscopic H&E appearance of compact granular-cell differentiation in clear cell renal carcinoma"]
+    },
+    {
+      "event_id": "rhabdoid_differentiation",
+      "event_name": "Rhabdoid differentiation",
+      "category": "differentiation",
+      "definition": "Large discohesive tumor cells show eccentric nuclei, prominent nucleoli, and abundant dense eosinophilic cytoplasm.",
+      "visual_cues": ["eccentric vesicular nuclei with prominent nucleoli", "abundant dense eosinophilic cytoplasm in discohesive cells"],
+      "exclusion_cues": ["conventional cohesive clear cell nests", "uniform small lymphoid cells"],
+      "prognostic_rationale": "Rhabdoid morphology is a recognizable form of tumor dedifferentiation and aggressive local behavior.",
+      "prompt_templates": ["H&E histopathology image showing rhabdoid differentiation in renal cell carcinoma", "photomicrograph demonstrating large discohesive cells with eccentric nuclei and dense cytoplasm, H&E stain", "histologic section characterized by rhabdoid tumor cells with prominent nucleoli", "microscopic H&E appearance of a rhabdoid component in clear cell renal carcinoma"]
+    },
+    {
+      "event_id": "sarcomatoid_spindle_cell_transformation",
+      "event_name": "Sarcomatoid spindle-cell transformation",
+      "category": "differentiation",
+      "definition": "A carcinoma component transitions into malignant spindle cells growing in intersecting fascicles or disordered sheets.",
+      "visual_cues": ["pleomorphic spindle cells in fascicles", "transition between epithelial and spindle-cell components"],
+      "exclusion_cues": ["bland fibroblasts in collagenous stroma", "purely epithelioid clear cell nests"],
+      "prognostic_rationale": "Sarcomatoid transformation reflects marked dedifferentiation and enhanced invasive capacity.",
+      "prompt_templates": ["H&E histopathology image showing sarcomatoid spindle-cell transformation in renal carcinoma", "photomicrograph demonstrating pleomorphic malignant spindle cells in fascicles, H&E stain", "histologic section characterized by transition from clear cell carcinoma to sarcomatoid morphology", "microscopic H&E appearance of a spindle-cell sarcomatoid component in kidney tumor"]
+    },
+    {
+      "event_id": "prominent_nucleolar_morphology",
+      "event_name": "Prominent nucleolar morphology",
+      "category": "differentiation",
+      "definition": "Tumor nuclei contain conspicuous eosinophilic nucleoli readily visible within enlarged vesicular nuclei.",
+      "visual_cues": ["large eosinophilic nucleoli", "enlarged vesicular tumor nuclei"],
+      "exclusion_cues": ["small uniform nuclei with inconspicuous nucleoli", "degenerative nuclear smudging"],
+      "prognostic_rationale": "Nucleolar prominence captures nuclear-grade morphology associated with altered cellular differentiation.",
+      "prompt_templates": ["H&E histopathology image showing prominent nucleoli in clear cell renal carcinoma", "photomicrograph demonstrating enlarged vesicular nuclei with conspicuous eosinophilic nucleoli, H&E stain", "histologic section characterized by renal tumor cells with readily visible macronucleoli", "microscopic H&E appearance of nucleolar prominence in kidney carcinoma"]
+    },
+    {
+      "event_id": "marked_tumor_cell_pleomorphism",
+      "event_name": "Marked tumor cell pleomorphism",
+      "category": "differentiation",
+      "definition": "A tumor region exhibits pronounced variation in nuclear size, shape, chromasia, and cellular form.",
+      "visual_cues": ["bizarre enlarged hyperchromatic nuclei", "substantial cell-to-cell size variation"],
+      "exclusion_cues": ["monomorphic round nuclei", "reactive stromal cells outside tumor nests"],
+      "prognostic_rationale": "Marked pleomorphism reflects loss of organized differentiation and genomic instability at the morphologic level.",
+      "prompt_templates": ["H&E histopathology image showing marked tumor cell pleomorphism in renal carcinoma", "photomicrograph demonstrating bizarre variably sized hyperchromatic tumor nuclei, H&E stain", "histologic section characterized by pronounced nuclear and cellular atypia", "microscopic H&E appearance of pleomorphic clear cell renal carcinoma"]
+    },
+    {
+      "event_id": "brisk_mitotic_activity",
+      "event_name": "Brisk mitotic activity",
+      "category": "proliferation",
+      "definition": "A localized viable tumor region contains numerous readily identifiable mitotic figures.",
+      "visual_cues": ["multiple mitotic figures among viable tumor cells", "condensed chromosomes in dividing cells"],
+      "exclusion_cues": ["apoptotic bodies without mitotic chromosomes", "necrotic debris lacking viable cells"],
+      "prognostic_rationale": "Frequent mitoses provide direct morphologic evidence of active tumor-cell proliferation.",
+      "prompt_templates": ["H&E histopathology image showing brisk mitotic activity in renal carcinoma", "photomicrograph demonstrating numerous mitotic figures among viable tumor cells, H&E stain", "histologic section characterized by frequent dividing clear cell carcinoma cells", "microscopic H&E appearance of a proliferative renal tumor focus"]
+    },
+    {
+      "event_id": "atypical_mitotic_figures",
+      "event_name": "Atypical mitotic figures",
+      "category": "proliferation",
+      "definition": "Tumor cells display abnormal multipolar, asymmetric, or otherwise malformed mitotic figures.",
+      "visual_cues": ["multipolar mitoses", "asymmetric clumped mitotic chromosomes"],
+      "exclusion_cues": ["typical bipolar mitoses", "pyknotic apoptotic nuclei"],
+      "prognostic_rationale": "Atypical mitoses are a morphologic manifestation of disordered cell division and chromosomal instability.",
+      "prompt_templates": ["H&E histopathology image showing atypical mitotic figures in renal carcinoma", "photomicrograph demonstrating multipolar and malformed tumor-cell mitoses, H&E stain", "histologic section characterized by abnormal asymmetric mitotic chromosomes", "microscopic H&E appearance of atypical cell division in clear cell renal carcinoma"]
+    },
+    {
+      "event_id": "coagulative_tumor_necrosis",
+      "event_name": "Coagulative tumor necrosis",
+      "category": "necrosis",
+      "definition": "Geographic zones of dead tumor retain ghost-like architecture with eosinophilic cytoplasm and nuclear loss.",
+      "visual_cues": ["geographic eosinophilic ghost tumor", "abrupt transition from viable tumor to karyolytic necrosis"],
+      "exclusion_cues": ["cystic spaces without necrotic ghosts", "small apoptotic foci"],
+      "prognostic_rationale": "Coagulative necrosis indicates that tumor growth has exceeded local tissue viability and perfusion.",
+      "prompt_templates": ["H&E histopathology image showing coagulative necrosis in clear cell renal carcinoma", "photomicrograph demonstrating geographic eosinophilic ghost tumor with nuclear loss, H&E stain", "histologic section characterized by abrupt viable-to-necrotic tumor transition", "microscopic H&E appearance of extensive coagulative tumor necrosis in kidney cancer"]
+    },
+    {
+      "event_id": "intratumoral_hemorrhage",
+      "event_name": "Intratumoral hemorrhage",
+      "category": "vasculature",
+      "definition": "Extravasated erythrocytes and blood lakes dissect through or replace a localized tumor region.",
+      "visual_cues": ["blood-filled spaces outside intact vessels", "erythrocytes dissecting between tumor nests"],
+      "exclusion_cues": ["congestion confined to intact capillaries", "processing-related edge bleeding"],
+      "prognostic_rationale": "Hemorrhage reflects vascular fragility and disturbed perfusion within the tumor microenvironment.",
+      "prompt_templates": ["H&E histopathology image showing intratumoral hemorrhage in clear cell renal carcinoma", "photomicrograph demonstrating extravasated erythrocytes and blood lakes within tumor, H&E stain", "histologic section characterized by hemorrhage dissecting clear cell nests", "microscopic H&E appearance of a hemorrhagic renal carcinoma focus"]
+    },
+    {
+      "event_id": "cystic_degenerative_change",
+      "event_name": "Cystic degenerative change",
+      "category": "other",
+      "definition": "A tumor region contains macroscopic or microscopic cyst-like spaces formed by degeneration and tissue loss.",
+      "visual_cues": ["cystic spaces within tumor", "attenuated or degenerative lining around luminal cavities"],
+      "exclusion_cues": ["small true acinar lumina", "pure hemorrhagic lakes filled with erythrocytes"],
+      "prognostic_rationale": "Cystic degeneration records regional tissue remodeling and variable viability within the tumor.",
+      "prompt_templates": ["H&E histopathology image showing cystic degenerative change in renal carcinoma", "photomicrograph demonstrating tumor-associated cystic spaces and tissue loss, H&E stain", "histologic section characterized by degenerative cavities within clear cell carcinoma", "microscopic H&E appearance of cystic change in a kidney tumor"]
+    },
+    {
+      "event_id": "delicate_capillary_network",
+      "event_name": "Delicate capillary network",
+      "category": "vasculature",
+      "definition": "A dense branching network of thin-walled capillaries courses between nests of clear tumor cells.",
+      "visual_cues": ["thin-walled branching capillaries", "fine vascular mesh surrounding clear cell nests"],
+      "exclusion_cues": ["thick-walled muscular vessels", "avascular necrotic tumor"],
+      "prognostic_rationale": "The capillary network is the principal visible vascular phenotype supporting clear cell tumor tissue.",
+      "prompt_templates": ["H&E histopathology image showing a delicate capillary network in clear cell renal carcinoma", "photomicrograph demonstrating thin branching vessels between clear tumor cells, H&E stain", "histologic section characterized by a fine capillary mesh around nested carcinoma", "microscopic H&E appearance of highly vascular clear cell renal tumor"]
+    },
+    {
+      "event_id": "microvascular_tumor_invasion",
+      "event_name": "Microvascular tumor invasion",
+      "category": "invasion",
+      "definition": "Cohesive tumor cells are present within endothelial-lined small vascular channels adjacent to or within the tumor.",
+      "visual_cues": ["tumor emboli inside endothelial-lined small vessels", "attachment of tumor cells to a vascular lumen"],
+      "exclusion_cues": ["retraction artifact around tumor nests", "free tissue fragments without an endothelial boundary"],
+      "prognostic_rationale": "Small-vessel invasion provides a morphologic route for hematogenous dissemination.",
+      "prompt_templates": ["H&E histopathology image showing microvascular invasion by clear cell renal carcinoma", "photomicrograph demonstrating tumor emboli in endothelial-lined small vessels, H&E stain", "histologic section characterized by renal carcinoma cells within microvascular lumina", "microscopic H&E appearance of small-vessel tumor invasion in kidney cancer"]
+    },
+    {
+      "event_id": "venous_tumor_thrombus",
+      "event_name": "Venous tumor thrombus",
+      "category": "invasion",
+      "definition": "A large venous lumen contains a cohesive expansile mass of viable renal carcinoma cells, often with associated fibrin or blood.",
+      "visual_cues": ["large vessel lumen occupied by cohesive tumor", "tumor mass bordered by venous wall or endothelium"],
+      "exclusion_cues": ["small capillary embolus", "bland fibrin thrombus without tumor cells"],
+      "prognostic_rationale": "Extension into a major vein demonstrates large-vessel invasion and access to systemic circulation.",
+      "prompt_templates": ["H&E histopathology image showing a venous tumor thrombus from renal cell carcinoma", "photomicrograph demonstrating cohesive clear cell tumor within a large venous lumen, H&E stain", "histologic section characterized by renal carcinoma filling a vein with associated blood", "microscopic H&E appearance of large-vessel tumor extension in kidney cancer"]
+    },
+    {
+      "event_id": "fibrous_tumor_pseudocapsule",
+      "event_name": "Fibrous tumor pseudocapsule",
+      "category": "tissue_interface",
+      "definition": "A compressed fibrous band forms a discrete boundary between the renal tumor and adjacent parenchyma.",
+      "visual_cues": ["continuous collagenous rim around tumor", "compressed renal tissue external to a fibrous boundary"],
+      "exclusion_cues": ["irregular infiltrative edge without a rim", "internal desmoplastic septa"],
+      "prognostic_rationale": "A pseudocapsule defines the local tumor-host interface against which focal invasion can be assessed.",
+      "prompt_templates": ["H&E histopathology image showing a fibrous pseudocapsule around clear cell renal carcinoma", "photomicrograph demonstrating a collagenous rim between tumor and compressed kidney, H&E stain", "histologic section characterized by a discrete fibrous tumor-parenchyma boundary", "microscopic H&E appearance of an encapsulated renal tumor interface"]
+    },
+    {
+      "event_id": "pseudocapsule_penetration",
+      "event_name": "Pseudocapsule penetration",
+      "category": "invasion",
+      "definition": "Irregular tongues or nests of tumor traverse a pre-existing fibrous pseudocapsule into surrounding tissue.",
+      "visual_cues": ["tumor nests crossing a collagenous rim", "discontinuous pseudocapsule with outward tumor tongues"],
+      "exclusion_cues": ["intact continuous pseudocapsule", "tumor confined to the inner capsule surface"],
+      "prognostic_rationale": "Capsular penetration is direct morphologic evidence that the tumor has breached a local containment interface.",
+      "prompt_templates": ["H&E histopathology image showing renal carcinoma penetrating a fibrous pseudocapsule", "photomicrograph demonstrating tumor nests crossing a collagenous capsule, H&E stain", "histologic section characterized by discontinuous pseudocapsule and outward invasive tongues", "microscopic H&E appearance of pseudocapsular invasion by clear cell carcinoma"]
+    },
+    {
+      "event_id": "renal_parenchymal_infiltration",
+      "event_name": "Renal parenchymal infiltration",
+      "category": "invasion",
+      "definition": "Irregular carcinoma nests infiltrate among and replace native renal tubules or glomeruli at the tumor boundary.",
+      "visual_cues": ["tumor nests interdigitating with renal tubules", "entrapped glomeruli or tubules at an irregular edge"],
+      "exclusion_cues": ["smooth pushing border", "compressed but non-entrapped parenchyma"],
+      "prognostic_rationale": "Parenchymal infiltration captures active local invasion beyond an expansile growth front.",
+      "prompt_templates": ["H&E histopathology image showing clear cell renal carcinoma infiltrating renal parenchyma", "photomicrograph demonstrating tumor nests interdigitating with native tubules, H&E stain", "histologic section characterized by entrapped glomeruli at an irregular tumor edge", "microscopic H&E appearance of infiltrative kidney tumor-parenchyma interface"]
+    },
+    {
+      "event_id": "perinephric_adipose_invasion",
+      "event_name": "Perinephric adipose invasion",
+      "category": "invasion",
+      "definition": "Renal carcinoma nests or cords extend irregularly between adipocytes in perinephric fat.",
+      "visual_cues": ["tumor cells dissecting between mature adipocytes", "irregular nests beyond the renal outer boundary"],
+      "exclusion_cues": ["fat entrapped within the tumor center", "smooth contact with adipose tissue without infiltration"],
+      "prognostic_rationale": "Extension into perinephric adipose tissue demonstrates spread beyond the renal parenchymal compartment.",
+      "prompt_templates": ["H&E histopathology image showing perinephric adipose invasion by renal carcinoma", "photomicrograph demonstrating clear tumor nests between mature fat cells, H&E stain", "histologic section characterized by kidney carcinoma infiltrating perinephric adipose tissue", "microscopic H&E appearance of renal tumor extension into surrounding fat"]
+    },
+    {
+      "event_id": "renal_sinus_invasion",
+      "event_name": "Renal sinus invasion",
+      "category": "invasion",
+      "definition": "Tumor extends into renal sinus soft tissue, fat, or vascular structures at the hilar interface.",
+      "visual_cues": ["tumor nests among sinus fat and large vessels", "irregular extension into hilar soft tissue"],
+      "exclusion_cues": ["tumor limited by renal parenchyma", "peripheral fat invasion remote from sinus structures"],
+      "prognostic_rationale": "The renal sinus contains abundant vascular and lymphatic channels that provide routes for regional extension.",
+      "prompt_templates": ["H&E histopathology image showing renal sinus invasion by clear cell carcinoma", "photomicrograph demonstrating tumor in hilar fat near large vessels, H&E stain", "histologic section characterized by irregular carcinoma extension into renal sinus tissue", "microscopic H&E appearance of kidney tumor invading the sinus interface"]
+    },
+    {
+      "event_id": "infiltrative_small_nests_and_cords",
+      "event_name": "Infiltrative small nests and cords",
+      "category": "invasion",
+      "definition": "Small irregular groups and cords of tumor cells separate from the main mass and permeate adjacent stroma.",
+      "visual_cues": ["discontinuous small tumor nests", "thin cords permeating stromal tissue"],
+      "exclusion_cues": ["large cohesive pushing nests", "isolated inflammatory cells"],
+      "prognostic_rationale": "Fragmented infiltrative growth reflects reduced cohesion and local tissue permeation.",
+      "prompt_templates": ["H&E histopathology image showing infiltrative small nests and cords of renal carcinoma", "photomicrograph demonstrating discontinuous clear tumor groups permeating stroma, H&E stain", "histologic section characterized by thin invasive cords separated from the main kidney tumor", "microscopic H&E appearance of fragmented infiltrative growth in renal carcinoma"]
+    },
+    {
+      "event_id": "tumor_budding_at_invasive_front",
+      "event_name": "Tumor budding at invasive front",
+      "category": "invasion",
+      "definition": "Single tumor cells or tiny clusters detach from larger nests at an invasive tissue interface.",
+      "visual_cues": ["isolated tumor cells near the advancing front", "tiny clusters detached from cohesive nests"],
+      "exclusion_cues": ["crushed lymphocytes", "artifactual fragments floating in empty spaces"],
+      "prognostic_rationale": "Budding provides a localized morphologic sign of tumor-cell detachment and invasive transition.",
+      "prompt_templates": ["H&E histopathology image showing tumor budding at the invasive front of renal carcinoma", "photomicrograph demonstrating single cells and tiny tumor clusters detached from larger nests, H&E stain", "histologic section characterized by budding clear carcinoma cells at a stromal interface", "microscopic H&E appearance of tumor-cell detachment at the kidney cancer edge"]
+    },
+    {
+      "event_id": "intratumoral_lymphocyte_infiltration",
+      "event_name": "Intratumoral lymphocyte infiltration",
+      "category": "immune_microenvironment",
+      "definition": "Small mature lymphocytes permeate viable tumor nests and directly contact carcinoma cells.",
+      "visual_cues": ["lymphocytes between viable tumor cells", "immune cells located inside epithelial nests"],
+      "exclusion_cues": ["lymphocytes restricted to outer stroma", "neutrophil-rich necrotic debris"],
+      "prognostic_rationale": "Intratumoral lymphocytes record direct immune access to viable carcinoma compartments.",
+      "prompt_templates": ["H&E histopathology image showing intratumoral lymphocyte infiltration in renal carcinoma", "photomicrograph demonstrating mature lymphocytes between viable clear tumor cells, H&E stain", "histologic section characterized by immune cells permeating epithelial tumor nests", "microscopic H&E appearance of lymphocytes directly contacting clear cell carcinoma"]
+    },
+    {
+      "event_id": "peritumoral_lymphoid_aggregates",
+      "event_name": "Peritumoral lymphoid aggregates",
+      "category": "immune_microenvironment",
+      "definition": "Dense localized aggregates of lymphocytes occupy stroma immediately outside the tumor boundary.",
+      "visual_cues": ["compact lymphoid clusters at tumor margin", "peripheral stromal lymphocytes without intranest permeation"],
+      "exclusion_cues": ["diffuse intratumoral lymphocytes", "neutrophilic abscess-like inflammation"],
+      "prognostic_rationale": "Peritumoral aggregates represent organized immune recruitment at the tumor-host interface.",
+      "prompt_templates": ["H&E histopathology image showing peritumoral lymphoid aggregates around renal carcinoma", "photomicrograph demonstrating compact lymphocyte clusters at the tumor margin, H&E stain", "histologic section characterized by dense peripheral immune aggregates outside clear cell nests", "microscopic H&E appearance of lymphoid organization at a kidney tumor boundary"]
+    },
+    {
+      "event_id": "immune_exclusion_at_tumor_margin",
+      "event_name": "Immune exclusion at tumor margin",
+      "category": "immune_microenvironment",
+      "definition": "Lymphocytes accumulate in peritumoral stroma but remain largely absent from adjacent viable tumor nests.",
+      "visual_cues": ["stromal lymphocyte band along tumor edge", "sharp drop in lymphocytes inside tumor nests"],
+      "exclusion_cues": ["uniform intratumoral lymphocyte permeation", "absence of lymphocytes in both compartments"],
+      "prognostic_rationale": "Spatial separation of immune cells from carcinoma suggests a barrier to effective tumor-cell contact.",
+      "prompt_templates": ["H&E histopathology image showing immune exclusion at the margin of renal carcinoma", "photomicrograph demonstrating stromal lymphocytes blocked outside viable tumor nests, H&E stain", "histologic section characterized by a peripheral immune band and lymphocyte-poor tumor interior", "microscopic H&E appearance of spatially excluded lymphocytes in clear cell renal carcinoma"]
+    },
+    {
+      "event_id": "neutrophil_rich_inflammation",
+      "event_name": "Neutrophil-rich inflammation",
+      "category": "immune_microenvironment",
+      "definition": "A tumor region contains conspicuous aggregates of segmented neutrophils within viable tissue or at necrotic interfaces.",
+      "visual_cues": ["segmented neutrophils among tumor cells", "dense neutrophilic collections bordering necrosis"],
+      "exclusion_cues": ["monomorphic small lymphocytes", "acellular granular necrotic debris"],
+      "prognostic_rationale": "Neutrophil-rich inflammation reflects an acute inflammatory microenvironment and tissue injury response.",
+      "prompt_templates": ["H&E histopathology image showing neutrophil-rich inflammation in renal carcinoma", "photomicrograph demonstrating segmented neutrophils within tumor and near necrosis, H&E stain", "histologic section characterized by acute inflammatory cell collections in clear cell carcinoma", "microscopic H&E appearance of neutrophilic inflammation in a kidney tumor"]
+    },
+    {
+      "event_id": "desmoplastic_stromal_response",
+      "event_name": "Desmoplastic stromal response",
+      "category": "stroma",
+      "definition": "Activated fibroblastic stroma with newly deposited collagen surrounds and separates infiltrating tumor groups.",
+      "visual_cues": ["plump fibroblasts in collagen around invasive nests", "reactive stromal expansion at tumor interface"],
+      "exclusion_cues": ["acellular mature hyalinized scar", "delicate capillary septa without fibroblastic reaction"],
+      "prognostic_rationale": "Desmoplasia reflects active reciprocal remodeling between invasive carcinoma and host stroma.",
+      "prompt_templates": ["H&E histopathology image showing a desmoplastic stromal response around renal carcinoma", "photomicrograph demonstrating activated fibroblasts and collagen surrounding invasive tumor nests, H&E stain", "histologic section characterized by reactive stromal expansion at a clear cell carcinoma interface", "microscopic H&E appearance of desmoplasia associated with infiltrating kidney tumor"]
+    },
+    {
+      "event_id": "hyalinized_fibrotic_stroma",
+      "event_name": "Hyalinized fibrotic stroma",
+      "category": "stroma",
+      "definition": "Dense paucicellular eosinophilic collagen forms broad scar-like bands within or adjacent to the tumor.",
+      "visual_cues": ["broad glassy collagen bundles", "paucicellular scar-like stromal zones"],
+      "exclusion_cues": ["cellular fibroblastic desmoplasia", "loose myxoid matrix"],
+      "prognostic_rationale": "Hyalinized fibrosis records chronic stromal remodeling and may compartmentalize viable tumor regions.",
+      "prompt_templates": ["H&E histopathology image showing hyalinized fibrotic stroma in renal carcinoma", "photomicrograph demonstrating broad paucicellular glassy collagen bands, H&E stain", "histologic section characterized by dense scar-like fibrosis adjacent to clear tumor cells", "microscopic H&E appearance of chronic hyalinized stroma in a kidney tumor"]
+    },
+    {
+      "event_id": "edematous_myxoid_stroma",
+      "event_name": "Edematous myxoid stroma",
+      "category": "stroma",
+      "definition": "A loose pale stromal matrix with edema or myxoid quality separates tumor nests and contains sparse stellate cells.",
+      "visual_cues": ["pale loose extracellular matrix", "widely spaced stellate stromal cells"],
+      "exclusion_cues": ["dense hyalinized collagen", "empty retraction spaces without matrix"],
+      "prognostic_rationale": "A myxoid or edematous matrix reflects altered extracellular-matrix composition and local tissue mechanics.",
+      "prompt_templates": ["H&E histopathology image showing edematous myxoid stroma in renal carcinoma", "photomicrograph demonstrating pale loose matrix between clear tumor nests, H&E stain", "histologic section characterized by sparse stellate cells in an edematous stromal background", "microscopic H&E appearance of myxoid stromal change in a kidney tumor"]
+    }
+  ]
+}

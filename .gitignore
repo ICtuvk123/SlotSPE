@@ -1,5 +1,49 @@
-dataset_csv/raw_rna_data_inter/
+# Python and editor state
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
 .idea/
+.vscode/
+
+# Local environments, credentials, and gated model checkouts
+.env
+.env.*
+!.env.example
+**/*hf_token*
+third_party/CONCH/
+third_party/CONCH/checkpoints/
+feature_extract/tools/CLAM/_vendor/
+
+# Large or restricted datasets
+dataset_csv/raw_rna_data_inter/
+dataset_csv/raw_rna_data_inter
+dataset_csv/clinical/raw_rna_data_inter/
+gene_process/dataset_csv_example/raw_rna_data_inter/
+**/pt_files/
+*.svs
+*.h5
+
+# Generated model artifacts and experiment outputs
+*.ckpt
+*.pth
+*.pkl
+assets/event_bank/**/*.pt
+results/
+results_train/
+results_test/
+hypersearch/results/
+hypersearch/runs/
+logs/
+cache/
+
+# Transfer and preprocessing runtime artifacts
+bypy_*.log
+*.log
+feature_extract/tools/gdc/gdc-client
+feature_extract/tools/gdc/gdc-client*.zip
+feature_extract/tools/gdc/gdc_sample_sheet*.tsv
+feature_extract/tools/gdc/gdc_manifest_subset.txt
+feature_extract/tools/gdc/gdc_manifest_*failed*.txt
 feature_extract/tools/CLAM/.gitignore

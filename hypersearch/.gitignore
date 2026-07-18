@@ -1,0 +1,5 @@
+runs/*/logs/
+runs/*/status/
+results/
+*.pth
+*.pkl

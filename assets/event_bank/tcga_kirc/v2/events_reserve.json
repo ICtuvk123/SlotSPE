@@ -1,0 +1,415 @@
+{
+  "schema_version": "2.0",
+  "ontology_version": "tcga_kirc_v2",
+  "cancer_type": "kidney renal clear cell carcinoma",
+  "dataset": "TCGA-KIRC",
+  "status": "reserve_catalog_pending_pathologist_review",
+  "patch_spec": {
+    "width_px": 448,
+    "height_px": 448,
+    "magnification": 20,
+    "stain": "H&E"
+  },
+  "generation_metadata": {
+    "prompt_version": "tcga_kirc_v2.0",
+    "generator": "GPT-5 Codex evidence-constrained seed with deterministic schema checks",
+    "generated_at": "2026-07-18"
+  },
+  "sources": [
+    {
+      "source_id": "isup_prognostic_2013",
+      "citation": "Delahunt et al. Am J Surg Pathol. 2013;37:1490-1504. PMID: 24025520.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24025520/",
+      "evidence_scope": "ISUP consensus on RCC morphotype, nucleolar grading, extreme pleomorphism, sarcomatoid and rhabdoid differentiation, tumor necrosis, and microvascular invasion."
+    },
+    {
+      "source_id": "isup_staging_2013",
+      "citation": "Trpkov et al. Am J Surg Pathol. 2013;37:1505-1517. PMID: 24025521.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24025521/",
+      "evidence_scope": "ISUP consensus definitions and sampling requirements for renal sinus, perinephric fat, and major-vein involvement."
+    },
+    {
+      "source_id": "caircc_ontology_2020",
+      "citation": "Cai et al. EBioMedicine. 2020;51:102526. PMID: 31859241; PMCID: PMC7000318.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7000318/",
+      "evidence_scope": "Systematic 33-parameter ccRCC morphology ontology spanning architecture, cytology, and tumor microenvironment in 549 tumors."
+    },
+    {
+      "source_id": "infiltrative_growth_2013",
+      "citation": "Fukatsu et al. Am J Clin Pathol. 2013;140:500-505. PMID: 24045546.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24045546/",
+      "evidence_scope": "Cohort evaluation of infiltrative versus expansive growth pattern in ccRCC."
+    },
+    {
+      "source_id": "tumor_necrosis_2012",
+      "citation": "Pichler et al. Am J Clin Pathol. 2012;137:283-289. PMID: 22261455.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22261455/",
+      "evidence_scope": "Large cohort evaluation of histologic tumor necrosis in clear cell and papillary RCC."
+    },
+    {
+      "source_id": "neutrophils_2021",
+      "citation": "Tessier-Cloutier et al. J Pathol Clin Res. 2021;7:385-396. PMID: 33665979; PMCID: PMC8185362.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8185362/",
+      "evidence_scope": "Pathologist-scored tumor-infiltrating neutrophils in clinically annotated ccRCC cohorts."
+    },
+    {
+      "source_id": "conch_2024",
+      "citation": "Lu et al. Nat Med. 2024;30:863-874. PMID: 38504017.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38504017/",
+      "evidence_scope": "Pathology vision-language representation and prompt ensembling methodology; not clinical validation of individual events."
+    }
+  ],
+  "events": [
+    {
+      "event_id": "large_nest_architecture",
+      "event_name": "Large-nest architecture",
+      "category": "tumor_architecture",
+      "definition": "Viable carcinoma is arranged in broad cohesive nests with several cell layers between stromal boundaries.",
+      "visual_cues": [
+        "broad rounded tumor nests",
+        "multiple cell layers within each bounded nest"
+      ],
+      "exclusion_cues": [
+        "uniform small compact nests",
+        "unbounded confluent solid sheets"
+      ],
+      "prognostic_rationale": "Large nests capture an architectural state evaluated separately in the cohort-derived ccRCC ontology.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "at least two intact broad nests with visible boundaries"
+      ],
+      "confounders": [
+        "cropped portions of a solid sheet",
+        "coalescent small nests"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "nested_architecture",
+      "prompt_templates": [
+        "H&E histopathology showing large cohesive nests of clear cell renal carcinoma",
+        "photomicrograph demonstrating broad rounded tumor nests with thin boundaries",
+        "histologic section characterized by multilayered large nests of renal tumor cells",
+        "microscopic H&E appearance of large-nest renal carcinoma architecture"
+      ]
+    },
+    {
+      "event_id": "hemorrhagic_follicular_architecture",
+      "event_name": "Hemorrhagic follicular architecture",
+      "category": "tumor_architecture",
+      "definition": "Rounded tumor-lined spaces contain conspicuous erythrocytes or hemorrhagic material, creating a follicle-like pattern.",
+      "visual_cues": [
+        "blood-filled rounded spaces bounded by tumor",
+        "repeated hemorrhagic follicle-like units"
+      ],
+      "exclusion_cues": [
+        "free blood lake without tumor lining",
+        "congestion confined to intact capillaries"
+      ],
+      "prognostic_rationale": "Hemorrhagic follicles were recorded as a distinct architecture in the ccRCC phenotype ontology but have sampling sensitivity.",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "repeated tumor-lined hemorrhagic spaces rather than isolated bleeding"
+      ],
+      "confounders": [
+        "operative or processing hemorrhage",
+        "torn vascular spaces",
+        "regional congestion"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "hemorrhagic_architecture",
+      "prompt_templates": [
+        "H&E histopathology showing hemorrhagic follicle-like architecture in renal carcinoma",
+        "photomicrograph demonstrating repeated blood-filled spaces bounded by tumor cells",
+        "histologic section characterized by rounded hemorrhagic follicular units",
+        "microscopic H&E appearance of hemorrhagic follicular clear cell renal tumor"
+      ]
+    },
+    {
+      "event_id": "alveolar_architecture",
+      "event_name": "Alveolar architecture",
+      "category": "tumor_architecture",
+      "definition": "Tumor forms rounded cell nests separated by a delicate sinusoidal vascular network, producing an alveolar pattern.",
+      "visual_cues": [
+        "rounded nests outlined by fine capillaries",
+        "alveolus-like packets of clear tumor cells"
+      ],
+      "exclusion_cues": [
+        "compact nests without sinusoidal outlines",
+        "true glandular lumina within tumor units"
+      ],
+      "prognostic_rationale": "Alveolar growth is a recognized cohort-defined architectural phenotype of ccRCC.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "multiple rounded tumor packets with intact vascular outlines"
+      ],
+      "confounders": [
+        "generic nested architecture",
+        "retraction around solid nests"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "nested_architecture",
+      "prompt_templates": [
+        "H&E histopathology showing alveolar architecture in clear cell renal carcinoma",
+        "photomicrograph demonstrating rounded clear cell nests outlined by sinusoidal capillaries",
+        "histologic section characterized by alveolus-like tumor packets and delicate vessels",
+        "microscopic H&E appearance of alveolar clear cell renal tumor"
+      ]
+    },
+    {
+      "event_id": "degenerative_tumor_giant_cells",
+      "event_name": "Degenerative tumor giant cells",
+      "category": "differentiation",
+      "definition": "Scattered very large tumor cells show bizarre degenerative nuclei and abundant cytoplasm without syncytial viable proliferation.",
+      "visual_cues": [
+        "isolated giant cells with smudged bizarre nuclei",
+        "degenerative cytoplasmic vacuolation in giant tumor cells"
+      ],
+      "exclusion_cues": [
+        "multinucleated viable syncytial tumor cells",
+        "foreign-body giant cells in stroma"
+      ],
+      "prognostic_rationale": "Degenerative giant cells were separated from syncytial giant cells in cohort-based ccRCC cytologic phenotyping.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "giant cells located within and morphologically continuous with carcinoma"
+      ],
+      "confounders": [
+        "macrophages",
+        "foreign-body giant-cell reaction",
+        "section-fold distortion"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "tumor_giant_cells",
+      "prompt_templates": [
+        "H&E histopathology showing degenerative giant tumor cells in clear cell renal carcinoma",
+        "photomicrograph demonstrating isolated bizarre giant carcinoma cells with degenerative nuclei",
+        "histologic section characterized by scattered vacuolated tumor giant cells",
+        "microscopic H&E appearance of degenerative giant-cell change in renal carcinoma"
+      ]
+    },
+    {
+      "event_id": "cytoplasmic_spindling",
+      "event_name": "Cytoplasmic spindling",
+      "category": "differentiation",
+      "definition": "Carcinoma cells acquire elongated cytoplasmic contours while retaining an epithelial nested or cohesive arrangement.",
+      "visual_cues": [
+        "elongated tumor cells within cohesive nests",
+        "tapered cytoplasm without a fully sarcomatoid fascicular component"
+      ],
+      "exclusion_cues": [
+        "frank malignant spindle-cell fascicles",
+        "bland stromal fibroblasts between tumor nests"
+      ],
+      "prognostic_rationale": "Cytoplasmic spindling was recorded separately from sarcomatoid differentiation in cohort-based ccRCC phenotyping.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "cohesive carcinoma with reproducibly elongated tumor-cell contours"
+      ],
+      "confounders": [
+        "compression artifact",
+        "tangentially cut nests",
+        "stromal fibroblasts"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "spindle_dedifferentiation",
+      "prompt_templates": [
+        "H&E histopathology showing cytoplasmic spindling in clear cell renal carcinoma",
+        "photomicrograph demonstrating elongated renal carcinoma cells within cohesive nests",
+        "histologic section characterized by tapered tumor-cell cytoplasm without spindle fascicles",
+        "microscopic H&E appearance of spindled cytoplasm in cohesive renal carcinoma"
+      ]
+    },
+    {
+      "event_id": "septal_lymphoplasmacytic_infiltrate",
+      "event_name": "Septal lymphoplasmacytic infiltrate",
+      "category": "immune_microenvironment",
+      "definition": "Lymphocytes with or without plasma cells occupy fibrous or vascular septa between tumor nests while largely sparing the nests.",
+      "visual_cues": [
+        "linear immune infiltrates along intratumoral septa",
+        "lymphoplasmacytic cells between but not within tumor nests"
+      ],
+      "exclusion_cues": [
+        "diffuse immune cells permeating carcinoma",
+        "peripheral lymphoid aggregate outside tumor"
+      ],
+      "prognostic_rationale": "Septal inflammation is spatially distinct from intratumoral and peritumoral patterns in the cohort-derived ccRCC ontology.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "multiple tumor nests and intervening immune-populated septa in one patch"
+      ],
+      "confounders": [
+        "ordinary perivascular cuffs",
+        "cropped tumor margin",
+        "folded fibrous tissue"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "lymphoid_spatial_pattern",
+      "prompt_templates": [
+        "H&E histopathology showing septal lymphoplasmacytic infiltration in clear cell renal carcinoma",
+        "photomicrograph demonstrating lymphocytes along septa between renal tumor nests",
+        "histologic section characterized by immune-populated intratumoral partitions",
+        "microscopic H&E appearance of septal inflammation between clear cell carcinoma nests"
+      ]
+    },
+    {
+      "event_id": "desmoplastic_stromal_response",
+      "event_name": "Desmoplastic stromal response",
+      "category": "stroma",
+      "definition": "Activated fibroblastic collagenous stroma surrounds or separates irregular viable tumor groups.",
+      "visual_cues": [
+        "fibroblastic collagen around tumor nests",
+        "reactive dense stroma interposed among irregular carcinoma groups"
+      ],
+      "exclusion_cues": [
+        "bland mature capsule",
+        "paucicellular hyalinized scar without entrapped viable tumor"
+      ],
+      "prognostic_rationale": "Desmoplasia is a locally visible tumor-stroma interaction candidate but is not an established ccRCC grading parameter.",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "reactive fibroblastic stroma in direct contact with viable carcinoma"
+      ],
+      "confounders": [
+        "native renal interstitial fibrosis",
+        "capsular collagen",
+        "scar from prior injury"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "fibrotic_stromal_change",
+      "prompt_templates": [
+        "H&E histopathology showing a desmoplastic stromal response around clear cell renal carcinoma",
+        "photomicrograph demonstrating fibroblastic collagen surrounding viable tumor nests",
+        "histologic section characterized by reactive stroma between irregular carcinoma groups",
+        "microscopic H&E appearance of desmoplasia in renal carcinoma"
+      ]
+    },
+    {
+      "event_id": "hyalinized_fibrotic_stroma",
+      "event_name": "Hyalinized fibrotic stroma",
+      "category": "stroma",
+      "definition": "Tumor contains dense glassy paucicellular collagen separating or replacing viable carcinoma areas.",
+      "visual_cues": [
+        "broad eosinophilic hyalinized collagen bands",
+        "paucicellular dense fibrosis within tumor"
+      ],
+      "exclusion_cues": [
+        "cellular fibroblastic desmoplasia",
+        "fibrin or coagulative necrosis"
+      ],
+      "prognostic_rationale": "Hyalinized fibrosis is a distinct local stromal state but has limited ccRCC-specific outcome evidence.",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "dense hyalinized collagen spatially integrated with viable tumor"
+      ],
+      "confounders": [
+        "tumor capsule",
+        "native renal scar",
+        "thick vessel wall"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "fibrotic_stromal_change",
+      "prompt_templates": [
+        "H&E histopathology showing hyalinized fibrotic stroma in clear cell renal carcinoma",
+        "photomicrograph demonstrating dense glassy collagen bands within renal tumor",
+        "histologic section characterized by paucicellular hyalinized fibrosis separating carcinoma",
+        "microscopic H&E appearance of hyalinized stroma in renal carcinoma"
+      ]
+    }
+  ],
+  "curation_metadata": {
+    "subset": "reserve",
+    "curator": "Codex-assisted computational pathology curation; independent genitourinary-pathologist review pending",
+    "review_date": "2026-07-18",
+    "pathologist_reviewed": false,
+    "criteria": [
+      "Core events must be directly observable in one 448x448 H&E patch at 20x.",
+      "Core size must be 20-25 and invasion must not dominate the distribution.",
+      "ISUP consensus features receive priority when locally observable.",
+      "Cohort-supported architecture and cytology are retained only when visually separable.",
+      "Anatomic and boundary-dependent diagnoses are isolated in a context catalog.",
+      "Lower-specificity, redundant, or strongly artifact-sensitive events remain reserve candidates.",
+      "All decisions remain pending independent genitourinary-pathologist review."
+    ],
+    "decisions": [
+      {
+        "event_id": "large_nest_architecture",
+        "decision": "reserve",
+        "reason": "Patch-observable but likely to overlap compact nested and solid patterns under text encoding."
+      },
+      {
+        "event_id": "hemorrhagic_follicular_architecture",
+        "decision": "reserve",
+        "reason": "Cohort-described but particularly sensitive to operative hemorrhage, processing, and congestion."
+      },
+      {
+        "event_id": "alveolar_architecture",
+        "decision": "reserve",
+        "reason": "Valid morphology but high expected redundancy with nested architecture and delicate capillary network."
+      },
+      {
+        "event_id": "degenerative_tumor_giant_cells",
+        "decision": "reserve",
+        "reason": "Cohort-supported but vulnerable to macrophage and degeneration confounding; syncytial type retained instead."
+      },
+      {
+        "event_id": "cytoplasmic_spindling",
+        "decision": "reserve",
+        "reason": "Likely text and visual overlap with sarcomatoid differentiation despite a narrower definition."
+      },
+      {
+        "event_id": "septal_lymphoplasmacytic_infiltrate",
+        "decision": "reserve",
+        "reason": "Patch-observable but expected to overlap intratumoral inflammation when septal boundaries are incomplete."
+      },
+      {
+        "event_id": "desmoplastic_stromal_response",
+        "decision": "reserve",
+        "reason": "Locally visible but lower ccRCC specificity and potentially confounded by native renal fibrosis."
+      },
+      {
+        "event_id": "hyalinized_fibrotic_stroma",
+        "decision": "reserve",
+        "reason": "Locally visible but lower specificity and likely semantic overlap with scar-like regression."
+      }
+    ]
+  }
+}

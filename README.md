@@ -192,6 +192,132 @@ Useful arguments:
 
 The example script [scripts/SlotSPE.sh](scripts/SlotSPE.sh) shows how these arguments are combined for SLURM-based runs across studies and seeds.
 
+## CONCH Event Grounding (TCGA-KIRC)
+
+The fair primary comparison uses one normalized CONCH contrastive tensor for
+both `X_slot` and `Z_conch`. Original SlotSPE and Event-Gated SlotSPE therefore
+see the exact same patches and features; only event grounding differs. A legacy
+dual-stream UNI+CONCH experiment remains possible, but UNI, ResNet, or
+CTransPath vectors are rejected if passed as CONCH evidence. The default
+`slot_attention_type=original` remains unchanged.
+
+### 1. Install CONCH and build KIRC event text embeddings
+
+CONCH is a gated model. Request access at
+[MahmoodLab/CONCH](https://huggingface.co/MahmoodLab/CONCH), then use either a
+local checkpoint or `HF_TOKEN`; tokens and weights are never hard-coded.
+
+```bash
+bash scripts/setup_conch.sh
+
+# Local checkpoint mode (large artifacts are kept on /data0 by default)
+CONCH_CHECKPOINT=/data0/lfy_data/Pathology/checkpoints/conch/pytorch_model.bin \
+  CONCH_DEVICE=cuda \
+  bash scripts/build_tcga_kirc_event_bank.sh
+
+# Hugging Face mode
+export HF_TOKEN=<your_token>
+CONCH_FROM_HF=1 CONCH_DEVICE=cuda \
+  bash scripts/build_tcga_kirc_event_bank.sh
+```
+
+The checked-in `assets/event_bank/tcga_kirc/events_raw.json` contains 30
+Codex-generated candidates. They are machine-checkable candidates, not expert
+validated pathology labels. To generate another cancer-specific vocabulary,
+use `tools/generate_event_candidates.py --cancer-type ... --dataset ...` and
+review it with `tools/review_event_candidates.py`.
+
+Those files are retained as the v0 baseline. A separate scale-aware v2 workflow
+contains 38 evidence-tracked candidates, a 22-event patch-local core, and
+separate interface/WSI-context and reserve catalogs:
+
+```bash
+CONCH_DEVICE=cuda bash scripts/build_tcga_kirc_event_bank_v2.sh
+
+# Also audit v0/v2 activation on an existing patch-feature directory.
+CONCH_DEVICE=cuda \
+V2_PATCH_FEATURE_DIR=/data0/lfy_data/Pathology/CONCH/kirc/pt_files \
+bash scripts/build_tcga_kirc_event_bank_v2.sh
+```
+
+See [the v2 event-bank documentation](assets/event_bank/tcga_kirc/v2/README.md)
+for the schema, curation status, evidence sources, threshold sensitivity audit,
+and required expert-review checkpoint. The v2 workflow never overwrites v0.
+
+### 2. Stream TCGA-KIRC WSIs into CONCH PT files
+
+The repository already contains the 939-slide GDC manifest. The disk-bounded
+pipeline downloads one WSI at a time, creates non-overlapping 448x448 patches
+at 20x, encodes them with the official frozen CONCH model, validates normalized
+`[N,512]` float16 tensors, then deletes that raw WSI. Coordinate HDF5 files are
+retained because they are small and preserve reproducibility.
+
+```bash
+mkdir -p /data0/lfy_data/Pathology/checkpoints/conch
+# Manually place the gated pytorch_model.bin in the directory above.
+
+bash scripts/run_kirc_conch_preprocess.sh
+tmux attach -t kirc_conch
+```
+
+Defaults use `/data0/lfy_data/Pathology`, which currently has substantially
+more free disk than the root filesystem. Override `PATHOLOGY_DATA_ROOT`,
+`MODEL_CKPT`, `FEAT_DIR`, or `EXTRACT_BATCH_SIZE` through environment variables.
+The process is resumable and writes PT files atomically. Use the read-only
+storage report at any time:
+
+```bash
+bash scripts/audit_kirc_storage.sh
+```
+
+### 3. Run baseline or Event-Gated SlotSPE
+
+Use the same CONCH PT directory for the fair baseline:
+
+```bash
+bash scripts/run_kirc_conch_baseline.sh
+```
+
+Event-Gated training reuses those exact tensors as CONCH evidence:
+
+```bash
+EVENT_BANK_PATH=assets/event_bank/tcga_kirc/conch_event_bank.pt \
+  bash scripts/run_kirc_event_gated.sh
+```
+
+The historical UNI baseline remains available separately, but it is not the
+primary architecture-only comparison against Event-Gated SlotSPE.
+
+Set `--return_event_details` to return a third forward value containing
+`B_pre`, `B_post`, raw/support patch-event evidence, slot-event routing, visual
+support, all structured gates, and dominant event indices. Save that dictionary
+with `torch.save` and inspect it with:
+
+```bash
+python tools/inspect_slot_events.py \
+  --details /path/to/details.pt --slide-id TCGA-XX-XXXX --open-threshold 0.2
+```
+
+The inspection threshold only labels reports; it never replaces the continuous
+training gate.
+
+### 4. Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Tests that require the official package or real gated weights report an explicit
+skip when those external resources are unavailable. Unit tests never substitute
+random weights for a claimed CONCH artifact.
+
+### 5. Collaborating
+
+Keep datasets, gated weights, checkpoints, logs, and experiment outputs outside
+Git. Develop changes on a named feature branch and merge them through a reviewed
+pull request. See [CONTRIBUTING.md](CONTRIBUTING.md) for the setup, branch,
+testing, experiment-reporting, and data-security workflow.
+
 ### Expected Outputs
 
 For each run, the code creates a study- and experiment-specific subdirectory under `--results_dir`. The pipeline writes:

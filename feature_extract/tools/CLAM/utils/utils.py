@@ -17,14 +17,28 @@ import math
 from itertools import islice
 import collections
 from scipy.ndimage.filters import convolve
-import staintools
-import torchstain
 import openslide
 import cv2
 
-from utils import stainlib_augmentation
-
 device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+staintools = None
+torchstain = None
+
+def require_stain_tools():
+	global staintools, torchstain
+	if staintools is None or torchstain is None:
+		try:
+			import staintools as _staintools
+			import torchstain as _torchstain
+		except ImportError as e:
+			raise ImportError(
+				"staintools and torchstain are required only when color "
+				"normalization is enabled."
+			) from e
+		staintools = _staintools
+		torchstain = _torchstain
+	return staintools, torchstain
 
 SEP = '--'
 # Tensor with channel first, and values in [0, 255]
@@ -124,6 +138,7 @@ def color_normalization(img, normalizer):
 	:return
 	    torch.Tensor() with shape of [C, H, W]
 	"""
+	staintools, torchstain = require_stain_tools()
 	img = staintools.LuminosityStandardizer.standardize(img)
 	try:
 		if isinstance(normalizer, torchstain.normalizers.torch_macenko_normalizer.TorchMacenkoNormalizer):
@@ -140,6 +155,7 @@ def color_normalization(img, normalizer):
 	return rimg
 
 def get_color_normalizer(name, cn_method='macenko'):
+	staintools, torchstain = require_stain_tools()
 	assert name in ['x5-256', 'x20-256', 'thumbnail-256', 'camelyon16-x20-256']
 	assert cn_method in ['macenko', 'vahadane']
 	template_path = './docs/template-%s.jpg' % name
@@ -161,6 +177,8 @@ def color_augmentation(img, augmenter):
 	return res
 
 def get_color_augmenter(method='hed_lighter'):
+	from utils import stainlib_augmentation
+
 	assert method in ['hed_lighter', 'hed_light', 'hed_strong']
 	if method == 'hed_lighter':
 		hed_aug = stainlib_augmentation.HedLighterColorAugmenter()
@@ -342,4 +360,3 @@ def initialize_weights(module):
 		elif isinstance(m, nn.BatchNorm1d):
 			nn.init.constant_(m.weight, 1)
 			nn.init.constant_(m.bias, 0)
-

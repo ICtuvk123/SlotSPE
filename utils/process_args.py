@@ -83,6 +83,36 @@ def _process_args():
     parser.add_argument('--slot_num_omics', type=int, default=8, help='number of slots')
     parser.add_argument('--slot_iters', type=int, default=10, help='number of slot attention iterations')
 
+    # ---> CONCH event grounding (disabled by default for baseline compatibility)
+    parser.add_argument('--slot_attention_type', type=str, default='original',
+                        choices=['original', 'event_gated'])
+    parser.add_argument('--event_bank_path', type=str, default=None)
+    parser.add_argument('--conch_patch_feature_dir', type=str, default=None)
+    parser.add_argument('--slot_feature_encoder', type=str, default='unknown',
+                        help='Encoder used for raw SlotSPE patch features, e.g. uni or conch')
+    parser.add_argument('--reuse_slot_features_as_conch', action='store_true', default=False,
+                        help='Only valid for normalized CONCH contrastive SlotSPE features')
+    parser.add_argument('--require_conch_alignment', action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument('--event_bank_trainable', action='store_true', default=False)
+    parser.add_argument('--event_gate_start_iter', type=int, default=1)
+    parser.add_argument('--event_projection_dim', type=int, default=256)
+    parser.add_argument('--tau_event', type=float, default=0.10)
+    parser.add_argument('--patch_event_support_mode', type=str, default='calibrated_sigmoid',
+                        choices=['raw', 'calibrated_sigmoid', 'softmax'])
+    parser.add_argument('--delta_patch_event', type=float, default=0.20)
+    parser.add_argument('--beta_patch_event', type=float, default=0.10)
+    parser.add_argument('--tau_patch_event', type=float, default=0.10)
+    parser.add_argument('--delta_sem', type=float, default=0.20)
+    parser.add_argument('--beta_sem', type=float, default=0.10)
+    parser.add_argument('--delta_vis', type=float, default=0.30)
+    parser.add_argument('--beta_vis', type=float, default=0.10)
+    parser.add_argument('--use_agreement_gate', action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument('--lambda_js', type=float, default=1.0)
+    parser.add_argument('--lambda_event', type=float, default=1.0)
+    parser.add_argument('--event_residual_dropout', type=float, default=0.0)
+    parser.add_argument('--return_event_details', action='store_true', default=False)
+    parser.add_argument('--store_all_iterations', action='store_true', default=False)
+
     # ---> for gating mechanism, temperature=args.temperature
     parser.add_argument('--temperature', type=float, default=0.01, help='temperature for gating mechanism')
     # topk_ratio=0.25

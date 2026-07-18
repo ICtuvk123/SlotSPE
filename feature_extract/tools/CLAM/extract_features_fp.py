@@ -21,11 +21,18 @@ import openslide
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 import os.path as osp
 
+
+def atomic_torch_save(value, path):
+    """Write a tensor atomically so --auto_skip never accepts a partial file."""
+    partial_path = path + '.partial'
+    torch.save(value, partial_path)
+    os.replace(partial_path, path)
+
 def compute_w_loader(arch, file_path, output_path, wsi, model,
     batch_size = 8, verbose = 0, print_every=20, imagenet_pretrained=True, 
     custom_downsample=1, target_patch_size=-1, sampler_setting=None, custom_transforms=None,
     color_normalizer=None, color_augmenter=None, add_patch_noise=None, vertical_flip=False, 
-    save_h5_path=None, **kws):
+    save_h5_path=None, num_workers=4, save_dtype='float32', **kws):
     """
     args:
         arch: the name of model to use
@@ -49,7 +56,10 @@ def compute_w_loader(arch, file_path, output_path, wsi, model,
         sampler_setting=sampler_setting, color_normalizer=color_normalizer, 
         color_augmenter=color_augmenter, add_patch_noise=add_patch_noise, 
         vertical_flip=vertical_flip, custom_transforms=custom_transforms)
-    kwargs = {'num_workers': 4, 'pin_memory': True} if device.type == "cuda" else {}   #num_workers 4->0
+    kwargs = {
+        'num_workers': num_workers,
+        'pin_memory': True,
+    } if device.type == "cuda" else {'num_workers': num_workers}
     loader = DataLoader(dataset=dataset, batch_size=batch_size, **kwargs, collate_fn=collate_features)
 
     if verbose > 0:
@@ -69,8 +79,11 @@ def compute_w_loader(arch, file_path, output_path, wsi, model,
         else:
             raise ValueError(f"Invalid value of `proj_to_contrast` ({proj_to_contrast}).")
 
-    all_feats = None
-    all_coors = None
+    # Keep per-batch chunks and concatenate only once. The previous repeated
+    # torch.cat grew a new full-slide tensor for every batch (quadratic memory
+    # traffic), which is particularly expensive for large TCGA slides.
+    feature_chunks = None
+    coordinate_chunks = []
     for count, (batch, coords) in enumerate(loader):
         coords = torch.from_numpy(coords)
         with torch.no_grad():   
@@ -91,26 +104,40 @@ def compute_w_loader(arch, file_path, output_path, wsi, model,
                 features = model(batch)
 
             features = features.cpu() if not isinstance(features, tuple) else (features[0].cpu(), features[1].cpu())
-            
-            if all_feats is None:
-                all_feats = features
-                all_coors = coords
-            else:
-                if isinstance(all_feats, tuple) and isinstance(features, tuple):
-                    all_feats = (torch.cat([all_feats[0], features[0]], axis=0), torch.cat([all_feats[1], features[1]], axis=0))
-                else:
-                    all_feats = torch.cat([all_feats, features], axis=0)
+            if save_dtype == 'float16':
+                features = features.half() if not isinstance(features, tuple) else tuple(item.half() for item in features)
 
-                all_coors = torch.cat([all_coors, coords], axis=0)
+            if feature_chunks is None:
+                feature_chunks = ([features[0]], [features[1]]) if isinstance(features, tuple) else [features]
+            elif isinstance(features, tuple):
+                feature_chunks[0].append(features[0])
+                feature_chunks[1].append(features[1])
+            else:
+                feature_chunks.append(features)
+            coordinate_chunks.append(coords)
+
+    if feature_chunks is None:
+        raise RuntimeError(f'No patches were encoded from {file_path}')
+    if isinstance(feature_chunks, tuple):
+        all_feats = (torch.cat(feature_chunks[0], dim=0), torch.cat(feature_chunks[1], dim=0))
+    else:
+        all_feats = torch.cat(feature_chunks, dim=0)
+    all_coors = torch.cat(coordinate_chunks, dim=0)
     
     if isinstance(all_feats, tuple):
         print("two features' size:", all_feats[0].shape)
-        torch.save(all_feats[0], output_path[0])
-        torch.save(all_feats[1], output_path[1])
+        atomic_torch_save(all_feats[0], output_path[0])
+        atomic_torch_save(all_feats[1], output_path[1])
         print("saved pt files:", output_path)
     else:
         print('features size:', all_feats.shape)
-        torch.save(all_feats, output_path)
+        if arch == 'CONCH' and proj_to_contrast == 'Y':
+            norms = all_feats.float().norm(dim=-1)
+            if not torch.isfinite(all_feats).all():
+                raise RuntimeError('CONCH produced non-finite projected features')
+            if not torch.allclose(norms, torch.ones_like(norms), atol=5e-3, rtol=5e-3):
+                raise RuntimeError('CONCH projected features are not L2-normalized')
+        atomic_torch_save(all_feats, output_path)
         print('saved pt file:', output_path)
     
     if save_h5_path is not None:
@@ -129,17 +156,23 @@ def compute_w_loader(arch, file_path, output_path, wsi, model,
 
 @torch.no_grad()
 def conch_encoder_image(conch_model, batch, proj_contrast='Y'):
-    # Use CONCH's built-in functions
-    vis_features = conch_model.visual.forward_no_head(batch, normalize=False)
-    
+    """Encode with the public CONCH API.
+
+    Projected features are explicitly L2-normalized because they are reused
+    for image-text evidence. Unprojected features remain suitable for MIL.
+    """
+    model = conch_model.module if isinstance(conch_model, nn.DataParallel) else conch_model
     if proj_contrast == 'N':
-        image_features = vis_features
+        image_features = model.encode_image(batch, proj_contrast=False, normalize=False)
 
     elif proj_contrast == 'Y':
-        image_features = conch_model.visual.forward_project(vis_features)
+        image_features = model.encode_image(batch, proj_contrast=True, normalize=True)
 
     elif proj_contrast in ['NY', 'YN']:
-        image_features = (vis_features, conch_model.visual.forward_project(vis_features))
+        image_features = (
+            model.encode_image(batch, proj_contrast=False, normalize=False),
+            model.encode_image(batch, proj_contrast=True, normalize=True),
+        )
 
     return image_features
 
@@ -223,6 +256,10 @@ parser.add_argument('--csv_path', type=str, default=None)
 parser.add_argument('--feat_dir', type=str, default=None)
 parser.add_argument('--feat_dir_ext', type=str, default=None)
 parser.add_argument('--batch_size', type=int, default=256)
+parser.add_argument('--num_workers', type=int, default=4,
+                    help='Patch loader workers; set 0 or 1 on memory-constrained hosts.')
+parser.add_argument('--save_dtype', type=str, default='float32', choices=['float16', 'float32'],
+                    help='Storage dtype for output feature tensors.')
 parser.add_argument('--auto_skip', default=False, action='store_true')
 parser.add_argument('--custom_downsample', type=int, default=1)
 parser.add_argument('--target_patch_size', type=int, default=256)
@@ -350,7 +387,9 @@ if __name__ == '__main__':
         args_custom_transforms = processor
         print(f"[warning] Due to the use of {args.arch}, only using custom transforms and all other arguments are not active.")
     elif args.arch == 'CONCH':
-        from models.conch import create_model_from_pretrained
+        # Use the installed official CONCH package, shared with event-bank text
+        # encoding, so image and text features cannot silently drift apart.
+        from conch.open_clip_custom import create_model_from_pretrained
         model, preprocess = create_model_from_pretrained(
             "conch_ViT-B-16", 
             checkpoint_path=args.ckpt_path,
@@ -483,7 +522,8 @@ if __name__ == '__main__':
             custom_downsample=args.custom_downsample, target_patch_size=args.target_patch_size, sampler_setting=args_sampler,
             custom_transforms=args_custom_transforms, color_normalizer=color_normalizer, color_augmenter=color_augmenter,
             add_patch_noise=args.patch_noise, vertical_flip=args.vertical_flip, 
-            save_h5_path=output_h5_path, proj_to_contrast=args_proj_to_contrast
+            save_h5_path=output_h5_path, proj_to_contrast=args_proj_to_contrast,
+            num_workers=args.num_workers, save_dtype=args.save_dtype
         )
         time_elapsed = time.time() - time_start
         print('\ncomputing features for {} took {} s'.format(output_file_path, time_elapsed))

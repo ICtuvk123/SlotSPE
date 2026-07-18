@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 from models.slot_attention import MultiHeadSlotAttention, gumbel_topk_st, parallel_topk_st
+from models.event_gated_slot_attention import EventGatedSlotAttention
+from models.event_grounding import FrozenEventBank
 from models.transformer import IterativeCrossAttTransformer, Transformer
 from models.omics_encoder import SNN_Block, WSI_Mlp
 from utils.loss_func import NLLSurvLoss
@@ -170,10 +172,45 @@ class SlotSPE(nn.Module):
         self.wsi_mlp = WSI_Mlp(dim_in=self.wsi_embedding_dim, feat_dim=self.wsi_projection_dim)
 
         # ---> slot attention
-        self.slot_attention_wsi = MultiHeadSlotAttention(dim=self.wsi_projection_dim,
-                                                    num_slots=args.slot_num_wsi,
-                                                    iters=args.slot_iters,
-                                                    heads=8)
+        self.event_bank = None
+        if args.slot_attention_type == "original":
+            self.slot_attention_wsi = MultiHeadSlotAttention(dim=self.wsi_projection_dim,
+                                                        num_slots=args.slot_num_wsi,
+                                                        iters=args.slot_iters,
+                                                        heads=8)
+        elif args.slot_attention_type == "event_gated":
+            if not args.event_bank_path:
+                raise ValueError(
+                    "event_bank_path is required for slot_attention_type='event_gated'"
+                )
+            self.event_bank = FrozenEventBank(
+                args.event_bank_path, trainable=args.event_bank_trainable
+            )
+            self.slot_attention_wsi = EventGatedSlotAttention(
+                dim=self.wsi_projection_dim,
+                num_slots=args.slot_num_wsi,
+                iters=args.slot_iters,
+                heads=8,
+                event_embedding_dim=self.event_bank.embedding_dim,
+                event_projection_dim=args.event_projection_dim,
+                tau_event=args.tau_event,
+                event_gate_start_iter=args.event_gate_start_iter,
+                patch_event_support_mode=args.patch_event_support_mode,
+                delta_patch_event=args.delta_patch_event,
+                beta_patch_event=args.beta_patch_event,
+                tau_patch_event=args.tau_patch_event,
+                delta_sem=args.delta_sem,
+                beta_sem=args.beta_sem,
+                delta_vis=args.delta_vis,
+                beta_vis=args.beta_vis,
+                use_agreement_gate=args.use_agreement_gate,
+                lambda_js=args.lambda_js,
+                lambda_event=args.lambda_event,
+                event_residual_dropout=args.event_residual_dropout,
+                store_all_iterations=args.store_all_iterations,
+            )
+        else:
+            raise ValueError(f"Unknown slot_attention_type: {args.slot_attention_type}")
         self.slot_attention_omic = MultiHeadSlotAttention(dim=self.wsi_projection_dim,
                                                      num_slots=args.slot_num_omics,
                                                      iters=args.slot_iters,
@@ -280,7 +317,25 @@ class SlotSPE(nn.Module):
                 recon_omic_joint = self.reconstruction_head_joint(x_omics, slots_omic_from_wsi)
                 x_omics = recon_omic_joint
 
-        slots_wsi = self.slot_attention_wsi(x_wsi_proj) # (batch_size, num_slots, dim)
+        event_details = None
+        if self.args.slot_attention_type == "event_gated":
+            slot_result = self.slot_attention_wsi(
+                x_wsi_proj,
+                kwargs.get("z_conch"),
+                self.event_bank.embeddings,
+                mask=kwargs.get("patch_mask"),
+                z_feature_space="conch_contrastive",
+                event_feature_space=self.event_bank.feature_space,
+                return_event_details=self.args.return_event_details,
+            )
+            if self.args.return_event_details:
+                slots_wsi, event_details = slot_result
+                event_details["event_ids"] = list(self.event_bank.event_ids)
+                event_details["event_names"] = list(self.event_bank.event_names)
+            else:
+                slots_wsi = slot_result
+        else:
+            slots_wsi = self.slot_attention_wsi(x_wsi_proj) # (batch_size, num_slots, dim)
         # print(x_omics.shape)
         slots_omic = self.slot_attention_omic(x_omics)
 
@@ -329,4 +384,6 @@ class SlotSPE(nn.Module):
         else:
             # ---> total auxiliary loss
             aux_loss = 0.0
+        if self.args.slot_attention_type == "event_gated" and self.args.return_event_details:
+            return logits, aux_loss, event_details
         return logits, aux_loss

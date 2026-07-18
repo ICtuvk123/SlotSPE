@@ -1,0 +1,898 @@
+{
+  "model_name": "conch_ViT-B-16",
+  "encoder_type": "CONCH text encoder",
+  "feature_space": "conch_contrastive",
+  "normalized": true,
+  "prompt_ensemble": "mean_then_l2_normalize",
+  "cancer_type": "kidney renal clear cell carcinoma",
+  "dataset": "TCGA-KIRC",
+  "review_status": "machine_curated_pending_pathologist_review",
+  "event_ids": [
+    "compact_small_nest_architecture",
+    "thick_trabecular_insular_architecture",
+    "solid_sheet_architecture",
+    "microcystic_architecture",
+    "tubular_acinar_architecture",
+    "papillary_pseudopapillary_architecture",
+    "prominent_nucleoli",
+    "extreme_nuclear_pleomorphism",
+    "sarcomatoid_differentiation",
+    "rhabdoid_differentiation",
+    "syncytial_tumor_giant_cells",
+    "scant_cytoplasm_phenotype",
+    "abundant_eosinophilic_cytoplasm",
+    "cytoplasmic_hyaline_globules",
+    "brisk_mitotic_activity",
+    "atypical_mitotic_figures",
+    "coagulative_tumor_necrosis",
+    "delicate_capillary_network",
+    "microvascular_tumor_invasion",
+    "intratumoral_lymphoplasmacytic_infiltrate",
+    "intratumoral_neutrophil_infiltrate",
+    "scar_like_stromal_regression"
+  ],
+  "event_names": [
+    "Compact small-nest architecture",
+    "Thick trabecular-insular architecture",
+    "Solid sheet architecture",
+    "Microcystic architecture",
+    "Tubular-acinar architecture",
+    "Papillary-pseudopapillary architecture",
+    "Prominent nucleoli",
+    "Extreme nuclear pleomorphism",
+    "Sarcomatoid differentiation",
+    "Rhabdoid differentiation",
+    "Syncytial tumor giant cells",
+    "Scant-cytoplasm phenotype",
+    "Abundant eosinophilic cytoplasm",
+    "Cytoplasmic hyaline globules",
+    "Brisk mitotic activity",
+    "Atypical mitotic figures",
+    "Coagulative tumor necrosis",
+    "Delicate capillary network",
+    "Microvascular tumor invasion",
+    "Intratumoral lymphoplasmacytic infiltrate",
+    "Intratumoral neutrophil infiltrate",
+    "Scar-like stromal regression"
+  ],
+  "event_categories": [
+    "tumor_architecture",
+    "tumor_architecture",
+    "tumor_architecture",
+    "tumor_architecture",
+    "tumor_architecture",
+    "tumor_architecture",
+    "differentiation",
+    "differentiation",
+    "differentiation",
+    "differentiation",
+    "differentiation",
+    "differentiation",
+    "differentiation",
+    "differentiation",
+    "proliferation",
+    "proliferation",
+    "necrosis",
+    "vasculature",
+    "invasion",
+    "immune_microenvironment",
+    "immune_microenvironment",
+    "stroma"
+  ],
+  "event_definitions": [
+    "Viable carcinoma forms tightly packed small nests separated by delicate stromal or vascular partitions.",
+    "Tumor cells form thick elongated trabeculae or irregular islands separated by vascularized stroma.",
+    "Carcinoma grows as confluent sheets with little intervening vascular or stromal partitioning.",
+    "Tumor contains numerous small variably shaped cyst-like spaces within viable carcinoma.",
+    "Carcinoma forms repeated tubular or acinar units with true central lumina.",
+    "Tumor cells form true fibrovascular papillae or pseudopapillary projections around vascular cores.",
+    "Viable tumor nuclei contain readily conspicuous enlarged nucleoli at routine microscopic resolution.",
+    "Viable carcinoma contains strikingly enlarged, bizarre, and markedly variable tumor nuclei.",
+    "Renal carcinoma shows malignant spindle-cell or pleomorphic sarcoma-like transformation.",
+    "Tumor contains discohesive large cells with eccentric nuclei, prominent nucleoli, and abundant eosinophilic cytoplasm.",
+    "Viable carcinoma contains large multinucleated or multilobated syncytial tumor cells.",
+    "Tumor cells have a high nuclear-to-cytoplasmic ratio with little visible cytoplasm and reduced clear-cell appearance.",
+    "A viable tumor population contains voluminous granular eosinophilic rather than optically clear cytoplasm.",
+    "Tumor cells contain discrete round eosinophilic hyaline inclusions within their cytoplasm.",
+    "A viable tumor focus contains multiple readily identifiable mitotic figures.",
+    "Viable tumor cells show multipolar, asymmetric, or otherwise malformed mitotic figures.",
+    "Geographic dead tumor retains ghost-like architecture with eosinophilic cytoplasm and loss of viable nuclei.",
+    "A fine branching network of thin-walled capillaries separates or surrounds clear-cell tumor nests.",
+    "Cohesive carcinoma cells are present within a convincing endothelial-lined small vascular channel.",
+    "Small lymphocytes with or without plasma cells permeate viable tumor nests and contact carcinoma cells.",
+    "Neutrophils with segmented nuclei infiltrate viable carcinoma rather than being confined to necrotic debris.",
+    "A tumor focus is replaced by edematous-to-collagenized paucicellular scar-like stroma with reduced viable carcinoma."
+  ],
+  "event_prompts": [
+    [
+      "H&E histopathology showing compact small nests of clear cell renal carcinoma",
+      "photomicrograph demonstrating tightly packed small tumor nests separated by thin partitions",
+      "histologic section characterized by repeated cohesive small nests and delicate septa",
+      "microscopic H&E appearance of compact nested renal carcinoma architecture"
+    ],
+    [
+      "H&E histopathology showing thick trabecular and insular renal carcinoma architecture",
+      "photomicrograph demonstrating broad anastomosing tumor cords and irregular islands",
+      "histologic section characterized by thick trabeculae separated by vascular stroma",
+      "microscopic H&E appearance of trabecular-insular clear cell renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing solid sheet growth in clear cell renal carcinoma",
+      "photomicrograph demonstrating confluent viable tumor without nested partitions",
+      "histologic section characterized by broad uninterrupted sheets of renal carcinoma cells",
+      "microscopic H&E appearance of solid clear cell renal tumor architecture"
+    ],
+    [
+      "H&E histopathology showing microcystic architecture in clear cell renal carcinoma",
+      "photomicrograph demonstrating numerous small cyst-like spaces within viable tumor",
+      "histologic section characterized by repeated microcysts bordered by renal carcinoma cells",
+      "microscopic H&E appearance of microcystic clear cell renal tumor"
+    ],
+    [
+      "H&E histopathology showing tubular and acinar clear cell renal carcinoma architecture",
+      "photomicrograph demonstrating repeated tumor-lined tubules with true lumina",
+      "histologic section characterized by back-to-back acini formed by renal tumor cells",
+      "microscopic H&E appearance of tubular-acinar renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing papillary and pseudopapillary growth in clear cell renal carcinoma",
+      "photomicrograph demonstrating tumor-covered fibrovascular projections",
+      "histologic section characterized by papillary tufts around delicate vascular cores",
+      "microscopic H&E appearance of pseudopapillary renal carcinoma architecture"
+    ],
+    [
+      "H&E histopathology showing conspicuous nucleoli in clear cell renal carcinoma",
+      "photomicrograph demonstrating enlarged eosinophilic nucleoli in viable tumor nuclei",
+      "histologic section characterized by vesicular nuclei with readily visible macronucleoli",
+      "microscopic H&E appearance of nucleolar prominence in renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing extreme nuclear pleomorphism in clear cell renal carcinoma",
+      "photomicrograph demonstrating bizarre giant hyperchromatic tumor nuclei",
+      "histologic section characterized by striking variation in viable carcinoma nuclei",
+      "microscopic H&E appearance of extreme pleomorphic renal tumor cytology"
+    ],
+    [
+      "H&E histopathology showing sarcomatoid differentiation in renal carcinoma",
+      "photomicrograph demonstrating malignant spindle-cell transformation of renal carcinoma",
+      "histologic section characterized by pleomorphic sarcoma-like viable tumor",
+      "microscopic H&E appearance of a sarcomatoid renal carcinoma component"
+    ],
+    [
+      "H&E histopathology showing rhabdoid differentiation in clear cell renal carcinoma",
+      "photomicrograph demonstrating large discohesive cells with eccentric nuclei and eosinophilic cytoplasm",
+      "histologic section characterized by viable rhabdoid renal tumor cells",
+      "microscopic H&E appearance of a rhabdoid renal carcinoma component"
+    ],
+    [
+      "H&E histopathology showing syncytial tumor giant cells in clear cell renal carcinoma",
+      "photomicrograph demonstrating viable multinucleated malignant renal tumor cells",
+      "histologic section characterized by large syncytial cells with multiple atypical nuclei",
+      "microscopic H&E appearance of syncytial giant-cell renal carcinoma cytology"
+    ],
+    [
+      "H&E histopathology showing a scant-cytoplasm phenotype in clear cell renal carcinoma",
+      "photomicrograph demonstrating crowded tumor nuclei with narrow cytoplasmic rims",
+      "histologic section characterized by densely cellular renal carcinoma with little visible cytoplasm",
+      "microscopic H&E appearance of scant-cytoplasm renal tumor cells"
+    ],
+    [
+      "H&E histopathology showing abundant eosinophilic cytoplasm in clear cell renal carcinoma",
+      "photomicrograph demonstrating large polygonal renal tumor cells with voluminous pink cytoplasm",
+      "histologic section characterized by a granular eosinophilic tumor-cell population",
+      "microscopic H&E appearance of eosinophilic clear cell renal carcinoma cytology"
+    ],
+    [
+      "H&E histopathology showing cytoplasmic hyaline globules in clear cell renal carcinoma",
+      "photomicrograph demonstrating round eosinophilic inclusions within renal tumor cells",
+      "histologic section characterized by repeated intracellular hyaline globules",
+      "microscopic H&E appearance of hyaline cytoplasmic inclusions in renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing brisk mitotic activity in clear cell renal carcinoma",
+      "photomicrograph demonstrating multiple mitotic figures among viable renal tumor cells",
+      "histologic section characterized by frequent recognizable tumor-cell divisions",
+      "microscopic H&E appearance of a mitotically active renal carcinoma focus"
+    ],
+    [
+      "H&E histopathology showing atypical mitotic figures in clear cell renal carcinoma",
+      "photomicrograph demonstrating multipolar and malformed tumor-cell mitoses",
+      "histologic section characterized by asymmetric clumped mitotic chromosomes",
+      "microscopic H&E appearance of atypical cell division in renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing coagulative tumor necrosis in clear cell renal carcinoma",
+      "photomicrograph demonstrating geographic eosinophilic ghost tumor with nuclear loss",
+      "histologic section characterized by an abrupt viable-to-necrotic carcinoma transition",
+      "microscopic H&E appearance of coagulative necrosis in renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing a delicate capillary network in clear cell renal carcinoma",
+      "photomicrograph demonstrating fine branching vessels between clear tumor cells",
+      "histologic section characterized by a thin vascular mesh surrounding tumor nests",
+      "microscopic H&E appearance of delicate intratumoral capillaries in renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing microvascular invasion by clear cell renal carcinoma",
+      "photomicrograph demonstrating a cohesive tumor embolus in an endothelial-lined small vessel",
+      "histologic section characterized by renal carcinoma cells within a microvascular lumen",
+      "microscopic H&E appearance of small-vessel tumor invasion"
+    ],
+    [
+      "H&E histopathology showing intratumoral lymphoplasmacytic infiltration in clear cell renal carcinoma",
+      "photomicrograph demonstrating mature lymphocytes between viable renal tumor cells",
+      "histologic section characterized by lymphoplasmacytic cells permeating carcinoma nests",
+      "microscopic H&E appearance of immune cells directly contacting renal carcinoma"
+    ],
+    [
+      "H&E histopathology showing intratumoral neutrophils in clear cell renal carcinoma",
+      "photomicrograph demonstrating segmented neutrophils among viable renal tumor cells",
+      "histologic section characterized by neutrophils directly contacting non-necrotic carcinoma",
+      "microscopic H&E appearance of neutrophilic infiltration within viable renal tumor"
+    ],
+    [
+      "H&E histopathology showing scar-like stromal regression within clear cell renal carcinoma",
+      "photomicrograph demonstrating paucicellular collagenized stroma replacing a tumor focus",
+      "histologic section characterized by transition from viable carcinoma to scar-like tissue",
+      "microscopic H&E appearance of stromal regression in renal carcinoma"
+    ]
+  ],
+  "schema_version": "2.0",
+  "ontology_version": "tcga_kirc_v2",
+  "patch_spec": {
+    "width_px": 448,
+    "height_px": 448,
+    "magnification": 20,
+    "stain": "H&E"
+  },
+  "generation_metadata": {
+    "prompt_version": "tcga_kirc_v2.0",
+    "generator": "GPT-5 Codex evidence-constrained seed with deterministic schema checks",
+    "generated_at": "2026-07-18"
+  },
+  "curation_metadata": {
+    "subset": "patch_core",
+    "curator": "Codex-assisted computational pathology curation; independent genitourinary-pathologist review pending",
+    "review_date": "2026-07-18",
+    "pathologist_reviewed": false,
+    "criteria": [
+      "Core events must be directly observable in one 448x448 H&E patch at 20x.",
+      "Core size must be 20-25 and invasion must not dominate the distribution.",
+      "ISUP consensus features receive priority when locally observable.",
+      "Cohort-supported architecture and cytology are retained only when visually separable.",
+      "Anatomic and boundary-dependent diagnoses are isolated in a context catalog.",
+      "Lower-specificity, redundant, or strongly artifact-sensitive events remain reserve candidates.",
+      "All decisions remain pending independent genitourinary-pathologist review."
+    ],
+    "decisions": [
+      {
+        "event_id": "compact_small_nest_architecture",
+        "decision": "core",
+        "reason": "Patch-local cohort-defined architecture; retained as the representative compact nested pattern."
+      },
+      {
+        "event_id": "thick_trabecular_insular_architecture",
+        "decision": "core",
+        "reason": "Distinct cord-and-island architecture with direct patch observability and cohort support."
+      },
+      {
+        "event_id": "solid_sheet_architecture",
+        "decision": "core",
+        "reason": "Distinct loss of partitioned architecture with cohort evidence for advanced phenotypic evolution."
+      },
+      {
+        "event_id": "microcystic_architecture",
+        "decision": "core",
+        "reason": "Repeated microcysts are locally visible and distinguishable with explicit artifact exclusions."
+      },
+      {
+        "event_id": "tubular_acinar_architecture",
+        "decision": "core",
+        "reason": "True tumor-lined lumina define a separable patch-local architecture."
+      },
+      {
+        "event_id": "papillary_pseudopapillary_architecture",
+        "decision": "core",
+        "reason": "Fibrovascular projections are patch-local and visually distinct from tubular or nested growth."
+      },
+      {
+        "event_id": "prominent_nucleoli",
+        "decision": "core",
+        "reason": "Directly patch-visible consensus basis of WHO/ISUP nucleolar grading."
+      },
+      {
+        "event_id": "extreme_nuclear_pleomorphism",
+        "decision": "core",
+        "reason": "Directly visible consensus grade-four morphology with explicit degenerative-artifact exclusions."
+      },
+      {
+        "event_id": "sarcomatoid_differentiation",
+        "decision": "core",
+        "reason": "Consensus reportable morphology with a distinctive malignant spindle-cell phenotype."
+      },
+      {
+        "event_id": "rhabdoid_differentiation",
+        "decision": "core",
+        "reason": "Consensus reportable morphology with a defined patch-local cytologic constellation."
+      },
+      {
+        "event_id": "syncytial_tumor_giant_cells",
+        "decision": "core",
+        "reason": "Viable multinucleated malignant cells provide a more specific giant-cell phenotype than degenerative forms."
+      },
+      {
+        "event_id": "scant_cytoplasm_phenotype",
+        "decision": "core",
+        "reason": "Patch-local cohort-defined cytology that is distinct from classic clear or eosinophilic cells."
+      },
+      {
+        "event_id": "abundant_eosinophilic_cytoplasm",
+        "decision": "core",
+        "reason": "Patch-local cohort-defined phenotypic shift with explicit rhabdoid and fixation exclusions."
+      },
+      {
+        "event_id": "cytoplasmic_hyaline_globules",
+        "decision": "core",
+        "reason": "Specific intracellular inclusion pattern separable from architecture and stromal material."
+      },
+      {
+        "event_id": "brisk_mitotic_activity",
+        "decision": "core",
+        "reason": "Direct patch-visible proliferation signal retained as an explicitly exploratory event."
+      },
+      {
+        "event_id": "atypical_mitotic_figures",
+        "decision": "core",
+        "reason": "Morphologically distinct abnormal division pattern retained as an exploratory local event."
+      },
+      {
+        "event_id": "coagulative_tumor_necrosis",
+        "decision": "core",
+        "reason": "Consensus prognostic parameter with a locally observable viable-to-necrotic transition."
+      },
+      {
+        "event_id": "delicate_capillary_network",
+        "decision": "core",
+        "reason": "Directly observable vascular phenotype retained as a morphology-grounding anchor."
+      },
+      {
+        "event_id": "microvascular_tumor_invasion",
+        "decision": "core",
+        "reason": "Only invasion event in the core; a convincing endothelial-lined lumen is locally testable."
+      },
+      {
+        "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+        "decision": "core",
+        "reason": "Locally testable immune access to viable tumor with cohort-defined spatial semantics."
+      },
+      {
+        "event_id": "intratumoral_neutrophil_infiltrate",
+        "decision": "core",
+        "reason": "Directly visible segmented neutrophils in viable tumor with dedicated ccRCC cohort evidence."
+      },
+      {
+        "event_id": "scar_like_stromal_regression",
+        "decision": "core",
+        "reason": "Cohort-described local tumor-stroma state retained with a required within-patch tumor transition."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "isup_prognostic_2013",
+      "citation": "Delahunt et al. Am J Surg Pathol. 2013;37:1490-1504. PMID: 24025520.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24025520/",
+      "evidence_scope": "ISUP consensus on RCC morphotype, nucleolar grading, extreme pleomorphism, sarcomatoid and rhabdoid differentiation, tumor necrosis, and microvascular invasion."
+    },
+    {
+      "source_id": "isup_staging_2013",
+      "citation": "Trpkov et al. Am J Surg Pathol. 2013;37:1505-1517. PMID: 24025521.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24025521/",
+      "evidence_scope": "ISUP consensus definitions and sampling requirements for renal sinus, perinephric fat, and major-vein involvement."
+    },
+    {
+      "source_id": "caircc_ontology_2020",
+      "citation": "Cai et al. EBioMedicine. 2020;51:102526. PMID: 31859241; PMCID: PMC7000318.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7000318/",
+      "evidence_scope": "Systematic 33-parameter ccRCC morphology ontology spanning architecture, cytology, and tumor microenvironment in 549 tumors."
+    },
+    {
+      "source_id": "infiltrative_growth_2013",
+      "citation": "Fukatsu et al. Am J Clin Pathol. 2013;140:500-505. PMID: 24045546.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24045546/",
+      "evidence_scope": "Cohort evaluation of infiltrative versus expansive growth pattern in ccRCC."
+    },
+    {
+      "source_id": "tumor_necrosis_2012",
+      "citation": "Pichler et al. Am J Clin Pathol. 2012;137:283-289. PMID: 22261455.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22261455/",
+      "evidence_scope": "Large cohort evaluation of histologic tumor necrosis in clear cell and papillary RCC."
+    },
+    {
+      "source_id": "neutrophils_2021",
+      "citation": "Tessier-Cloutier et al. J Pathol Clin Res. 2021;7:385-396. PMID: 33665979; PMCID: PMC8185362.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8185362/",
+      "evidence_scope": "Pathologist-scored tumor-infiltrating neutrophils in clinically annotated ccRCC cohorts."
+    },
+    {
+      "source_id": "conch_2024",
+      "citation": "Lu et al. Nat Med. 2024;30:863-874. PMID: 38504017.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38504017/",
+      "evidence_scope": "Pathology vision-language representation and prompt ensembling methodology; not clinical validation of individual events."
+    }
+  ],
+  "event_metadata": [
+    {
+      "event_id": "compact_small_nest_architecture",
+      "event_name": "Compact small-nest architecture",
+      "category": "tumor_architecture",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "multiple complete viable tumor nests within the patch"
+      ],
+      "confounders": [
+        "tangentially cut tubules",
+        "crush-fragmented larger nests"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "nested_architecture"
+    },
+    {
+      "event_id": "thick_trabecular_insular_architecture",
+      "event_name": "Thick trabecular-insular architecture",
+      "category": "tumor_architecture",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "several intact thick cords or islands within viable tumor"
+      ],
+      "confounders": [
+        "compressed nested architecture",
+        "sectioning through tubular structures"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "trabecular_architecture"
+    },
+    {
+      "event_id": "solid_sheet_architecture",
+      "event_name": "Solid sheet architecture",
+      "category": "tumor_architecture",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "a viable confluent tumor field occupying a substantial part of the patch"
+      ],
+      "confounders": [
+        "densely packed small nests with inapparent septa",
+        "poorly preserved necrotic tissue"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "solid_architecture"
+    },
+    {
+      "event_id": "microcystic_architecture",
+      "event_name": "Microcystic architecture",
+      "category": "tumor_architecture",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "repeated microcystic spaces lined or bordered by viable tumor"
+      ],
+      "confounders": [
+        "tissue retraction",
+        "dilated capillaries",
+        "processing tears"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "microcystic_architecture"
+    },
+    {
+      "event_id": "tubular_acinar_architecture",
+      "event_name": "Tubular-acinar architecture",
+      "category": "tumor_architecture",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "multiple well-preserved tumor-lined lumina in one patch"
+      ],
+      "confounders": [
+        "entrapped native renal tubules",
+        "tangentially sectioned vessels"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "tubular_architecture"
+    },
+    {
+      "event_id": "papillary_pseudopapillary_architecture",
+      "event_name": "Papillary-pseudopapillary architecture",
+      "category": "tumor_architecture",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "several intact projections with recognizable vascular cores"
+      ],
+      "confounders": [
+        "processing fragmentation",
+        "papillary RCC or clear cell papillary tumor mimic"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "papillary_architecture"
+    },
+    {
+      "event_id": "prominent_nucleoli",
+      "event_name": "Prominent nucleoli",
+      "category": "differentiation",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "well-preserved viable tumor nuclei at sufficient resolution"
+      ],
+      "confounders": [
+        "out-of-focus scanning",
+        "section thickness",
+        "reactive non-neoplastic cells"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "nucleolar_grade"
+    },
+    {
+      "event_id": "extreme_nuclear_pleomorphism",
+      "event_name": "Extreme nuclear pleomorphism",
+      "category": "differentiation",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "well-preserved bizarre nuclei demonstrably belonging to viable carcinoma"
+      ],
+      "confounders": [
+        "degenerative atypia",
+        "crush artifact",
+        "large reactive stromal cells"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "grade_four_cytology"
+    },
+    {
+      "event_id": "sarcomatoid_differentiation",
+      "event_name": "Sarcomatoid differentiation",
+      "category": "differentiation",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "a cohesive viable malignant spindle or pleomorphic component"
+      ],
+      "confounders": [
+        "desmoplastic fibroblasts",
+        "smooth muscle in vessel walls",
+        "tissue crush"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "spindle_dedifferentiation"
+    },
+    {
+      "event_id": "rhabdoid_differentiation",
+      "event_name": "Rhabdoid differentiation",
+      "category": "differentiation",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "several viable tumor cells showing the complete rhabdoid constellation"
+      ],
+      "confounders": [
+        "histiocytes",
+        "degenerative tumor cells",
+        "eosinophilic non-rhabdoid phenotype"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "rhabdoid_dedifferentiation"
+    },
+    {
+      "event_id": "syncytial_tumor_giant_cells",
+      "event_name": "Syncytial tumor giant cells",
+      "category": "differentiation",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "viable multinucleated cells clearly integrated with carcinoma"
+      ],
+      "confounders": [
+        "reactive histiocytic giant cells",
+        "overlapping mononuclear tumor cells"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "tumor_giant_cells"
+    },
+    {
+      "event_id": "scant_cytoplasm_phenotype",
+      "event_name": "Scant-cytoplasm phenotype",
+      "category": "differentiation",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "a viable cohesive tumor population with consistently narrow cytoplasm"
+      ],
+      "confounders": [
+        "poor fixation",
+        "thick sections",
+        "dense lymphoid infiltrate"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "cytoplasmic_volume"
+    },
+    {
+      "event_id": "abundant_eosinophilic_cytoplasm",
+      "event_name": "Abundant eosinophilic cytoplasm",
+      "category": "differentiation",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "a coherent viable tumor focus with consistently abundant eosinophilic cytoplasm"
+      ],
+      "confounders": [
+        "ischemic eosinophilia",
+        "stain variation",
+        "oncocytic non-ccRCC mimic"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "cytoplasmic_volume"
+    },
+    {
+      "event_id": "cytoplasmic_hyaline_globules",
+      "event_name": "Cytoplasmic hyaline globules",
+      "category": "differentiation",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "multiple inclusions demonstrably located inside viable tumor cells"
+      ],
+      "confounders": [
+        "section overlap",
+        "intracytoplasmic erythrocytes",
+        "protein droplets in native tubules"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "cytoplasmic_inclusions"
+    },
+    {
+      "event_id": "brisk_mitotic_activity",
+      "event_name": "Brisk mitotic activity",
+      "category": "proliferation",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "multiple unequivocal mitoses in well-preserved viable carcinoma"
+      ],
+      "confounders": [
+        "apoptosis",
+        "crush artifact",
+        "small patch area and mitotic sampling variance"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "conch_2024"
+      ],
+      "semantic_group": "mitotic_activity"
+    },
+    {
+      "event_id": "atypical_mitotic_figures",
+      "event_name": "Atypical mitotic figures",
+      "category": "proliferation",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "an unequivocal malformed mitosis within viable carcinoma"
+      ],
+      "confounders": [
+        "apoptotic chromatin",
+        "overlapping nuclei",
+        "focus and resolution limitations"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "conch_2024"
+      ],
+      "semantic_group": "mitotic_activity"
+    },
+    {
+      "event_id": "coagulative_tumor_necrosis",
+      "event_name": "Coagulative tumor necrosis",
+      "category": "necrosis",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "dead tumor architecture and an identifiable viable-to-necrotic transition"
+      ],
+      "confounders": [
+        "infarcted non-neoplastic tissue",
+        "cautery artifact",
+        "processing-related tissue loss"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "tumor_necrosis_2012",
+        "conch_2024"
+      ],
+      "semantic_group": "tumor_necrosis"
+    },
+    {
+      "event_id": "delicate_capillary_network",
+      "event_name": "Delicate capillary network",
+      "category": "vasculature",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "several intact thin-walled vessels interposed among viable tumor cells"
+      ],
+      "confounders": [
+        "retraction artifact",
+        "vascular congestion",
+        "section thickness"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "intratumoral_vasculature"
+    },
+    {
+      "event_id": "microvascular_tumor_invasion",
+      "event_name": "Microvascular tumor invasion",
+      "category": "invasion",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "both tumor embolus and a convincing endothelial-lined lumen in the same patch"
+      ],
+      "confounders": [
+        "retraction artifact",
+        "floaters",
+        "mechanically displaced tumor fragments"
+      ],
+      "source_basis": [
+        "isup_prognostic_2013",
+        "conch_2024"
+      ],
+      "semantic_group": "microvascular_invasion"
+    },
+    {
+      "event_id": "intratumoral_lymphoplasmacytic_infiltrate",
+      "event_name": "Intratumoral lymphoplasmacytic infiltrate",
+      "category": "immune_microenvironment",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "viable tumor nests and immune cells within those nests in one patch"
+      ],
+      "confounders": [
+        "crushed tumor nuclei",
+        "perivascular lymphocytes",
+        "necrosis-associated inflammation"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "lymphoid_spatial_pattern"
+    },
+    {
+      "event_id": "intratumoral_neutrophil_infiltrate",
+      "event_name": "Intratumoral neutrophil infiltrate",
+      "category": "immune_microenvironment",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "segmented neutrophils and adjacent viable carcinoma in the same patch"
+      ],
+      "confounders": [
+        "necrosis-associated neutrophils",
+        "infection",
+        "poor resolution of granulocyte nuclei"
+      ],
+      "source_basis": [
+        "neutrophils_2021",
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "myeloid_inflammation"
+    },
+    {
+      "event_id": "scar_like_stromal_regression",
+      "event_name": "Scar-like stromal regression",
+      "category": "stroma",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "patch_local",
+      "patch_observable": "yes",
+      "required_context": [
+        "scar-like stroma and an adjacent viable tumor transition within one patch"
+      ],
+      "confounders": [
+        "pre-existing renal scar",
+        "capsule",
+        "biopsy tract",
+        "tissue processing loss"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020",
+        "conch_2024"
+      ],
+      "semantic_group": "fibrotic_stromal_change"
+    }
+  ],
+  "prompt_embeddings_shape": [
+    22,
+    4,
+    512
+  ],
+  "event_embeddings_shape": [
+    22,
+    512
+  ]
+}

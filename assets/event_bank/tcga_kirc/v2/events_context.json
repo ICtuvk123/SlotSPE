@@ -1,0 +1,414 @@
+{
+  "schema_version": "2.0",
+  "ontology_version": "tcga_kirc_v2",
+  "cancer_type": "kidney renal clear cell carcinoma",
+  "dataset": "TCGA-KIRC",
+  "status": "context_catalog_pending_pathologist_review",
+  "patch_spec": {
+    "width_px": 448,
+    "height_px": 448,
+    "magnification": 20,
+    "stain": "H&E"
+  },
+  "generation_metadata": {
+    "prompt_version": "tcga_kirc_v2.0",
+    "generator": "GPT-5 Codex evidence-constrained seed with deterministic schema checks",
+    "generated_at": "2026-07-18"
+  },
+  "sources": [
+    {
+      "source_id": "isup_prognostic_2013",
+      "citation": "Delahunt et al. Am J Surg Pathol. 2013;37:1490-1504. PMID: 24025520.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24025520/",
+      "evidence_scope": "ISUP consensus on RCC morphotype, nucleolar grading, extreme pleomorphism, sarcomatoid and rhabdoid differentiation, tumor necrosis, and microvascular invasion."
+    },
+    {
+      "source_id": "isup_staging_2013",
+      "citation": "Trpkov et al. Am J Surg Pathol. 2013;37:1505-1517. PMID: 24025521.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24025521/",
+      "evidence_scope": "ISUP consensus definitions and sampling requirements for renal sinus, perinephric fat, and major-vein involvement."
+    },
+    {
+      "source_id": "caircc_ontology_2020",
+      "citation": "Cai et al. EBioMedicine. 2020;51:102526. PMID: 31859241; PMCID: PMC7000318.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7000318/",
+      "evidence_scope": "Systematic 33-parameter ccRCC morphology ontology spanning architecture, cytology, and tumor microenvironment in 549 tumors."
+    },
+    {
+      "source_id": "infiltrative_growth_2013",
+      "citation": "Fukatsu et al. Am J Clin Pathol. 2013;140:500-505. PMID: 24045546.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24045546/",
+      "evidence_scope": "Cohort evaluation of infiltrative versus expansive growth pattern in ccRCC."
+    },
+    {
+      "source_id": "tumor_necrosis_2012",
+      "citation": "Pichler et al. Am J Clin Pathol. 2012;137:283-289. PMID: 22261455.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22261455/",
+      "evidence_scope": "Large cohort evaluation of histologic tumor necrosis in clear cell and papillary RCC."
+    },
+    {
+      "source_id": "neutrophils_2021",
+      "citation": "Tessier-Cloutier et al. J Pathol Clin Res. 2021;7:385-396. PMID: 33665979; PMCID: PMC8185362.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8185362/",
+      "evidence_scope": "Pathologist-scored tumor-infiltrating neutrophils in clinically annotated ccRCC cohorts."
+    },
+    {
+      "source_id": "conch_2024",
+      "citation": "Lu et al. Nat Med. 2024;30:863-874. PMID: 38504017.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38504017/",
+      "evidence_scope": "Pathology vision-language representation and prompt ensembling methodology; not clinical validation of individual events."
+    }
+  ],
+  "events": [
+    {
+      "event_id": "peritumoral_lymphoid_aggregates",
+      "event_name": "Peritumoral lymphoid aggregates",
+      "category": "immune_microenvironment",
+      "definition": "Dense localized lymphoid aggregates occupy host stroma immediately outside a confirmed tumor boundary.",
+      "visual_cues": [
+        "compact lymphoid clusters adjacent to tumor edge",
+        "peripheral stromal lymphocytes without intranest permeation"
+      ],
+      "exclusion_cues": [
+        "intratumoral lymphocytes",
+        "lymphoid tissue with no demonstrable tumor-host boundary"
+      ],
+      "prognostic_rationale": "Peritumoral inflammation is a distinct spatial category in the cohort-derived ccRCC microenvironment ontology.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "interface_context",
+      "patch_observable": "conditional",
+      "required_context": [
+        "a verified tumor-host interface extending beyond a cropped local field"
+      ],
+      "confounders": [
+        "intrarenal lymphoid aggregate remote from tumor",
+        "cropped intratumoral septum",
+        "adjacent lymph node"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020"
+      ],
+      "semantic_group": "lymphoid_spatial_pattern",
+      "prompt_templates": [
+        "H&E histopathology showing lymphoid aggregates beside renal carcinoma",
+        "photomicrograph demonstrating compact lymphocyte clusters adjacent to tumor",
+        "histologic section characterized by peripheral stromal lymphoid aggregates",
+        "microscopic H&E appearance of lymphoid organization near a renal tumor boundary"
+      ]
+    },
+    {
+      "event_id": "infiltrative_renal_parenchymal_growth",
+      "event_name": "Infiltrative renal parenchymal growth",
+      "category": "tissue_interface",
+      "definition": "Irregular tumor groups interdigitate with and entrap native renal tubules or glomeruli at a confirmed tumor boundary.",
+      "visual_cues": [
+        "carcinoma nests between native renal tubules",
+        "entrapped glomeruli at an irregular tumor edge"
+      ],
+      "exclusion_cues": [
+        "smooth pushing border",
+        "native tubules located within an unverified tumor-like region"
+      ],
+      "prognostic_rationale": "Infiltrative growth has cohort evidence in ccRCC, but a true tumor-host interface is needed for interpretation.",
+      "evidence_tier": "tier_2_cohort_supported",
+      "observation_scale": "interface_context",
+      "patch_observable": "conditional",
+      "required_context": [
+        "a confirmed tumor-parenchyma interface across adjacent fields or WSI context"
+      ],
+      "confounders": [
+        "entrapped tubules inside an expansile tumor",
+        "tangential sectioning",
+        "poorly oriented edge"
+      ],
+      "source_basis": [
+        "infiltrative_growth_2013",
+        "caircc_ontology_2020"
+      ],
+      "semantic_group": "invasive_front",
+      "prompt_templates": [
+        "H&E histopathology showing irregular renal carcinoma groups among native tubules",
+        "photomicrograph demonstrating tumor nests interdigitating with renal parenchyma",
+        "histologic section characterized by entrapped tubules and glomeruli beside carcinoma",
+        "microscopic H&E appearance of an irregular tumor-parenchyma interface"
+      ]
+    },
+    {
+      "event_id": "tumor_budding_at_invasive_front",
+      "event_name": "Tumor budding at an invasive front",
+      "category": "tissue_interface",
+      "definition": "Single tumor cells or tiny clusters detach from larger nests at a confirmed advancing tumor-host interface.",
+      "visual_cues": [
+        "isolated malignant cells near larger tumor nests",
+        "tiny detached tumor clusters in interface stroma"
+      ],
+      "exclusion_cues": [
+        "lymphocytes or histiocytes",
+        "artifactual fragments floating in empty spaces"
+      ],
+      "prognostic_rationale": "Budding is a plausible local invasion phenotype, but its reproducibility and ccRCC-specific evidence are limited.",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "interface_context",
+      "patch_observable": "conditional",
+      "required_context": [
+        "a verified advancing tumor-host boundary and continuity with the main tumor"
+      ],
+      "confounders": [
+        "tissue floaters",
+        "crush artifact",
+        "inflammatory cells",
+        "fragmented section edges"
+      ],
+      "source_basis": [
+        "infiltrative_growth_2013",
+        "caircc_ontology_2020"
+      ],
+      "semantic_group": "invasive_front",
+      "prompt_templates": [
+        "H&E histopathology showing small detached renal carcinoma clusters in interface stroma",
+        "photomicrograph demonstrating isolated tumor cells beside larger renal carcinoma nests",
+        "histologic section characterized by tiny carcinoma buds near a tumor boundary",
+        "microscopic H&E appearance of tumor-cell detachment at a renal carcinoma interface"
+      ]
+    },
+    {
+      "event_id": "immune_exclusion_at_tumor_margin",
+      "event_name": "Immune exclusion at a tumor margin",
+      "category": "immune_microenvironment",
+      "definition": "Lymphocytes accumulate in host stroma at a confirmed tumor margin while adjacent viable tumor nests remain sparsely infiltrated.",
+      "visual_cues": [
+        "dense stromal lymphocytes beside immune-sparse tumor",
+        "sharp spatial separation of lymphocytes and viable carcinoma"
+      ],
+      "exclusion_cues": [
+        "diffuse intratumoral lymphocytes",
+        "no demonstrable tumor-host margin"
+      ],
+      "prognostic_rationale": "Immune exclusion is an exploratory spatial interaction requiring interface context rather than a single arbitrary tumor patch.",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "interface_context",
+      "patch_observable": "conditional",
+      "required_context": [
+        "a confirmed margin with both peritumoral stroma and adjacent viable tumor across sufficient area"
+      ],
+      "confounders": [
+        "cropped margin",
+        "septal inflammation",
+        "heterogeneous sampling of immune cells"
+      ],
+      "source_basis": [
+        "caircc_ontology_2020"
+      ],
+      "semantic_group": "lymphoid_spatial_pattern",
+      "prompt_templates": [
+        "H&E histopathology showing stromal lymphocytes separated from viable renal carcinoma",
+        "photomicrograph demonstrating lymphocyte-rich stroma beside immune-sparse tumor nests",
+        "histologic section characterized by spatial separation of lymphocytes and carcinoma",
+        "microscopic H&E appearance of an immune-rich stromal and immune-sparse tumor interface"
+      ]
+    },
+    {
+      "event_id": "pseudocapsule_penetration",
+      "event_name": "Pseudocapsule penetration",
+      "category": "invasion",
+      "definition": "Tumor traverses a pre-existing fibrous pseudocapsule into surrounding tissue on an oriented tumor-boundary section.",
+      "visual_cues": [
+        "tumor nests crossing a fibrous rim",
+        "discontinuous capsule with outward tumor tongues"
+      ],
+      "exclusion_cues": [
+        "internal fibrous septum",
+        "tumor confined to one side of an intact collagenous band"
+      ],
+      "prognostic_rationale": "Capsular penetration is a boundary event whose anatomic meaning cannot be established from an isolated patch.",
+      "evidence_tier": "tier_3_exploratory",
+      "observation_scale": "wsi_anatomic_context",
+      "patch_observable": "no",
+      "required_context": [
+        "oriented gross and WSI confirmation that the collagenous band is the tumor pseudocapsule"
+      ],
+      "confounders": [
+        "intratumoral fibrous septum",
+        "scar",
+        "tangential sectioning of an intact capsule"
+      ],
+      "source_basis": [
+        "isup_staging_2013",
+        "infiltrative_growth_2013"
+      ],
+      "semantic_group": "anatomic_invasion",
+      "prompt_templates": [
+        "H&E histopathology showing renal carcinoma nests crossing a fibrous band",
+        "photomicrograph demonstrating tumor tongues traversing collagenous tissue",
+        "histologic section characterized by carcinoma on both sides of a fibrous rim",
+        "microscopic H&E appearance of renal tumor crossing a collagenous boundary"
+      ]
+    },
+    {
+      "event_id": "renal_sinus_invasion",
+      "event_name": "Renal sinus invasion",
+      "category": "invasion",
+      "definition": "Tumor involves renal sinus soft tissue, fat, or endothelial-lined spaces on appropriately sampled hilar-interface sections.",
+      "visual_cues": [
+        "tumor contacting sinus-type fat or loose tissue",
+        "tumor within an endothelial-lined space in renal sinus tissue"
+      ],
+      "exclusion_cues": [
+        "adipose tissue without proven sinus location",
+        "peripheral tumor-fat contact remote from the hilum"
+      ],
+      "prognostic_rationale": "Renal sinus invasion is a consensus staging parameter that requires gross orientation and targeted interface sampling.",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "wsi_anatomic_context",
+      "patch_observable": "no",
+      "required_context": [
+        "gross or WSI confirmation of renal sinus location and an adequately sampled tumor-sinus interface"
+      ],
+      "confounders": [
+        "perinephric fat",
+        "fat entrapped within tumor",
+        "lack of hilar orientation"
+      ],
+      "source_basis": [
+        "isup_staging_2013"
+      ],
+      "semantic_group": "anatomic_invasion",
+      "prompt_templates": [
+        "H&E histopathology showing renal carcinoma adjacent to adipose tissue and large vascular structures",
+        "photomicrograph demonstrating irregular tumor extension into loose fatty soft tissue",
+        "histologic section characterized by renal tumor among adipocytes and vascular channels",
+        "microscopic H&E appearance of a renal tumor and fatty tissue interface"
+      ]
+    },
+    {
+      "event_id": "perinephric_adipose_invasion",
+      "event_name": "Perinephric adipose invasion",
+      "category": "invasion",
+      "definition": "Tumor directly touches or extends as irregular tongues into perinephric tissue on an oriented outer renal interface.",
+      "visual_cues": [
+        "irregular carcinoma tongues among mature adipocytes",
+        "tumor directly contacting fat beyond the renal boundary"
+      ],
+      "exclusion_cues": [
+        "adipocytes within an unlocalized tumor field",
+        "smooth contact without confirmation of outer renal location"
+      ],
+      "prognostic_rationale": "Perinephric fat invasion is a consensus staging parameter requiring multiple oriented interface sections.",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "wsi_anatomic_context",
+      "patch_observable": "no",
+      "required_context": [
+        "gross and WSI confirmation of the outer renal-perinephric interface with adequate sampling"
+      ],
+      "confounders": [
+        "renal sinus fat",
+        "fat entrapped within tumor",
+        "tangential sectioning"
+      ],
+      "source_basis": [
+        "isup_staging_2013"
+      ],
+      "semantic_group": "anatomic_invasion",
+      "prompt_templates": [
+        "H&E histopathology showing renal carcinoma cells among mature adipocytes",
+        "photomicrograph demonstrating irregular tumor tongues extending through fatty tissue",
+        "histologic section characterized by carcinoma nests dissecting between adipocytes",
+        "microscopic H&E appearance of a renal tumor and adipose tissue interface"
+      ]
+    },
+    {
+      "event_id": "venous_tumor_thrombus",
+      "event_name": "Venous tumor thrombus",
+      "category": "invasion",
+      "definition": "A grossly identified renal or caval venous lumen contains cohesive tumor, with wall attachment assessed on oriented sections.",
+      "visual_cues": [
+        "large venous lumen occupied by cohesive carcinoma",
+        "tumor mass associated with venous wall, blood, or fibrin"
+      ],
+      "exclusion_cues": [
+        "small microvascular embolus",
+        "bland thrombus without tumor",
+        "unoriented blood-filled cleft"
+      ],
+      "prognostic_rationale": "Major-vein extension is a staging event whose interpretation depends on gross identification and oriented sampling.",
+      "evidence_tier": "tier_1_consensus",
+      "observation_scale": "wsi_anatomic_context",
+      "patch_observable": "no",
+      "required_context": [
+        "gross designation of the renal vein or vena cava and oriented wall or margin sampling"
+      ],
+      "confounders": [
+        "microvascular invasion",
+        "tissue displacement into a vascular space",
+        "bland fibrin thrombus"
+      ],
+      "source_basis": [
+        "isup_staging_2013"
+      ],
+      "semantic_group": "anatomic_invasion",
+      "prompt_templates": [
+        "H&E histopathology showing a large blood-filled vessel containing cohesive renal carcinoma",
+        "photomicrograph demonstrating viable tumor associated with a venous wall and fibrin",
+        "histologic section characterized by a large vascular lumen occupied by carcinoma",
+        "microscopic H&E appearance of cohesive renal tumor within a large vessel"
+      ]
+    }
+  ],
+  "curation_metadata": {
+    "subset": "interface_and_wsi_context",
+    "curator": "Codex-assisted computational pathology curation; independent genitourinary-pathologist review pending",
+    "review_date": "2026-07-18",
+    "pathologist_reviewed": false,
+    "criteria": [
+      "Core events must be directly observable in one 448x448 H&E patch at 20x.",
+      "Core size must be 20-25 and invasion must not dominate the distribution.",
+      "ISUP consensus features receive priority when locally observable.",
+      "Cohort-supported architecture and cytology are retained only when visually separable.",
+      "Anatomic and boundary-dependent diagnoses are isolated in a context catalog.",
+      "Lower-specificity, redundant, or strongly artifact-sensitive events remain reserve candidates.",
+      "All decisions remain pending independent genitourinary-pathologist review."
+    ],
+    "decisions": [
+      {
+        "event_id": "peritumoral_lymphoid_aggregates",
+        "decision": "context",
+        "reason": "Requires confirmation that the lymphoid aggregate lies outside a genuine tumor boundary."
+      },
+      {
+        "event_id": "infiltrative_renal_parenchymal_growth",
+        "decision": "context",
+        "reason": "A true tumor-parenchyma boundary must be established across adjacent fields or WSI context."
+      },
+      {
+        "event_id": "tumor_budding_at_invasive_front",
+        "decision": "context",
+        "reason": "Requires a verified advancing front and is vulnerable to fragmentation and inflammatory-cell mimics."
+      },
+      {
+        "event_id": "immune_exclusion_at_tumor_margin",
+        "decision": "context",
+        "reason": "Spatial exclusion cannot be inferred reliably without sufficient tumor-margin context."
+      },
+      {
+        "event_id": "pseudocapsule_penetration",
+        "decision": "context",
+        "reason": "An isolated fibrous band cannot be identified reliably as the tumor pseudocapsule."
+      },
+      {
+        "event_id": "renal_sinus_invasion",
+        "decision": "context",
+        "reason": "Requires gross hilar orientation and directed renal-sinus interface sampling."
+      },
+      {
+        "event_id": "perinephric_adipose_invasion",
+        "decision": "context",
+        "reason": "Tumor plus fat in one patch cannot establish perinephric rather than sinus or intratumoral location."
+      },
+      {
+        "event_id": "venous_tumor_thrombus",
+        "decision": "context",
+        "reason": "Major-vein identity and wall or margin relationship require gross and WSI orientation."
+      }
+    ]
+  }
+}

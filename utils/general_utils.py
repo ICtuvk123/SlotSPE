@@ -88,6 +88,30 @@ def _prepare_for_experiment(args):
                 'slot_num_wsi': args.slot_num_wsi,
                 'slot_num_omics': args.slot_num_omics,
                 'slot_iters': args.slot_iters,
+                'slot_attention_type': args.slot_attention_type,
+                'event_bank_path': args.event_bank_path,
+                'conch_patch_feature_dir': args.conch_patch_feature_dir,
+                'slot_feature_encoder': args.slot_feature_encoder,
+                'reuse_slot_features_as_conch': args.reuse_slot_features_as_conch,
+                'require_conch_alignment': args.require_conch_alignment,
+                'event_bank_trainable': args.event_bank_trainable,
+                'event_gate_start_iter': args.event_gate_start_iter,
+                'event_projection_dim': args.event_projection_dim,
+                'tau_event': args.tau_event,
+                'patch_event_support_mode': args.patch_event_support_mode,
+                'delta_patch_event': args.delta_patch_event,
+                'beta_patch_event': args.beta_patch_event,
+                'tau_patch_event': args.tau_patch_event,
+                'delta_sem': args.delta_sem,
+                'beta_sem': args.beta_sem,
+                'delta_vis': args.delta_vis,
+                'beta_vis': args.beta_vis,
+                'use_agreement_gate': args.use_agreement_gate,
+                'lambda_js': args.lambda_js,
+                'lambda_event': args.lambda_event,
+                'event_residual_dropout': args.event_residual_dropout,
+                'return_event_details': args.return_event_details,
+                'store_all_iterations': args.store_all_iterations,
                 'topk_ratio': args.topk_ratio,
                 'top_k_method': args.top_k_method,
                 }
@@ -191,6 +215,8 @@ def _get_custom_exp_code(args):
     param_code += "_seed" + str(args.seed)
     param_code += "_rW_" + str(args.slot_num_wsi)
     param_code += "_rG_" + str(args.slot_num_omics)
+    if args.slot_attention_type != "original":
+        param_code += "_sa_" + str(args.slot_attention_type)
     param_code += "_sp_" + str(args.specific_simple)
 
     # ----> Updating

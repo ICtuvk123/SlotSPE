@@ -34,7 +34,10 @@ def _unpack_data(data, device, omics_format):
     event_time = data[3].to(device)
     c = data[4].to(device)
 
-    return data_wsi, data_omics, y_disc, event_time, c
+    z_conch = data[5].to(device) if len(data) > 5 else None
+    patch_mask = data[6].to(device) if len(data) > 6 else None
+
+    return data_wsi, data_omics, y_disc, event_time, c, z_conch, patch_mask
 
 SIGNATURES = ["all", "six", "hallmarks", "combine", "xena"]
 RNA_FORMATS = ["RNASeq", "Pathways", "GeneEmbedding"]
@@ -187,12 +190,30 @@ class SurvivalDatasetFactory:
 
 
 class SurvivalDataset(Dataset):
-    def __init__(self, dataset_factory, wsi_path, split_key: str = 'train', fold=None, encoding_dim=768):
+    def __init__(
+        self,
+        dataset_factory,
+        wsi_path,
+        split_key: str = 'train',
+        fold=None,
+        encoding_dim=768,
+        conch_patch_feature_dir=None,
+        reuse_slot_features_as_conch=False,
+        slot_feature_encoder="unknown",
+        require_conch_alignment=True,
+    ):
         self.dataset_factory = dataset_factory
         self.wsi_path = wsi_path
         self.split_key = split_key
         self.fold = fold  # which fold to use
         self.encoding_dim = encoding_dim
+        self.conch_patch_feature_dir = conch_patch_feature_dir
+        self.reuse_slot_features_as_conch = reuse_slot_features_as_conch
+        self.slot_feature_encoder = str(slot_feature_encoder).casefold()
+        self.require_conch_alignment = require_conch_alignment
+        self.event_features_enabled = bool(
+            self.conch_patch_feature_dir or self.reuse_slot_features_as_conch
+        )
 
         if split_key in ['train', 'val']:
             self.label_df = self._load_split()
@@ -219,21 +240,78 @@ class SurvivalDataset(Dataset):
 
         return clinical_df_splits
 
-    def load_wsi(self, slides):
+    @staticmethod
+    def _slide_ids(slides):
+        return slides.split(", ")
+
+    @staticmethod
+    def _slide_stem(slide_id):
+        return slide_id[:-4] if slide_id.casefold().endswith(".svs") else slide_id
+
+    def load_wsi(self, slides, return_metadata=False):
         if str(slides) == "nan":
             return torch.zeros((1))
         else:
-            slide_ids = slides.split(", ")
+            slide_ids = self._slide_ids(slides)
             wsi = []
+            lengths = []
             for slide_id in slide_ids:
-                wsi_path = os.path.join(self.wsi_path, '{}.pt'.format(slide_id.rstrip('.svs')))
+                wsi_path = os.path.join(self.wsi_path, '{}.pt'.format(self._slide_stem(slide_id)))
                 if os.path.exists(wsi_path):
-                    wsi.append(torch.load(wsi_path))
+                    try:
+                        slide_features = torch.load(wsi_path, map_location="cpu", weights_only=True)
+                    except TypeError:
+                        slide_features = torch.load(wsi_path, map_location="cpu")
+                    if not isinstance(slide_features, torch.Tensor) or slide_features.ndim != 2:
+                        raise ValueError(f"WSI feature file must contain [N,D] Tensor: {wsi_path}")
+                    wsi.append(slide_features)
+                    lengths.append(slide_features.shape[0])
                 else:
+                    if self.event_features_enabled:
+                        raise FileNotFoundError(
+                            f"Missing SlotSPE features required for aligned event grounding: {wsi_path}"
+                        )
                     wsi.append(torch.zeros((self.dataset_factory.num_patches, self.encoding_dim)))
+                    lengths.append(self.dataset_factory.num_patches)
                     print("missing file: ", slide_id)
             wsi = torch.cat(wsi, dim=0).type(torch.float32)  # TODO: check the torch.float32
+            if return_metadata:
+                return wsi, slide_ids, lengths
             return wsi
+
+    def load_conch_features(self, slide_ids, expected_lengths):
+        """Load verified CONCH features in exactly the SlotSPE slide order."""
+        if self.reuse_slot_features_as_conch:
+            raise RuntimeError("Internal error: reuse mode should not load separate CONCH files")
+        conch_parts = []
+        for slide_id, expected_length in zip(slide_ids, expected_lengths):
+            stem = self._slide_stem(slide_id)
+            feature_path = os.path.join(self.conch_patch_feature_dir, f"{stem}.pt")
+            if not os.path.isfile(feature_path):
+                raise FileNotFoundError(f"Missing aligned CONCH patch features: {feature_path}")
+            try:
+                artifact = torch.load(feature_path, map_location="cpu", weights_only=True)
+            except TypeError:
+                artifact = torch.load(feature_path, map_location="cpu")
+            if not isinstance(artifact, dict):
+                raise ValueError(f"CONCH patch file must contain metadata dictionary: {feature_path}")
+            embeddings = artifact.get("conch_patch_embeddings")
+            if not isinstance(embeddings, torch.Tensor) or embeddings.ndim != 2:
+                raise ValueError(f"conch_patch_embeddings must be [N,D]: {feature_path}")
+            if artifact.get("slide_id") != stem:
+                raise ValueError(f"slide_id mismatch in {feature_path}")
+            if artifact.get("feature_space") != "conch_contrastive" or not artifact.get("normalized"):
+                raise ValueError(f"Invalid CONCH feature-space metadata: {feature_path}")
+            if self.require_conch_alignment and not artifact.get("alignment_verified", False):
+                raise ValueError(
+                    f"Patch order is not verified for {feature_path}; refusing silent alignment."
+                )
+            if embeddings.shape[0] != expected_length:
+                raise ValueError(
+                    f"Patch count mismatch for {stem}: SlotSPE={expected_length}, CONCH={embeddings.shape[0]}"
+                )
+            conch_parts.append(embeddings.float())
+        return torch.cat(conch_parts, dim=0)
 
     def load_genes(self, case_id):
         patient_genes = self.dataset_factory.gene_data_df[case_id]
@@ -279,7 +357,27 @@ class SurvivalDataset(Dataset):
         case_id = self.label_df.loc[idx, 'case id']
         slides = self.label_df.loc[idx, 'wsi']
         label, event_time, censorship = self.get_label(case_id)
-        wsi = self.load_wsi(slides)
+        if self.event_features_enabled:
+            wsi, slide_ids, slide_lengths = self.load_wsi(slides, return_metadata=True)
+            if self.reuse_slot_features_as_conch:
+                if self.slot_feature_encoder != "conch":
+                    raise ValueError(
+                        "reuse_slot_features_as_conch requires slot_feature_encoder='conch'; "
+                        f"got {self.slot_feature_encoder!r}"
+                    )
+                norms = wsi.norm(dim=-1)
+                if not torch.allclose(norms, torch.ones_like(norms), atol=5e-3, rtol=5e-3):
+                    raise ValueError(
+                        "Reused CONCH SlotSPE features are not normalized contrastive embeddings"
+                    )
+                z_conch = wsi.clone()
+            else:
+                z_conch = self.load_conch_features(slide_ids, slide_lengths)
+            patch_mask = torch.ones(wsi.shape[0], dtype=torch.bool)
+        else:
+            wsi = self.load_wsi(slides)
+            z_conch = None
+            patch_mask = None
         genes = self.load_genes(case_id)
 
         # sample from the patches
@@ -287,9 +385,19 @@ class SurvivalDataset(Dataset):
             n_samples = min(self.dataset_factory.num_patches, wsi.size(0))
             idx = np.sort(np.random.choice(wsi.size(0), n_samples, replace=False))
             wsi = wsi[idx, :]
+            if z_conch is not None:
+                z_conch = z_conch[idx, :]
+                patch_mask = patch_mask[idx]
 
             if n_samples < self.dataset_factory.num_patches:
-                wsi = torch.cat([wsi, torch.zeros(self.dataset_factory.num_patches - n_samples, wsi.size(1))], dim=0)
+                padding = self.dataset_factory.num_patches - n_samples
+                wsi = torch.cat([wsi, torch.zeros(padding, wsi.size(1))], dim=0)
+                if z_conch is not None:
+                    z_conch = torch.cat(
+                        [z_conch, torch.zeros(padding, z_conch.size(1), dtype=z_conch.dtype)],
+                        dim=0,
+                    )
+                    patch_mask = torch.cat([patch_mask, torch.zeros(padding, dtype=torch.bool)])
         if self.dataset_factory.num_genes is not None and self.split_key == 'train':
             if self.dataset_factory.rna_format != "Pathways":
                 n_genes = min(self.dataset_factory.num_genes, genes.size(0))
@@ -298,6 +406,8 @@ class SurvivalDataset(Dataset):
                 if n_genes < self.dataset_factory.num_genes:
                     genes = torch.cat([genes, torch.zeros(self.dataset_factory.num_genes - n_genes)], dim=0)
 
+        if z_conch is not None:
+            return wsi, genes, label, event_time, censorship, z_conch, patch_mask
         return wsi, genes, label, event_time, censorship
 
 
@@ -313,7 +423,11 @@ def _collate_pathways(batch):
     event_time = torch.FloatTensor([item[3] for item in batch])
     c = torch.FloatTensor([item[4] for item in batch])
 
-    return [img, omic_data_list, label, event_time, c]
+    result = [img, omic_data_list, label, event_time, c]
+    if len(batch[0]) > 5:
+        result.append(torch.stack([item[5] for item in batch]))
+        result.append(torch.stack([item[6] for item in batch]))
+    return result
 
 if __name__ == '__main__':
     from torch.utils.data import DataLoader, SubsetRandomSampler
@@ -344,8 +458,7 @@ if __name__ == '__main__':
         #     print(gene.shape)
 
     for i, data in enumerate(train_loader):
-        wsi, genes, label, event_time, censorship = _unpack_data(data, device="cpu", omics_format=rna_format)
+        wsi, genes, label, event_time, censorship, _, _ = _unpack_data(data, device="cpu", omics_format=rna_format)
         # print(wsi.shape, label, event_time, censorship)
         for gene in genes:
             print(gene.shape)
-

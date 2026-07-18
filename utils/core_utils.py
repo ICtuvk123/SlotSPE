@@ -38,8 +38,28 @@ def free_loader(loader):
 def _get_split(args, dataset_factory, cur):
     print('\nTraining Fold {}!'.format(cur))
     print('\nInit train/val splits...', end=' ')
-    train_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'train', cur, args.encoding_dim)
-    test_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'val', cur, args.encoding_dim)
+    if (
+        args.slot_attention_type == "event_gated"
+        and args.lambda_event != 0.0
+        and not args.conch_patch_feature_dir
+        and not args.reuse_slot_features_as_conch
+    ):
+        raise ValueError(
+            "Event-Gated SlotSPE requires --conch_patch_feature_dir, or explicitly verified "
+            "--reuse_slot_features_as_conch. Cross-encoder cosine is forbidden."
+        )
+    event_dataset_args = {
+        "conch_patch_feature_dir": args.conch_patch_feature_dir
+        if args.slot_attention_type == "event_gated" else None,
+        "reuse_slot_features_as_conch": args.reuse_slot_features_as_conch
+        if args.slot_attention_type == "event_gated" else False,
+        "slot_feature_encoder": args.slot_feature_encoder,
+        "require_conch_alignment": args.require_conch_alignment,
+    }
+    train_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'train', cur, args.encoding_dim,
+                                 **event_dataset_args)
+    test_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'val', cur, args.encoding_dim,
+                                **event_dataset_args)
     if args.rna_format == "Pathways" or args.rna_format == "RankedGenes":
         train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, num_workers=0, drop_last=True, collate_fn=_collate_pathways, pin_memory=False)
         test_loader = torch.utils.data.DataLoader(test_data, batch_size=1, shuffle=False, num_workers=0, collate_fn=_collate_pathways, pin_memory=False)
@@ -166,12 +186,20 @@ def _unpack_data(data, device, omics_format):
     event_time = data[3].to(device)
     c = data[4].to(device)
 
-    return data_wsi, data_omics, y_disc, event_time, c
+    z_conch = data[5].to(device) if len(data) > 5 else None
+    patch_mask = data[6].to(device) if len(data) > 6 else None
+
+    return data_wsi, data_omics, y_disc, event_time, c, z_conch, patch_mask
 
 def _process_data_and_forward(args, model, data, device, test=False):
-    data_wsi, data_omics, y_disc, event_time, c = _unpack_data(data, device, args.rna_format)
+    data_wsi, data_omics, y_disc, event_time, c, z_conch, patch_mask = _unpack_data(
+        data, device, args.rna_format
+    )
     
     input_args = {"x_wsi": data_wsi}
+    if z_conch is not None:
+        input_args["z_conch"] = z_conch
+        input_args["patch_mask"] = patch_mask
 
     input_args["cur_epoch"] = args.cur_epoch
     input_args['omic_missing'] = False
@@ -204,6 +232,15 @@ def _calculate_risk(h):
     return risk, survival.detach().cpu().numpy()
 
 
+def _unpack_slotspe_output(output):
+    """Accept the baseline pair and the optional event-debug triple."""
+    if not isinstance(output, (tuple, list)) or len(output) not in (2, 3):
+        raise ValueError("SlotSPE must return (logits, aux_loss[, event_details])")
+    logits, aux_loss = output[:2]
+    details = output[2] if len(output) == 3 else None
+    return logits, aux_loss, details
+
+
 def _update_arrays(all_risk_scores, all_censorships, all_event_times, event_time, censor, risk, clinical_data_list):
 
     all_risk_scores.append(risk)
@@ -232,7 +269,7 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
         h, y_disc, event_time, c = _process_data_and_forward(args, model, data, device)
 
         if args.method.startswith("SlotSPE"):
-            logits, slot_loss = h
+            logits, slot_loss, _ = _unpack_slotspe_output(h)
         else:
             raise ValueError(f"Method {args.method} not implemented")
 
@@ -364,7 +401,7 @@ def _summary(args, dataset_factory, model, loader, loss_fn, survival_train=None)
             h, y_disc, event_time, c = _process_data_and_forward(args, model, data, device, test=True)
 
             if args.method.startswith("SlotSPE"):
-                logits, _ = h
+                logits, _, _ = _unpack_slotspe_output(h)
             else:
                 raise ValueError(f"Method {args.method} not implemented")
 
