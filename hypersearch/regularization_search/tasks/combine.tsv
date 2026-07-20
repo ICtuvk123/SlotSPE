@@ -1,0 +1,1 @@
+task_id	phase	variant	tag	source_tag	seed	opt	lr	weight_decay	tau_event	lambda_event	topk_ratio	wsi_projection_dropout	fusion_dropout	event_residual_dropout	lambda_decoder_loss	lambda_recon_loss	event_projection_dim	slot_iters

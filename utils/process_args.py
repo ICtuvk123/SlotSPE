@@ -49,12 +49,20 @@ def _process_args():
     parser.add_argument('--max_epochs', type=int, default=30, help='maximum number of epochs to train (default: 200)')
     parser.add_argument('--lr', type=float, default=5e-4, help='learning rate (default: 0.0001)')
     parser.add_argument('--seed', type=int, default=3, help='random seed for reproducible experiment (default: 1)')
-    parser.add_argument('--opt', type=str, default="adam", help="Optimizer")
+    parser.add_argument('--opt', type=str, default="adam", help="Optimizer (adam, adamw, sgd)")
     parser.add_argument('--batch_size', type=int, default=32, help='batch_size')
     parser.add_argument('--bag_loss', type=str, choices=["nll_surv", "rank_surv", "cox_surv","sinkhorn_surv"], default="nll_surv",
                         help='survival loss function (default: ce)')
     parser.add_argument('--alpha_surv', type=float, default=0.5, help='weight given to uncensored patients')
     parser.add_argument('--reg', type=float, default=1e-3, help='weight decay / L2 (default: 1e-5)')
+    parser.add_argument(
+        '--weight_decay', type=float, default=None,
+        help='Explicit optimizer weight decay. AdamW falls back to --reg when omitted.'
+    )
+    parser.add_argument(
+        '--eval_slot_seed', type=int, default=None,
+        help='Base seed for deterministic validation Slot initialization; fold id is added.'
+    )
     parser.add_argument('--max_cindex', type=float, default=0.0, help='maximum c-index')
 
     #---> model related
@@ -65,6 +73,18 @@ def _process_args():
 
     # loss related
     parser.add_argument('--lambda_recon_loss', type=float, default=0.01, help="lambda for reconstruction loss")
+    parser.add_argument(
+        '--lambda_decoder_loss', type=float, default=1.0,
+        help='lambda for the two unimodal Slot decoder survival losses'
+    )
+    parser.add_argument(
+        '--wsi_projection_dropout', type=float, default=0.0,
+        help='dropout applied to projected WSI patch features during training'
+    )
+    parser.add_argument(
+        '--fusion_dropout', type=float, default=0.0,
+        help='dropout applied to the fused representation before survival prediction'
+    )
 
     # lr_scheduler
     parser.add_argument('--scheduler', type=str, default='cosine', choices=['cosine','step'], help='lr scheduler')
@@ -94,6 +114,12 @@ def _process_args():
                         help='Only valid for normalized CONCH contrastive SlotSPE features')
     parser.add_argument('--require_conch_alignment', action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument('--event_bank_trainable', action='store_true', default=False)
+    parser.add_argument('--vl_adapter_type', type=str, default='none', choices=['none', 'dyko'],
+                        help='Optional DyKo-style visual/text adapters for CONCH v1.5 + TITAN')
+    parser.add_argument('--vl_adapter_reduction', type=int, default=4,
+                        help='Bottleneck reduction used by both DyKo adapters')
+    parser.add_argument('--lambda_vl_alignment', type=float, default=0.0,
+                        help='Weight of KL(semantic event distribution || visual event distribution)')
     parser.add_argument('--event_gate_start_iter', type=int, default=1)
     parser.add_argument('--event_projection_dim', type=int, default=256)
     parser.add_argument('--tau_event', type=float, default=0.10)

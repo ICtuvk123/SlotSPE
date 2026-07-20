@@ -1,0 +1,10 @@
+task_id	phase	variant	tag	source_tag	seed	opt	lr	weight_decay	tau_event	lambda_event	topk_ratio	wsi_projection_dropout	fusion_dropout	event_residual_dropout	lambda_decoder_loss	lambda_recon_loss	event_projection_dim	slot_iters
+0	optimizer	lr0p0004_wd0p001	reg_optimizer_lr0p0004_wd0p001_0fddf040e9_s3	-	3	adamW	0.0004	0.001	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+1	optimizer	lr0p0004_wd0p01	reg_optimizer_lr0p0004_wd0p01_b4f1adbc13_s3	-	3	adamW	0.0004	0.01	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+2	optimizer	lr0p0004_wd0p05	reg_optimizer_lr0p0004_wd0p05_af173aee30_s3	-	3	adamW	0.0004	0.05	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+3	optimizer	lr0p0005_wd0p001	reg_optimizer_lr0p0005_wd0p001_08a1b1aa76_s3	-	3	adamW	0.0005	0.001	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+4	optimizer	lr0p0005_wd0p01	reg_optimizer_lr0p0005_wd0p01_239fb93fc3_s3	-	3	adamW	0.0005	0.01	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+5	optimizer	lr0p0005_wd0p05	reg_optimizer_lr0p0005_wd0p05_2bb1e54ee4_s3	-	3	adamW	0.0005	0.05	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+6	optimizer	lr0p0006_wd0p001	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	-	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+7	optimizer	lr0p0006_wd0p01	reg_optimizer_lr0p0006_wd0p01_a13397562e_s3	-	3	adamW	0.0006	0.01	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+8	optimizer	lr0p0006_wd0p05	reg_optimizer_lr0p0006_wd0p05_fcf4d08efe_s3	-	3	adamW	0.0006	0.05	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10

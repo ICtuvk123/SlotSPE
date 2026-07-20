@@ -244,6 +244,10 @@ See [the v2 event-bank documentation](assets/event_bank/tcga_kirc/v2/README.md)
 for the schema, curation status, evidence sources, threshold sensitivity audit,
 and required expert-review checkpoint. The v2 workflow never overwrites v0.
 
+The complete CONCH v1.5 patch encoder, TITAN text encoder, and DyKo-style dual
+Adapter workflow is documented in
+[feature_extract/docs/CONCH_V15_TITAN_DYKO_ADAPTER_V2.md](feature_extract/docs/CONCH_V15_TITAN_DYKO_ADAPTER_V2.md).
+
 ### 2. Stream TCGA-KIRC WSIs into CONCH PT files
 
 The repository already contains the 939-slide GDC manifest. The disk-bounded

@@ -66,6 +66,12 @@ def _prepare_for_experiment(args):
     print('Split dir:', args.split_dir)
 
 
+    explicit_weight_decay = getattr(args, 'weight_decay', None)
+    if explicit_weight_decay is None:
+        effective_weight_decay = args.reg if args.opt.casefold() in {'adamw', 'sgd', 'lamb'} else 0.0
+    else:
+        effective_weight_decay = explicit_weight_decay
+
     #---> store the settings
     settings = {'num_splits': args.k,
                 'k_start': args.k_start,
@@ -75,6 +81,8 @@ def _prepare_for_experiment(args):
                 'lr': args.lr,
                 'study': args.study,
                 'reg': args.reg,
+                'weight_decay': effective_weight_decay,
+                'eval_slot_seed': getattr(args, 'eval_slot_seed', None),
                 'label_col': args.label_col,
                 'bag_loss': args.bag_loss,
                 'seed': args.seed,
@@ -88,6 +96,10 @@ def _prepare_for_experiment(args):
                 'slot_num_wsi': args.slot_num_wsi,
                 'slot_num_omics': args.slot_num_omics,
                 'slot_iters': args.slot_iters,
+                'wsi_projection_dropout': getattr(args, 'wsi_projection_dropout', 0.0),
+                'fusion_dropout': getattr(args, 'fusion_dropout', 0.0),
+                'lambda_decoder_loss': getattr(args, 'lambda_decoder_loss', 1.0),
+                'lambda_recon_loss': args.lambda_recon_loss,
                 'slot_attention_type': args.slot_attention_type,
                 'event_bank_path': args.event_bank_path,
                 'conch_patch_feature_dir': args.conch_patch_feature_dir,
@@ -95,6 +107,9 @@ def _prepare_for_experiment(args):
                 'reuse_slot_features_as_conch': args.reuse_slot_features_as_conch,
                 'require_conch_alignment': args.require_conch_alignment,
                 'event_bank_trainable': args.event_bank_trainable,
+                'vl_adapter_type': args.vl_adapter_type,
+                'vl_adapter_reduction': args.vl_adapter_reduction,
+                'lambda_vl_alignment': args.lambda_vl_alignment,
                 'event_gate_start_iter': args.event_gate_start_iter,
                 'event_projection_dim': args.event_projection_dim,
                 'tau_event': args.tau_event,

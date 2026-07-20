@@ -1,0 +1,8 @@
+task_id	phase	variant	tag	source_tag	seed	opt	lr	weight_decay	tau_event	lambda_event	topk_ratio	wsi_projection_dropout	fusion_dropout	event_residual_dropout	lambda_decoder_loss	lambda_recon_loss	event_projection_dim	slot_iters
+0	dropout	wsi0p1	reg_dropout_wsi0p1_59fd452904_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.1	0.0	0.0	1.0	0.01	256	10
+1	dropout	wsi0p2	reg_dropout_wsi0p2_e1d58f7561_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.2	0.0	0.0	1.0	0.01	256	10
+2	dropout	fusion0p1	reg_dropout_fusion0p1_b8300c4a77_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.1	0.0	1.0	0.01	256	10
+3	dropout	fusion0p2	reg_dropout_fusion0p2_787b13aa2b_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.2	0.0	1.0	0.01	256	10
+4	dropout	event0p1	reg_dropout_event0p1_a8155b0b50_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.1	1.0	0.01	256	10
+5	dropout	event0p2	reg_dropout_event0p2_f2d519aa6d_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.2	1.0	0.01	256	10
+6	dropout	event0p3	reg_dropout_event0p3_90d319e06f_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.3	1.0	0.01	256	10

@@ -149,8 +149,9 @@ class EventGatedSlotAttention(MultiHeadSlotAttention):
         z_feature_space: str = "unknown",
         event_feature_space: str = "conch_contrastive",
         return_event_details: bool = False,
+        return_alignment_loss: bool = False,
     ) -> torch.Tensor | tuple[torch.Tensor, dict[str, Any]]:
-        if self.lambda_event == 0.0 and not return_event_details:
+        if self.lambda_event == 0.0 and not return_event_details and not return_alignment_loss:
             return super().forward(inputs, num_slots=num_slots)
         if inputs.ndim != 3 or inputs.shape[-1] != self.dim:
             raise ValueError(f"inputs must have shape [B,N,{self.dim}]")
@@ -179,6 +180,7 @@ class EventGatedSlotAttention(MultiHeadSlotAttention):
         event_values = self.event_value_projection(event_embeddings)
 
         iteration_details: list[dict[str, torch.Tensor]] = []
+        final_alignment_loss = inputs.new_zeros((), dtype=torch.float32)
         for iteration in range(self.iters):
             slots_prev = slots
             pre_competition, pre_aggregation = self._assign(slots_prev, keys, mask)
@@ -186,6 +188,7 @@ class EventGatedSlotAttention(MultiHeadSlotAttention):
             similarity, routing = self._slot_event_match(slots_prev, event_semantic)
             visual_support = torch.einsum("bkn,bmn->bkm", bbar_pre.float(), patch_support)
             gates = self.known_event_gate(similarity, routing, visual_support)
+            final_alignment_loss = gates["alignment_kl"].mean()
             effective_gate = gates["event_gate"]
             if iteration < self.event_gate_start_iter:
                 effective_gate = torch.zeros_like(effective_gate)
@@ -226,6 +229,7 @@ class EventGatedSlotAttention(MultiHeadSlotAttention):
                     "visual_gate": gates["visual_gate"],
                     "agreement_gate": gates["agreement_gate"],
                     "event_gate": effective_gate,
+                    "alignment_kl": gates["alignment_kl"],
                     "dominant_event": gates["dominant_event"],
                     "semantic_score": gates["semantic_score"],
                     "visual_score": gates["visual_score"],
@@ -235,12 +239,15 @@ class EventGatedSlotAttention(MultiHeadSlotAttention):
                 }
                 iteration_details.append(detail)
 
-        if not return_event_details:
+        if not return_event_details and not return_alignment_loss:
             return slots
-        if self.store_all_iterations:
+        if return_event_details and self.store_all_iterations:
             details: dict[str, Any] = {
                 key: [item[key] for item in iteration_details] for key in iteration_details[0]
             }
-        else:
+        elif return_event_details:
             details = iteration_details[-1]
+        else:
+            details = {}
+        details["vl_alignment_loss"] = final_alignment_loss
         return slots, details

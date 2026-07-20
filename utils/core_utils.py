@@ -8,6 +8,8 @@
 '''
 
 from ast import Lambda
+import csv
+from contextlib import contextmanager
 import numpy as np
 from sksurv.metrics import concordance_index_censored, concordance_index_ipcw, cumulative_dynamic_auc, brier_score, integrated_brier_score
 from sksurv.util import Surv
@@ -20,6 +22,70 @@ import os
 from utils.model_utils import _init_model
 import torch.nn.functional as F
 import gc
+
+
+def _resolved_weight_decay(args):
+    """Resolve the explicit weight-decay option without changing legacy Adam runs."""
+    explicit = getattr(args, "weight_decay", None)
+    value = args.reg if explicit is None else explicit
+    value = float(value)
+    if value < 0.0:
+        raise ValueError(f"weight_decay must be non-negative; got {value}")
+    return value
+
+
+def _build_weight_decay_param_groups(model, weight_decay):
+    """Apply AdamW decay to matrix weights, but not offsets, norms, or Slot priors."""
+    decay = []
+    no_decay = []
+    no_decay_names = []
+    decay_names = []
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad:
+            continue
+        normalized_name = name.casefold()
+        exclude = (
+            parameter.ndim <= 1
+            or name.endswith(".bias")
+            or "norm" in normalized_name
+            or "slots_mu" in normalized_name
+            or "slots_logsigma" in normalized_name
+        )
+        if exclude:
+            no_decay.append(parameter)
+            no_decay_names.append(name)
+        else:
+            decay.append(parameter)
+            decay_names.append(name)
+
+    groups = []
+    if decay:
+        groups.append({"params": decay, "weight_decay": float(weight_decay), "group_name": "decay"})
+    if no_decay:
+        groups.append({"params": no_decay, "weight_decay": 0.0, "group_name": "no_decay"})
+    return groups, {"decay": decay_names, "no_decay": no_decay_names}
+
+
+def _fold_eval_slot_seed(args, fold):
+    base_seed = getattr(args, "eval_slot_seed", None)
+    return None if base_seed is None else int(base_seed) + int(fold)
+
+
+@contextmanager
+def _fixed_evaluation_rng(seed, device):
+    """Use common random numbers for validation without consuming the training RNG."""
+    if seed is None:
+        yield
+        return
+
+    cuda_devices = []
+    if device.type == "cuda":
+        cuda_devices = [device.index if device.index is not None else torch.cuda.current_device()]
+    with torch.random.fork_rng(devices=cuda_devices, enabled=True):
+        torch.manual_seed(int(seed))
+        if device.type == "cuda":
+            torch.cuda.manual_seed(int(seed))
+        yield
 
 def free_loader(loader):
     if loader is None:
@@ -112,16 +178,33 @@ def _init_optim(args, model):
     """
     print('\nInit optimizer ...', end='\n')
 
-    if args.opt == "adam":
+    optimizer_name = args.opt.casefold()
+    explicit_weight_decay = getattr(args, "weight_decay", None)
 
-        optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    if optimizer_name == "adam":
+        # Preserve legacy behavior unless the new explicit option is supplied.
+        weight_decay = 0.0 if explicit_weight_decay is None else _resolved_weight_decay(args)
+        optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=weight_decay)
 
-    elif args.opt == 'sgd':
-        optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9, weight_decay=args.reg)
-    elif args.opt == "adamW":
-        optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.reg)
-    elif args.opt == "lamb":
-        optimizer = Lambda(model.parameters(), lr=args.lr, weight_decay=args.reg)
+    elif optimizer_name == 'sgd':
+        optimizer = optim.SGD(
+            model.parameters(), lr=args.lr, momentum=0.9,
+            weight_decay=_resolved_weight_decay(args)
+        )
+    elif optimizer_name == "adamw":
+        weight_decay = _resolved_weight_decay(args)
+        parameter_groups, parameter_group_names = _build_weight_decay_param_groups(
+            model, weight_decay
+        )
+        optimizer = optim.AdamW(parameter_groups, lr=args.lr, weight_decay=0.0)
+        optimizer.parameter_group_names = parameter_group_names
+        print(
+            f"AdamW weight decay: {weight_decay:g} "
+            f"({len(parameter_group_names['decay'])} decayed tensors, "
+            f"{len(parameter_group_names['no_decay'])} excluded tensors)"
+        )
+    elif optimizer_name == "lamb":
+        optimizer = Lambda(model.parameters(), lr=args.lr, weight_decay=_resolved_weight_decay(args))
     else:
         raise NotImplementedError
 
@@ -255,7 +338,19 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.train()
 
-    total_loss = 0
+    total_loss = 0.0
+    total_survival_loss = 0.0
+    total_aux_loss = 0.0
+    component_totals = {
+        "decoder_loss": 0.0,
+        "reconstruction_loss": 0.0,
+        "weighted_decoder_loss": 0.0,
+        "weighted_reconstruction_loss": 0.0,
+        "vl_alignment_loss": 0.0,
+        "weighted_vl_alignment_loss": 0.0,
+    }
+    num_batches = 0
+    learning_rate = optimizer.param_groups[0]["lr"]
     all_risk_scores = []
     all_censorships = []
     all_event_times = []
@@ -301,6 +396,14 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
 
 
         total_loss += loss.item()
+        total_survival_loss += loss_surv.item()
+        total_aux_loss += float(slot_loss.detach().item())
+        latest_components = getattr(model, "last_loss_components", {})
+        for key in component_totals:
+            value = latest_components.get(key)
+            if value is not None:
+                component_totals[key] += float(value.detach().item())
+        num_batches += 1
         risk, _ = _calculate_risk(logits)
         all_risk_scores, all_censorships, all_event_times = _update_arrays(all_risk_scores, all_censorships,
                                                                            all_event_times, event_time, c, risk, data)
@@ -311,7 +414,12 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
 
     scheduler.step()
 
-    total_loss /= len(loader.dataset)
+    total_loss /= max(num_batches, 1)
+    total_survival_loss /= max(num_batches, 1)
+    total_aux_loss /= max(num_batches, 1)
+    component_totals = {
+        key: value / max(num_batches, 1) for key, value in component_totals.items()
+    }
     all_risk_scores = np.concatenate(all_risk_scores, axis=0)
     all_censorships = np.concatenate(all_censorships, axis=0)
     all_event_times = np.concatenate(all_event_times, axis=0)
@@ -320,7 +428,19 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
     print('Epoch: {}, train_loss: {:.4f}, train_c_index: {:.4f}'.format(epoch, total_loss, c_index))
     log_file.write('Epoch: {}, train_loss: {:.4f}, train_c_index: {:.4f}\n'.format(epoch, total_loss, c_index))
 
-    return
+    return {
+        "learning_rate": learning_rate,
+        "train_loss": total_loss,
+        "train_survival_loss": total_survival_loss,
+        "train_aux_loss": total_aux_loss,
+        "train_decoder_loss": component_totals["decoder_loss"],
+        "train_reconstruction_loss": component_totals["reconstruction_loss"],
+        "train_weighted_decoder_loss": component_totals["weighted_decoder_loss"],
+        "train_weighted_reconstruction_loss": component_totals["weighted_reconstruction_loss"],
+        "train_vl_alignment_loss": component_totals["vl_alignment_loss"],
+        "train_weighted_vl_alignment_loss": component_totals["weighted_vl_alignment_loss"],
+        "train_cindex": c_index,
+    }
 
 
 def _calculate_metrics(loader, dataset_factory, survival_train, all_risk_scores, all_censorships, all_event_times,
@@ -382,7 +502,10 @@ def _calculate_metrics(loader, dataset_factory, survival_train, all_risk_scores,
     return c_index, c_index_ipcw, BS, IBS, iauc
 
 
-def _summary(args, dataset_factory, model, loader, loss_fn, survival_train=None):
+def _summary(
+    args, dataset_factory, model, loader, loss_fn, survival_train=None,
+    eval_slot_seed=None,
+):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.eval()
 
@@ -396,7 +519,7 @@ def _summary(args, dataset_factory, model, loader, loss_fn, survival_train=None)
 
     case_ids = loader.dataset.label_df["case id"]
     count = 0
-    with torch.no_grad():
+    with _fixed_evaluation_rng(eval_slot_seed, device), torch.no_grad():
         for batch_idx, data in enumerate(loader):
             h, y_disc, event_time, c = _process_data_and_forward(args, model, data, device, test=True)
 
@@ -452,12 +575,45 @@ def _save_results(cur, results_dict, args):
     _save_pkl(filename, results_dict)
 
 
+_EPOCH_METRIC_FIELDS = [
+    "fold", "epoch", "learning_rate",
+    "train_loss", "train_survival_loss", "train_aux_loss",
+    "train_decoder_loss", "train_reconstruction_loss",
+    "train_weighted_decoder_loss", "train_weighted_reconstruction_loss",
+    "train_vl_alignment_loss", "train_weighted_vl_alignment_loss",
+    "train_cindex", "val_cindex", "val_cindex_ipcw", "val_BS", "val_IBS",
+    "val_iauc", "val_loss", "generalization_gap", "is_best",
+]
+
+
+def _initialize_epoch_metrics(args, fold):
+    path = os.path.join(args.results_dir, f"fold_{fold}_epoch_metrics.csv")
+    with open(path, "w", newline="") as handle:
+        csv.DictWriter(handle, fieldnames=_EPOCH_METRIC_FIELDS).writeheader()
+    return path
+
+
+def _append_epoch_metrics(path, row):
+    with open(path, "a", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=_EPOCH_METRIC_FIELDS)
+        writer.writerow({key: row[key] for key in _EPOCH_METRIC_FIELDS})
+
+
 def _step(args, cur, loss_fn, model, dataset_factory, optimizer, scheduler, train_loader, val_loader, log_file):
     all_survival = _extract_survival_metadata(dataset_factory)
+    eval_slot_seed = _fold_eval_slot_seed(args, cur)
+    epoch_metrics_path = _initialize_epoch_metrics(args, cur)
+    epoch_records = []
+    best_record = None
 
     for epoch in range(args.max_epochs):
-        _train_loop_survival(args, epoch, model, train_loader, optimizer, scheduler, loss_fn, log_file)
-        results_dict, val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss = _summary(args, dataset_factory, model, val_loader, loss_fn, all_survival)
+        train_metrics = _train_loop_survival(
+            args, epoch, model, train_loader, optimizer, scheduler, loss_fn, log_file
+        )
+        results_dict, val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss = _summary(
+            args, dataset_factory, model, val_loader, loss_fn, all_survival,
+            eval_slot_seed=eval_slot_seed,
+        )
         print(
             'Epoch:{} Val c-index: {:.4f} | Final Val c-index2: {:.4f} | Final Val IBS: {:.4f} | Final Val iauc: {:.4f}'.format(
                 epoch,
@@ -475,41 +631,61 @@ def _step(args, cur, loss_fn, model, dataset_factory, optimizer, scheduler, trai
                 val_iauc
             ))
 
-        if val_cindex >= args.max_cindex:
+        is_best = best_record is None or val_cindex > args.max_cindex
+        record = {
+            "fold": cur,
+            "epoch": epoch,
+            **train_metrics,
+            "val_cindex": val_cindex,
+            "val_cindex_ipcw": val_cindex_ipcw,
+            "val_BS": val_BS,
+            "val_IBS": val_IBS,
+            "val_iauc": val_iauc,
+            "val_loss": val_loss,
+            "generalization_gap": train_metrics["train_cindex"] - val_cindex,
+            "is_best": int(is_best),
+        }
+        epoch_records.append(record)
+        _append_epoch_metrics(epoch_metrics_path, record)
+
+        if is_best:
             args.max_cindex = val_cindex
             args.max_cindex_epoch = epoch
+            best_record = record.copy()
             torch.save(model.state_dict(), os.path.join(args.results_dir, "model_best_s{}.pth".format(cur)))
             _save_results(cur, results_dict, args)
 
     # save the trained model
     torch.save(model.state_dict(), os.path.join(args.results_dir, "s_{}_checkpoint.pth".format(cur)))
 
-    results_dict, val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss = _summary(args,
-                                                                                                dataset_factory,
-                                                                                                model,
-                                                                                                val_loader, loss_fn,
-                                                                                                all_survival)
+    final_record = epoch_records[-1]
 
     print(
         'Final Val c-index: {:.4f} | Final Val c-index2: {:.4f} | Final Val IBS: {:.4f} | Final Val iauc: {:.4f}'.format(
-            val_cindex,
-            val_cindex_ipcw,
-            val_IBS,
-            val_iauc
+            final_record["val_cindex"],
+            final_record["val_cindex_ipcw"],
+            final_record["val_IBS"],
+            final_record["val_iauc"]
         ))
     log_file.write(
         'Final Val c-index: {:.4f} | Final Val c-index2: {:.4f} | Final Val IBS: {:.4f} | Final Val iauc: {:.4f}\n'.format(
-            val_cindex,
-            val_cindex_ipcw,
-            val_IBS,
-            val_iauc
+            final_record["val_cindex"],
+            final_record["val_cindex_ipcw"],
+            final_record["val_IBS"],
+            final_record["val_iauc"]
         ))
 
     best_model = torch.load(os.path.join(args.results_dir, "model_best_s{}.pth".format(cur)))
     model.load_state_dict(best_model)
-    _, val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss = _summary(args, dataset_factory,
-                                                                                     model, val_loader, loss_fn,
-                                                                                     all_survival)
+    best_results_dict, val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss = _summary(
+        args, dataset_factory, model, val_loader, loss_fn, all_survival,
+        eval_slot_seed=eval_slot_seed,
+    )
+    if eval_slot_seed is not None and not np.isclose(val_cindex, args.max_cindex, atol=1e-12):
+        raise RuntimeError(
+            "Deterministic best-checkpoint evaluation changed from "
+            f"{args.max_cindex:.12f} to {val_cindex:.12f}"
+        )
     print(
         'Best Val c-index: {:.4f} | Best Val c-index2: {:.4f} | Best Val IBS: {:.4f} | Best Val iauc: {:.4f}'.format(
             val_cindex,
@@ -525,7 +701,19 @@ def _step(args, cur, loss_fn, model, dataset_factory, optimizer, scheduler, trai
             val_iauc
         ))
 
-    return results_dict, (args.max_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss)
+    training_stats = {
+        "best_epoch": int(args.max_cindex_epoch),
+        "train_cindex_at_best": float(best_record["train_cindex"]),
+        "generalization_gap": float(best_record["train_cindex"] - val_cindex),
+        "final_epoch_val_cindex": float(final_record["val_cindex"]),
+        "best_to_final_val_drop": float(val_cindex - final_record["val_cindex"]),
+        "eval_slot_seed": eval_slot_seed,
+    }
+
+    return best_results_dict, (
+        val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss,
+        training_stats,
+    )
 
 
 def _train_val(args, dataset_factory, cur, log_file):

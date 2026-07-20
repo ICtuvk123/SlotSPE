@@ -360,9 +360,10 @@ class SurvivalDataset(Dataset):
         if self.event_features_enabled:
             wsi, slide_ids, slide_lengths = self.load_wsi(slides, return_metadata=True)
             if self.reuse_slot_features_as_conch:
-                if self.slot_feature_encoder != "conch":
+                if self.slot_feature_encoder not in {"conch", "conch_v1_5"}:
                     raise ValueError(
-                        "reuse_slot_features_as_conch requires slot_feature_encoder='conch'; "
+                        "reuse_slot_features_as_conch requires slot_feature_encoder to be "
+                        "'conch' or 'conch_v1_5'; "
                         f"got {self.slot_feature_encoder!r}"
                     )
                 norms = wsi.norm(dim=-1)

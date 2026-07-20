@@ -124,6 +124,7 @@ class OriginalSlotSPECompatibilityTest(unittest.TestCase):
                 slot_num_omics=3, slot_iters=2, temperature=0.1, topk_ratio=0.5,
                 top_k_method="parallel_topk_st", bag_loss="nll_surv", alpha_surv=0.5,
                 lambda_recon_loss=0.01, event_bank_path=str(bank_path),
+                slot_feature_encoder="conch",
                 event_bank_trainable=False, event_projection_dim=16, tau_event=0.1,
                 event_gate_start_iter=1, patch_event_support_mode="calibrated_sigmoid",
                 delta_patch_event=0.2, beta_patch_event=0.1, tau_patch_event=0.1,

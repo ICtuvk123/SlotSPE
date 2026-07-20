@@ -3,6 +3,7 @@ import torch.nn as nn
 from models.slot_attention import MultiHeadSlotAttention, gumbel_topk_st, parallel_topk_st
 from models.event_gated_slot_attention import EventGatedSlotAttention
 from models.event_grounding import FrozenEventBank
+from models.cross_modal_adapter import DyKoAdapter
 from models.transformer import IterativeCrossAttTransformer, Transformer
 from models.omics_encoder import SNN_Block, WSI_Mlp
 from utils.loss_func import NLLSurvLoss
@@ -151,6 +152,24 @@ class SlotSPE(nn.Module):
         # ---> wsi encoder
         self.wsi_embedding_dim = args.encoding_dim
         self.wsi_projection_dim = args.wsi_projection_dim
+        self.wsi_projection_dropout_p = float(getattr(args, "wsi_projection_dropout", 0.0))
+        self.fusion_dropout_p = float(getattr(args, "fusion_dropout", 0.0))
+        self.lambda_decoder_loss = float(getattr(args, "lambda_decoder_loss", 1.0))
+        self.vl_adapter_type = str(getattr(args, "vl_adapter_type", "none")).casefold()
+        self.vl_adapter_reduction = int(getattr(args, "vl_adapter_reduction", 4))
+        self.lambda_vl_alignment = float(getattr(args, "lambda_vl_alignment", 0.0))
+        for name, value in (
+            ("wsi_projection_dropout", self.wsi_projection_dropout_p),
+            ("fusion_dropout", self.fusion_dropout_p),
+        ):
+            if not 0.0 <= value < 1.0:
+                raise ValueError(f"{name} must be in [0, 1); got {value}")
+        if self.lambda_decoder_loss < 0.0:
+            raise ValueError("lambda_decoder_loss must be non-negative")
+        if self.vl_adapter_type not in {"none", "dyko"}:
+            raise ValueError("vl_adapter_type must be 'none' or 'dyko'")
+        if self.lambda_vl_alignment < 0.0:
+            raise ValueError("lambda_vl_alignment must be non-negative")
 
         # ---> omics props
         self.omics_input_dim = omic_input_dim
@@ -170,9 +189,14 @@ class SlotSPE(nn.Module):
 
         # ---> wsi mlp
         self.wsi_mlp = WSI_Mlp(dim_in=self.wsi_embedding_dim, feat_dim=self.wsi_projection_dim)
+        self.wsi_projection_dropout = nn.Dropout(self.wsi_projection_dropout_p)
+        self.fusion_dropout = nn.Dropout(self.fusion_dropout_p)
+        self.last_loss_components = {}
 
         # ---> slot attention
         self.event_bank = None
+        self.path_adapter = None
+        self.text_adapter = None
         if args.slot_attention_type == "original":
             self.slot_attention_wsi = MultiHeadSlotAttention(dim=self.wsi_projection_dim,
                                                         num_slots=args.slot_num_wsi,
@@ -186,6 +210,43 @@ class SlotSPE(nn.Module):
             self.event_bank = FrozenEventBank(
                 args.event_bank_path, trainable=args.event_bank_trainable
             )
+            encoder_feature_spaces = {
+                "conch": "conch_contrastive",
+                "conch_v1_5": "conch_v1_5_patch_768",
+            }
+            raw_patch_feature_space = encoder_feature_spaces.get(
+                str(args.slot_feature_encoder).casefold(), "unknown"
+            )
+            if self.vl_adapter_type == "dyko":
+                if raw_patch_feature_space != "conch_v1_5_patch_768":
+                    raise ValueError("DyKo adapters require slot_feature_encoder='conch_v1_5'")
+                if self.event_bank.feature_space != "titan_text_768":
+                    raise ValueError(
+                        "DyKo adapters require a TITAN event bank marked 'titan_text_768'"
+                    )
+                if self.wsi_embedding_dim != 768 or self.event_bank.embedding_dim != 768:
+                    raise ValueError("DyKo CONCH v1.5/TITAN adapters require 768-D inputs")
+                if self.event_bank.trainable:
+                    raise ValueError("Keep the TITAN event bank frozen when training adapters")
+                self.path_adapter = DyKoAdapter(
+                    self.wsi_embedding_dim, reduction=self.vl_adapter_reduction
+                )
+                self.text_adapter = DyKoAdapter(
+                    self.event_bank.embedding_dim, reduction=self.vl_adapter_reduction
+                )
+                self.patch_event_feature_space = "conch_v1_5_titan_dyko_adapter_768"
+                self.event_feature_space = self.patch_event_feature_space
+            else:
+                self.patch_event_feature_space = raw_patch_feature_space
+                self.event_feature_space = self.event_bank.feature_space
+
+            if self.patch_event_feature_space != self.event_feature_space:
+                raise ValueError(
+                    "Slot feature encoder and event bank are incompatible: "
+                    f"encoder={args.slot_feature_encoder!r} maps to "
+                    f"{self.patch_event_feature_space!r}, bank={self.event_feature_space!r}. "
+                    "CONCH v1.5 patch and TITAN text tokens require --vl_adapter_type dyko."
+                )
             self.slot_attention_wsi = EventGatedSlotAttention(
                 dim=self.wsi_projection_dim,
                 num_slots=args.slot_num_wsi,
@@ -289,7 +350,21 @@ class SlotSPE(nn.Module):
 
     def forward(self, **kwargs):
         x_wsi = kwargs['x_wsi']  # (batch_size, num_patches, dim)
-        x_wsi_proj = self.wsi_mlp(x_wsi)
+        z_event = kwargs.get("z_conch")
+        event_embeddings = self.event_bank.embeddings if self.event_bank is not None else None
+        if self.vl_adapter_type == "dyko":
+            if z_event is None or event_embeddings is None:
+                raise ValueError("DyKo adapter mode requires patch and event tokens")
+            z_event = self.path_adapter(z_event)
+            event_embeddings = self.text_adapter(event_embeddings)
+            if getattr(self.args, "reuse_slot_features_as_conch", False):
+                if x_wsi.shape != z_event.shape:
+                    raise ValueError("Reused CONCH v1.5 patch tokens changed shape unexpectedly")
+                x_wsi = z_event
+
+        x_wsi_clean = self.wsi_mlp(x_wsi)
+        x_wsi_proj = self.wsi_projection_dropout(x_wsi_clean)
+        self.last_loss_components = {}
         # Encoder
         omic_missing = kwargs["omic_missing"]
 
@@ -318,22 +393,29 @@ class SlotSPE(nn.Module):
                 x_omics = recon_omic_joint
 
         event_details = None
+        vl_alignment_loss = x_wsi_proj.new_zeros((), dtype=torch.float32)
         if self.args.slot_attention_type == "event_gated":
+            need_alignment = self.training and self.lambda_vl_alignment > 0.0
             slot_result = self.slot_attention_wsi(
                 x_wsi_proj,
-                kwargs.get("z_conch"),
-                self.event_bank.embeddings,
+                z_event,
+                event_embeddings,
                 mask=kwargs.get("patch_mask"),
-                z_feature_space="conch_contrastive",
-                event_feature_space=self.event_bank.feature_space,
+                z_feature_space=self.patch_event_feature_space,
+                event_feature_space=self.event_feature_space,
                 return_event_details=self.args.return_event_details,
+                return_alignment_loss=need_alignment,
             )
+            if self.args.return_event_details or need_alignment:
+                slots_wsi, internal_event_details = slot_result
+                vl_alignment_loss = internal_event_details["vl_alignment_loss"]
+            else:
+                internal_event_details = None
+                slots_wsi = slot_result
             if self.args.return_event_details:
-                slots_wsi, event_details = slot_result
+                event_details = internal_event_details
                 event_details["event_ids"] = list(self.event_bank.event_ids)
                 event_details["event_names"] = list(self.event_bank.event_names)
-            else:
-                slots_wsi = slot_result
         else:
             slots_wsi = self.slot_attention_wsi(x_wsi_proj) # (batch_size, num_slots, dim)
         # print(x_omics.shape)
@@ -353,6 +435,7 @@ class SlotSPE(nn.Module):
 
         # survival prediction
         x = torch.cat([x_inter.mean(dim=1), wsi_intra.mean(dim=1), omic_intra.mean(dim=1)], dim=1)
+        x = self.fusion_dropout(x)
         logits = self.to_logits(x)
 
         if self.training:
@@ -365,9 +448,9 @@ class SlotSPE(nn.Module):
             recon_omic_joint = self.reconstruction_head_joint(x_omics, slots_omic_from_wsi)
             recon_mse += F.mse_loss(recon_omic_joint, h_omic_bag_origin)
 
-            recon_wsi = self.reconstruction_head_wsi(x_wsi_proj, slots_wsi, mask=wsi_keep_slots.bool())
+            recon_wsi = self.reconstruction_head_wsi(x_wsi_clean, slots_wsi, mask=wsi_keep_slots.bool())
             recon_wsi = F.normalize(recon_wsi, dim=-1)
-            target_wsi = F.normalize(x_wsi_proj, dim=-1)
+            target_wsi = F.normalize(x_wsi_clean, dim=-1)
             recon_loss_wsi = 1-F.cosine_similarity(recon_wsi, target_wsi, dim=-1).mean()
 
             # ---> reconstruction loss
@@ -380,7 +463,19 @@ class SlotSPE(nn.Module):
             loss_decoder = loss_decoder / y.shape[0]
 
             # ---> total auxiliary loss
-            aux_loss = loss_decoder + self.args.lambda_recon_loss * recon_loss
+            weighted_decoder_loss = self.lambda_decoder_loss * loss_decoder
+            weighted_recon_loss = self.args.lambda_recon_loss * recon_loss
+            weighted_vl_alignment_loss = self.lambda_vl_alignment * vl_alignment_loss
+            aux_loss = weighted_decoder_loss + weighted_recon_loss + weighted_vl_alignment_loss
+            self.last_loss_components = {
+                "decoder_loss": loss_decoder.detach(),
+                "reconstruction_loss": recon_loss.detach(),
+                "weighted_decoder_loss": weighted_decoder_loss.detach(),
+                "weighted_reconstruction_loss": weighted_recon_loss.detach(),
+                "vl_alignment_loss": vl_alignment_loss.detach(),
+                "weighted_vl_alignment_loss": weighted_vl_alignment_loss.detach(),
+                "aux_loss": aux_loss.detach(),
+            }
         else:
             # ---> total auxiliary loss
             aux_loss = 0.0

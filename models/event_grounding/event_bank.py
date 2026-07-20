@@ -50,8 +50,13 @@ class FrozenEventBank(nn.Module):
             norms, torch.ones_like(norms), atol=norm_tolerance, rtol=norm_tolerance
         ):
             raise ValueError("event_embeddings are not L2-normalized")
-        if artifact.get("feature_space") != "conch_contrastive":
-            raise ValueError("Event bank is not marked as CONCH contrastive space")
+        feature_space = artifact.get("feature_space")
+        if feature_space not in {
+            "conch_contrastive",
+            "conch_v1_5_contrastive",  # accepted for migration; direct use is rejected by SlotSPE
+            "titan_text_768",
+        }:
+            raise ValueError("Event bank is not marked as a supported pathology text space")
 
         if trainable:
             self._embeddings = nn.Parameter(embeddings)
@@ -60,7 +65,7 @@ class FrozenEventBank(nn.Module):
         self.trainable = bool(trainable)
         self.model_name = str(artifact.get("model_name", ""))
         self.encoder_type = str(artifact.get("encoder_type", ""))
-        self.feature_space = str(artifact["feature_space"])
+        self.feature_space = str(feature_space)
         self.review_status = str(artifact.get("review_status", "unknown"))
         self.cancer_type = str(artifact.get("cancer_type", ""))
         self.dataset = str(artifact.get("dataset", ""))

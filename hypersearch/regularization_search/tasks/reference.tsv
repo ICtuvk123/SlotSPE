@@ -1,0 +1,2 @@
+task_id	phase	variant	tag	source_tag	seed	opt	lr	weight_decay	tau_event	lambda_event	topk_ratio	wsi_projection_dropout	fusion_dropout	event_residual_dropout	lambda_decoder_loss	lambda_recon_loss	event_projection_dim	slot_iters
+0	reference	current_best	reg_reference_current_best_3d4def0467_s3	-	3	adam	0.0005	0	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	10

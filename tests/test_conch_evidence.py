@@ -50,6 +50,18 @@ class ConchEvidenceTest(unittest.TestCase):
             ConchPatchEventEvidence()(self.z, self.e,
                 z_feature_space="uni", event_feature_space="conch_contrastive")
 
+    def test_conch_v15_matching_space_is_accepted(self):
+        raw, _ = ConchPatchEventEvidence()(self.z, self.e,
+            z_feature_space="conch_v1_5_contrastive",
+            event_feature_space="conch_v1_5_contrastive")
+        self.assertEqual(raw.shape, (2, 10, 32))
+
+    def test_conch_versions_cannot_be_mixed(self):
+        with self.assertRaises(FeatureSpaceMismatchError):
+            ConchPatchEventEvidence()(self.z, self.e,
+                z_feature_space="conch_v1_5_contrastive",
+                event_feature_space="conch_contrastive")
+
 
 if __name__ == "__main__":
     unittest.main()

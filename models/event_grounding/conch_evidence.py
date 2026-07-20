@@ -15,6 +15,11 @@ class ConchPatchEventEvidence(nn.Module):
     """Compute absolute cosine evidence between CONCH image and text embeddings."""
 
     MODES = {"raw", "calibrated_sigmoid", "softmax"}
+    FEATURE_SPACES = {
+        "conch_contrastive",
+        "conch_v1_5_contrastive",
+        "conch_v1_5_titan_dyko_adapter_768",
+    }
 
     def __init__(
         self,
@@ -39,12 +44,17 @@ class ConchPatchEventEvidence(nn.Module):
 
     @staticmethod
     def validate_feature_spaces(z_feature_space: str, event_feature_space: str) -> None:
-        expected = "conch_contrastive"
-        if z_feature_space != expected or event_feature_space != expected:
+        if (
+            z_feature_space not in ConchPatchEventEvidence.FEATURE_SPACES
+            or event_feature_space not in ConchPatchEventEvidence.FEATURE_SPACES
+            or z_feature_space != event_feature_space
+        ):
             raise FeatureSpaceMismatchError(
-                "Patch-event cosine requires CONCH contrastive image and text embeddings; "
+                "Patch-event cosine requires matching CONCH image/text versions in a "
+                "supported contrastive space; "
                 f"got patch={z_feature_space!r}, event={event_feature_space!r}. "
-                "UNI/ResNet/CTransPath SlotSPE features cannot be compared directly."
+                "CONCH v1 and v1.5, as well as UNI/ResNet/CTransPath, cannot be "
+                "compared across encoders."
             )
 
     def _validate_normalized(

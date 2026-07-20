@@ -21,6 +21,11 @@ if [[ ! -d "${DATA_ROOT_DIR}" ]]; then
     exit 1
 fi
 
+EXTRA_ARGS=()
+if [[ -n "${EVAL_SLOT_SEED:-}" ]]; then
+    EXTRA_ARGS+=(--eval_slot_seed "${EVAL_SLOT_SEED}")
+fi
+
 "${PYTHON_BIN}" survival.py \
     --data_root_dir "${DATA_ROOT_DIR}" \
     --data_path "${DATA_PATH}" \
@@ -60,4 +65,9 @@ fi
     --beta_vis 0.10 \
     --lambda_js 1.0 \
     --lambda_event 1.0 \
+    --wsi_projection_dropout "${WSI_PROJECTION_DROPOUT:-0.0}" \
+    --fusion_dropout "${FUSION_DROPOUT:-0.0}" \
+    --event_residual_dropout "${EVENT_RESIDUAL_DROPOUT:-0.0}" \
+    --lambda_decoder_loss "${LAMBDA_DECODER_LOSS:-1.0}" \
+    "${EXTRA_ARGS[@]}" \
     "$@"

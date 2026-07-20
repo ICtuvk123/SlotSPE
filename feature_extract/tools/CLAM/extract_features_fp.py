@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from math import floor
 import os
 import random
@@ -20,6 +21,8 @@ import h5py
 import openslide
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 import os.path as osp
+from pathlib import Path
+import sys
 
 
 def atomic_torch_save(value, path):
@@ -94,6 +97,11 @@ def compute_w_loader(arch, file_path, output_path, wsi, model,
             
             if arch == 'CONCH':
                 features = conch_encoder_image(model, batch, proj_to_contrast)
+            elif arch == 'CONCH_v1.5':
+                # Save a stable unit-normalized 768-D patch representation.
+                # It is not assumed to be directly aligned with TITAN text;
+                # the downstream DyKo-style adapters learn that task space.
+                features = F.normalize(model(batch).float(), dim=-1)
             elif arch == 'MUSK':
                 features = musk_encoder_image(model, batch, proj_to_contrast)
             elif arch == 'CLIP' or arch == 'PLIP':
@@ -131,12 +139,12 @@ def compute_w_loader(arch, file_path, output_path, wsi, model,
         print("saved pt files:", output_path)
     else:
         print('features size:', all_feats.shape)
-        if arch == 'CONCH' and proj_to_contrast == 'Y':
+        if arch in {'CONCH', 'CONCH_v1.5'} and proj_to_contrast == 'Y':
             norms = all_feats.float().norm(dim=-1)
             if not torch.isfinite(all_feats).all():
-                raise RuntimeError('CONCH produced non-finite projected features')
+                raise RuntimeError(f'{arch} produced non-finite contrastive features')
             if not torch.allclose(norms, torch.ones_like(norms), atol=5e-3, rtol=5e-3):
-                raise RuntimeError('CONCH projected features are not L2-normalized')
+                raise RuntimeError(f'{arch} contrastive features are not L2-normalized')
         atomic_torch_save(all_feats, output_path)
         print('saved pt file:', output_path)
     
@@ -402,19 +410,13 @@ if __name__ == '__main__':
         print(f"[warning] Due to the use of {args.arch}, only using custom transforms and all other arguments are not active.")
     elif args.arch == 'CONCH_v1.5':
         assert args.target_patch_size == 448, 'TITAN is used with 448x448 CONCH v1.5 features'
-        try:
-            from transformers import AutoModel
-        except ImportError:
-            raise ImportError(
-                "Please install huggingface transformers (e.g. 'pip install transformers') to use CONCH v1.5")
-        # Please make sure that you have download TITAN to `args.ckpt_path`, e.g., /my/model/path/TITAN
-        titan = AutoModel.from_pretrained(args.ckpt_path, local_files_only=True, trust_remote_code=True)
-        model, _ = titan.return_conch()
-        preprocess = transforms.Compose([
-            transforms.Resize(args.target_patch_size),
-            transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-        ])
+        repo_root = Path(__file__).resolve().parents[3]
+        if str(repo_root) not in sys.path:
+            sys.path.insert(0, str(repo_root))
+        from tools.titan_local import load_local_titan
+        _, model, preprocess = load_local_titan(
+            args.ckpt_path, device="cpu", return_conch=True
+        )
         color_normalizer = None
         args_imagenet_pretrained = False
         args_sampler = None

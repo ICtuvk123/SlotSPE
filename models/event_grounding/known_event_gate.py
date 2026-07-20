@@ -49,20 +49,26 @@ class KnownEventGate(nn.Module):
         q_sem = torch.sigmoid((r_star - self.delta_sem) / self.beta_sem)
         q_vis = torch.sigmoid((pi_star - self.delta_vis) / self.beta_vis)
 
+        if self.support_mode == "raw":
+            pi_positive = F.softplus(visual_support)
+        else:
+            pi_positive = visual_support.clamp_min(0.0)
+        pi_positive = pi_positive + self.eps
+        pi_prob = pi_positive / pi_positive.sum(dim=-1, keepdim=True).clamp_min(self.eps)
+        a_prob = routing.float().clamp_min(self.eps)
+        a_prob = a_prob / a_prob.sum(dim=-1, keepdim=True).clamp_min(self.eps)
+        midpoint = 0.5 * (a_prob + pi_prob.float())
+        js = 0.5 * (
+            (a_prob * (a_prob.log() - midpoint.clamp_min(self.eps).log())).sum(dim=-1)
+            + (pi_prob * (pi_prob.log() - midpoint.clamp_min(self.eps).log())).sum(dim=-1)
+        )
+        # Match DyKo's direction: KL(text/semantic || image/visual). Neither
+        # distribution is detached, so both adapters receive gradients.
+        alignment_kl = (
+            a_prob * (a_prob.log() - pi_prob.clamp_min(self.eps).log())
+        ).sum(dim=-1)
+
         if self.use_agreement_gate:
-            if self.support_mode == "raw":
-                pi_positive = F.softplus(visual_support)
-            else:
-                pi_positive = visual_support.clamp_min(0.0)
-            pi_positive = pi_positive + self.eps
-            pi_prob = pi_positive / pi_positive.sum(dim=-1, keepdim=True).clamp_min(self.eps)
-            a_prob = routing.float().clamp_min(self.eps)
-            a_prob = a_prob / a_prob.sum(dim=-1, keepdim=True).clamp_min(self.eps)
-            midpoint = 0.5 * (a_prob + pi_prob.float())
-            js = 0.5 * (
-                (a_prob * (a_prob.log() - midpoint.clamp_min(self.eps).log())).sum(dim=-1)
-                + (pi_prob * (pi_prob.log() - midpoint.clamp_min(self.eps).log())).sum(dim=-1)
-            )
             q_agree = torch.exp(-self.lambda_js * js.clamp_min(0.0))
         else:
             q_agree = torch.ones_like(q_sem)
@@ -75,4 +81,5 @@ class KnownEventGate(nn.Module):
             "visual_gate": q_vis.unsqueeze(-1),
             "agreement_gate": q_agree.unsqueeze(-1),
             "event_gate": gate,
+            "alignment_kl": alignment_kl,
         }

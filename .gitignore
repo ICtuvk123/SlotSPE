@@ -47,3 +47,4 @@ feature_extract/tools/gdc/gdc_sample_sheet*.tsv
 feature_extract/tools/gdc/gdc_manifest_subset.txt
 feature_extract/tools/gdc/gdc_manifest_*failed*.txt
 feature_extract/tools/CLAM/.gitignore
+/third_party/TITAN/

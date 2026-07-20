@@ -1,0 +1,6 @@
+task_id	phase	variant	tag	source_tag	seed	opt	lr	weight_decay	tau_event	lambda_event	topk_ratio	wsi_projection_dropout	fusion_dropout	event_residual_dropout	lambda_decoder_loss	lambda_recon_loss	event_projection_dim	slot_iters
+0	refine	decoder0p5	reg_refine_decoder0p5_64f74dd4b8_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.0	0.5	0.01	256	10
+1	refine	eventdim128	reg_refine_eventdim128_347b849445_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	128	10
+2	refine	slotiters5	reg_refine_slotiters5_bc7f3deb56_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.01	256	5
+3	refine	lambdaevent0p5	reg_refine_lambdaevent0p5_6a1a229829_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	0.5	0.50	0.0	0.0	0.0	1.0	0.01	256	10
+4	refine	recon0p05	reg_refine_recon0p05_a920c28670_s3	reg_optimizer_lr0p0006_wd0p001_c7e2af3397_s3	3	adamW	0.0006	0.001	0.05	1.0	0.50	0.0	0.0	0.0	1.0	0.05	256	10

@@ -52,6 +52,9 @@ LOG_DIR=${LOG_DIR:-"${WORK_DIR}/logs"}
 
 BATCH_SIZE=${BATCH_SIZE:-50}
 START_BATCH=${START_BATCH:-1}
+# Zero means no upper bound. Useful for a one-slide smoke test and controlled
+# resumes without changing the generated manifest shards.
+END_BATCH=${END_BATCH:-0}
 
 MAG=${MAG:-20}
 SIZE=${SIZE:-256}
@@ -88,7 +91,20 @@ ALLOW_FAILED_SLIDES=${ALLOW_FAILED_SLIDES:-0}
 DRY_RUN=${DRY_RUN:-0}
 
 GDC_CLIENT=${GDC_CLIENT:-"gdc-client"}
+# Direct mode deliberately removes inherited VPN/proxy environment variables
+# from GDC requests. It does not affect the local preprocessing commands.
+GDC_DIRECT=${GDC_DIRECT:-1}
+GDC_PREFLIGHT_URL=${GDC_PREFLIGHT_URL:-"https://api.gdc.cancer.gov/status"}
+GDC_DOWNLOAD_RETRIES=${GDC_DOWNLOAD_RETRIES:-5}
+GDC_RETRY_SECONDS=${GDC_RETRY_SECONDS:-30}
 CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+
+# Optional shared-host GPU wait. With candidates such as "0,1,2,3,4",
+# downloading and CPU patching proceed first, then extraction waits for a GPU
+# with enough free memory instead of competing with an existing job.
+GPU_WAIT_CANDIDATES=${GPU_WAIT_CANDIDATES:-""}
+GPU_MIN_FREE_MIB=${GPU_MIN_FREE_MIB:-14000}
+GPU_POLL_SECONDS=${GPU_POLL_SECONDS:-60}
 
 #######################################
 # Helpers
@@ -104,6 +120,59 @@ run_cmd() {
     if [[ "${DRY_RUN}" != "1" ]]; then
         "$@"
     fi
+}
+
+gdc_direct_env() {
+    env \
+        -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY \
+        -u http_proxy -u https_proxy -u all_proxy \
+        NO_PROXY='*' no_proxy='*' "$@"
+}
+
+check_gdc_direct_connectivity() {
+    if [[ "${DRY_RUN}" == "1" ]]; then
+        echo "[dry-run] would verify direct GDC connectivity: ${GDC_PREFLIGHT_URL}"
+        return
+    fi
+
+    echo "[info] checking direct GDC connectivity with VPN/proxy variables removed"
+    gdc_direct_env python3 -c \
+        'import sys, urllib.request; response = urllib.request.urlopen(sys.argv[1], timeout=20); print("[info] GDC direct preflight HTTP", response.status)' \
+        "${GDC_PREFLIGHT_URL}" \
+        || die "cannot reach GDC directly. Confirm the VPN is disconnected and this host can access api.gdc.cancer.gov:443"
+}
+
+download_gdc_batch() {
+    local batch_manifest="$1"
+    local raw_batch_dir="$2"
+    local attempt
+
+    if [[ "${DRY_RUN}" == "1" ]]; then
+        echo "[cmd] direct-no-proxy ${GDC_CLIENT} download -m ${batch_manifest} -d ${raw_batch_dir}"
+        return
+    fi
+
+    if [[ "${GDC_DIRECT}" == "1" && "${GDC_PREFLIGHT_DONE}" != "1" ]]; then
+        check_gdc_direct_connectivity
+        GDC_PREFLIGHT_DONE=1
+    fi
+
+    for ((attempt = 1; attempt <= GDC_DOWNLOAD_RETRIES; attempt++)); do
+        echo "[info] GDC download attempt ${attempt}/${GDC_DOWNLOAD_RETRIES} (existing partial files are retained)"
+        if [[ "${GDC_DIRECT}" == "1" ]]; then
+            if gdc_direct_env "${GDC_CLIENT}" download -m "${batch_manifest}" -d "${raw_batch_dir}"; then
+                return
+            fi
+        elif "${GDC_CLIENT}" download -m "${batch_manifest}" -d "${raw_batch_dir}"; then
+            return
+        fi
+
+        if (( attempt < GDC_DOWNLOAD_RETRIES )); then
+            echo "[warning] GDC download failed; retrying in ${GDC_RETRY_SECONDS}s"
+            sleep "${GDC_RETRY_SECONDS}"
+        fi
+    done
+    die "GDC download failed after ${GDC_DOWNLOAD_RETRIES} attempts; partial files remain in ${raw_batch_dir} for resume"
 }
 
 require_file() {
@@ -182,6 +251,52 @@ count_failed_patch_slides() {
     awk -F',' 'NR > 1 && $3 ~ /^failed/ { count++ } END { print count + 0 }' "${process_csv}"
 }
 
+select_extraction_gpu() {
+    local candidates=",${GPU_WAIT_CANDIDATES// /},"
+    local selected=""
+    local best_free=-1
+    local index free_mib
+
+    if [[ "${DRY_RUN}" == "1" ]]; then
+        SELECTED_EXTRACTION_GPU="${GPU_WAIT_CANDIDATES%%,*}"
+        SELECTED_EXTRACTION_GPU="${SELECTED_EXTRACTION_GPU//[[:space:]]/}"
+        SELECTED_EXTRACTION_GPU="${SELECTED_EXTRACTION_GPU:-${CUDA_VISIBLE_DEVICES}}"
+        echo "[dry-run] GPU selection would wait on: ${GPU_WAIT_CANDIDATES:-${CUDA_VISIBLE_DEVICES}}"
+        return
+    fi
+
+    if [[ -z "${GPU_WAIT_CANDIDATES// /}" ]]; then
+        SELECTED_EXTRACTION_GPU="${CUDA_VISIBLE_DEVICES}"
+        return
+    fi
+    command -v nvidia-smi >/dev/null 2>&1 || die "nvidia-smi is required for GPU_WAIT_CANDIDATES"
+    [[ "${GPU_MIN_FREE_MIB}" =~ ^[0-9]+$ ]] || die "GPU_MIN_FREE_MIB must be a non-negative integer"
+    [[ "${GPU_POLL_SECONDS}" =~ ^[1-9][0-9]*$ ]] || die "GPU_POLL_SECONDS must be a positive integer"
+
+    while true; do
+        selected=""
+        best_free=-1
+        while IFS=',' read -r index free_mib; do
+            index=${index//[[:space:]]/}
+            free_mib=${free_mib//[[:space:]]/}
+            [[ "${candidates}" == *",${index},"* ]] || continue
+            [[ "${free_mib}" =~ ^[0-9]+$ ]] || continue
+            if (( free_mib >= GPU_MIN_FREE_MIB && free_mib > best_free )); then
+                selected="${index}"
+                best_free="${free_mib}"
+            fi
+        done < <(nvidia-smi --query-gpu=index,memory.free --format=csv,noheader,nounits)
+
+        if [[ -n "${selected}" ]]; then
+            SELECTED_EXTRACTION_GPU="${selected}"
+            echo "[info] selected GPU ${selected} for extraction (${best_free} MiB free)"
+            return
+        fi
+        echo "[info] waiting for >=${GPU_MIN_FREE_MIB} MiB free on GPU candidates ${GPU_WAIT_CANDIDATES}"
+        sleep "${GPU_POLL_SECONDS}"
+    done
+}
+
 append_failed_patch_slides() {
     local batch_name="$1"
     local process_csv="$2"
@@ -205,6 +320,10 @@ require_dir "${CLAM_DIR}"
 if [[ "${DRY_RUN}" != "1" ]]; then
     command -v "${GDC_CLIENT}" >/dev/null 2>&1 || die "gdc-client not found; set GDC_CLIENT=/path/to/gdc-client"
 fi
+[[ "${GDC_DIRECT}" == "0" || "${GDC_DIRECT}" == "1" ]] || die "GDC_DIRECT must be 0 or 1"
+[[ "${GDC_DOWNLOAD_RETRIES}" =~ ^[1-9][0-9]*$ ]] || die "GDC_DOWNLOAD_RETRIES must be a positive integer"
+[[ "${GDC_RETRY_SECONDS}" =~ ^[1-9][0-9]*$ ]] || die "GDC_RETRY_SECONDS must be a positive integer"
+GDC_PREFLIGHT_DONE=0
 
 mkdir -p "${WORK_DIR}" "${LOG_DIR}" "${FEAT_DIR}/pt_files"
 
@@ -248,6 +367,7 @@ echo "[info] batch size: ${BATCH_SIZE}"
 echo "[info] allow failed slides: ${ALLOW_FAILED_SLIDES}"
 echo "[info] source/target patch size: ${SIZE}/${TARGET_PATCH_SIZE}"
 echo "[info] extraction batch/workers/dtype: ${EXTRACT_BATCH_SIZE}/${EXTRACT_NUM_WORKERS}/${SAVE_DTYPE}"
+echo "[info] GDC network mode: $([[ "${GDC_DIRECT}" == "1" ]] && echo direct-no-proxy || echo inherited-environment)"
 
 #######################################
 # Main loop
@@ -260,6 +380,9 @@ for batch_manifest in "${SPLIT_DIR}"/batch_*.tsv; do
     if (( batch_num < START_BATCH )); then
         continue
     fi
+    if (( END_BATCH > 0 && batch_num > END_BATCH )); then
+        break
+    fi
 
     expected_pt=$(count_manifest_slides "${batch_manifest}")
     found_pt_before=$(count_expected_pt "${batch_manifest}")
@@ -268,7 +391,7 @@ for batch_manifest in "${SPLIT_DIR}"/batch_*.tsv; do
     echo "[info] ===== ${batch_name}: expected ${expected_pt}, already found ${found_pt_before} pt files ====="
 
     if [[ "${expected_pt}" == "${found_pt_before}" ]]; then
-        if [[ "${ARCH}" == "CONCH" && "${PROJ_TO_CONTRAST}" == "Y" && "${VALIDATE_CONCH}" == "1" ]]; then
+        if [[ ( "${ARCH}" == "CONCH" || "${ARCH}" == "CONCH_v1.5" ) && "${PROJ_TO_CONTRAST}" == "Y" && "${VALIDATE_CONCH}" == "1" ]]; then
             require_file "${VALIDATOR}"
             run_cmd python3 "${VALIDATOR}" \
                 --feature-dir "${FEAT_DIR}/pt_files" \
@@ -291,7 +414,7 @@ for batch_manifest in "${SPLIT_DIR}"/batch_*.tsv; do
         echo "[info] ${batch_name} raw slides already present; skipping download."
     else
         echo "[info] downloading ${batch_name}: found ${found_raw_before}/${expected_pt} raw slides before download"
-        run_cmd "${GDC_CLIENT}" download -m "${batch_manifest}" -d "${RAW_BATCH_DIR}"
+        download_gdc_batch "${batch_manifest}" "${RAW_BATCH_DIR}"
     fi
 
     cd "${CLAM_DIR}"
@@ -321,7 +444,8 @@ for batch_manifest in "${SPLIT_DIR}"/batch_*.tsv; do
     run_cmd env CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES}" "${patch_args[@]}"
 
     echo "[info] running S04 feature extraction for ${batch_name}"
-    run_cmd env CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES}" python3 extract_features_fp.py \
+    select_extraction_gpu
+    run_cmd env CUDA_VISIBLE_DEVICES="${SELECTED_EXTRACTION_GPU}" python3 extract_features_fp.py \
         --arch "${ARCH}" \
         --ckpt_path "${MODEL_CKPT}" \
         --data_h5_dir "${PATCH_BATCH_DIR}" \
@@ -359,7 +483,7 @@ for batch_manifest in "${SPLIT_DIR}"/batch_*.tsv; do
         echo -e "${batch_name}\tcompleted\t${expected_pt}\t${found_pt_after}" >> "${STATUS_FILE}"
     fi
 
-    if [[ "${ARCH}" == "CONCH" && "${PROJ_TO_CONTRAST}" == "Y" && "${VALIDATE_CONCH}" == "1" ]]; then
+    if [[ ( "${ARCH}" == "CONCH" || "${ARCH}" == "CONCH_v1.5" ) && "${PROJ_TO_CONTRAST}" == "Y" && "${VALIDATE_CONCH}" == "1" ]]; then
         require_file "${VALIDATOR}"
         echo "[info] validating normalized CONCH tensors before cleanup"
         run_cmd python3 "${VALIDATOR}" \

@@ -41,6 +41,11 @@ def main(args):
     all_val_IBS = []
     all_val_iauc = []
     all_val_loss = []
+    all_best_epoch = []
+    all_train_cindex_at_best = []
+    all_generalization_gap = []
+    all_final_epoch_val_cindex = []
+    all_best_to_final_val_drop = []
 
     # ----> log
     if args.only_test:
@@ -64,7 +69,10 @@ def main(args):
         args.max_cindex_epoch = 0.0
         print("Training fold {}".format(i))
         log_file.write("Training fold {}\n".format(i))
-        results, (val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss) = _train_val(args, dataset_factory, i, log_file)
+        results, (
+            val_cindex, val_cindex_ipcw, val_BS, val_IBS, val_iauc, val_loss,
+            training_stats,
+        ) = _train_val(args, dataset_factory, i, log_file)
         # store the results
         filename = os.path.join(args.results_dir, 'split_{}_results_final.pkl'.format(i))
         print("Saving results...")
@@ -76,6 +84,11 @@ def main(args):
         all_val_IBS.append(val_IBS)
         all_val_iauc.append(val_iauc)
         all_val_loss.append(val_loss)
+        all_best_epoch.append(training_stats['best_epoch'])
+        all_train_cindex_at_best.append(training_stats['train_cindex_at_best'])
+        all_generalization_gap.append(training_stats['generalization_gap'])
+        all_final_epoch_val_cindex.append(training_stats['final_epoch_val_cindex'])
+        all_best_to_final_val_drop.append(training_stats['best_to_final_val_drop'])
 
     log_file.close()
 
@@ -86,7 +99,12 @@ def main(args):
         # 'val_BS': all_val_BS,
         'val_IBS': all_val_IBS,
         'val_iauc': all_val_iauc,
-        'val_loss': all_val_loss
+        'val_loss': all_val_loss,
+        'best_epoch': all_best_epoch,
+        'train_cindex_at_best': all_train_cindex_at_best,
+        'generalization_gap': all_generalization_gap,
+        'final_epoch_val_cindex': all_final_epoch_val_cindex,
+        'best_to_final_val_drop': all_best_to_final_val_drop,
     })
 
     # calculate mean and std for each row, except for the folds

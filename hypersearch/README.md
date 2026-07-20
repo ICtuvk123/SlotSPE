@@ -33,3 +33,45 @@ the currently interrupted groups will not have a final `summary.csv`.
 Workers wait until their GPU has at least 18000 MiB free before starting a
 group. Override this with `WAIT_FOR_GPU_FREE_MIB`; setting it to `0` disables
 the guard.
+
+## Regularization search
+
+The anti-overfitting search is staged so later tasks inherit the best completed
+configuration instead of requiring parameters to be copied by hand:
+
+```bash
+bash scripts/launch_kirc_regularization_search.sh reference
+tmux attach -t slotspe_reg_reference
+
+# After the monitor finishes, repeat with optimizer, dropout, combine, refine,
+# and final, in that order.
+```
+
+Run the next phase only after the current monitor reports completion. A phase
+with no eligible adaptive tasks exits successfully without creating tmux. Use
+`DRY_RUN=1` with any phase to inspect its task manifest without starting tmux.
+The search uses a fixed validation Slot seed, full five-fold runs, and at most
+24 seed-3 configurations before evaluating the reference and two finalists at
+seeds 1 and 5.
+
+State is stored under `hypersearch/regularization_search/` by default:
+
+- `tasks/<phase>.tsv`: exact, recoverable phase manifests
+- `rankings/<phase>.csv`: C-index ranking with IPCW, IBS, generalization gap,
+  best epoch, and best-to-final drop
+- `final_3seed_report.csv`: seeds 1/3/5 aggregate for the reference and finalists
+
+All new model controls default to legacy behavior. The regularization launcher
+explicitly sets `eval_slot_seed=100000` and the selected AdamW/dropout/loss
+settings for each task.
+
+To let a controller advance all phases automatically, run it in a separate
+tmux session after starting (or before starting) the reference phase:
+
+```bash
+tmux new-session -d -s slotspe_reg_driver \
+  "GPU_IDS='5 6 7' bash scripts/drive_kirc_regularization_search.sh"
+```
+
+The controller never advances from an incomplete phase and stops on worker
+failure, leaving phase logs and manifests intact for diagnosis and recovery.

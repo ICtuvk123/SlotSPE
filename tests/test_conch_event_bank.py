@@ -84,6 +84,32 @@ class FrozenEventBankTest(unittest.TestCase):
                 torch.allclose(bank.embeddings.norm(dim=-1), torch.ones(5), atol=1e-6)
             )
 
+    def test_loads_conch_v15_space(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = self._artifact()
+            artifact["feature_space"] = "conch_v1_5_contrastive"
+            artifact["event_embeddings"] = torch.nn.functional.normalize(
+                torch.randn(5, 768), dim=-1
+            )
+            path = Path(directory) / "bank_v15.pt"
+            torch.save(artifact, path)
+            bank = FrozenEventBank(path)
+            self.assertEqual(bank.embedding_dim, 768)
+            self.assertEqual(bank.feature_space, "conch_v1_5_contrastive")
+
+    def test_loads_titan_text_space(self):
+        with tempfile.TemporaryDirectory() as directory:
+            artifact = self._artifact()
+            artifact["feature_space"] = "titan_text_768"
+            artifact["event_embeddings"] = torch.nn.functional.normalize(
+                torch.randn(5, 768), dim=-1
+            )
+            path = Path(directory) / "titan_bank.pt"
+            torch.save(artifact, path)
+            bank = FrozenEventBank(path)
+            self.assertEqual(bank.embedding_dim, 768)
+            self.assertEqual(bank.feature_space, "titan_text_768")
+
 
 if __name__ == "__main__":
     unittest.main()
