@@ -4,7 +4,7 @@ from models.slot_attention import MultiHeadSlotAttention, gumbel_topk_st, parall
 from models.event_gated_slot_attention import EventGatedSlotAttention
 from models.event_grounding import FrozenEventBank
 from models.cross_modal_adapter import DyKoAdapter
-from models.gc_rsm import GeneConditionedRankSpaceModulation
+from models.gc_rsm import GeneConditionedRankSpaceModulation, StaticLowRankResidualAdapter
 from models.transformer import IterativeCrossAttTransformer, Transformer
 from models.omics_encoder import SNN_Block, WSI_Mlp
 from utils.loss_func import NLLSurvLoss
@@ -176,8 +176,10 @@ class SlotSPE(nn.Module):
             raise ValueError("vl_adapter_type must be 'none' or 'dyko'")
         if self.lambda_vl_alignment < 0.0:
             raise ValueError("lambda_vl_alignment must be non-negative")
-        if self.gc_rsm_mode not in {"none", "feature"}:
-            raise ValueError("gc_rsm_mode must be 'none' or 'feature'")
+        if self.gc_rsm_mode not in {"none", "feature", "static_lora_feature"}:
+            raise ValueError(
+                "gc_rsm_mode must be 'none', 'feature', or 'static_lora_feature'"
+            )
 
         # ---> omics props
         self.omics_input_dim = omic_input_dim
@@ -198,6 +200,7 @@ class SlotSPE(nn.Module):
         # ---> wsi mlp
         self.wsi_mlp = WSI_Mlp(dim_in=self.wsi_embedding_dim, feat_dim=self.wsi_projection_dim)
         self.gc_rsm_feature = None
+        self.static_lora_feature = None
         if self.gc_rsm_mode == "feature":
             self.gc_rsm_feature = GeneConditionedRankSpaceModulation(
                 in_dim=self.wsi_embedding_dim,
@@ -206,6 +209,13 @@ class SlotSPE(nn.Module):
                 rank=self.gc_rsm_rank,
                 hidden_dim=self.gc_rsm_hidden_dim,
                 dropout=self.gc_rsm_dropout,
+                residual_scale=self.gc_rsm_residual_scale,
+            )
+        elif self.gc_rsm_mode == "static_lora_feature":
+            self.static_lora_feature = StaticLowRankResidualAdapter(
+                in_dim=self.wsi_embedding_dim,
+                out_dim=self.wsi_projection_dim,
+                rank=self.gc_rsm_rank,
                 residual_scale=self.gc_rsm_residual_scale,
             )
         self.wsi_projection_dropout = nn.Dropout(self.wsi_projection_dropout_p)
@@ -408,6 +418,8 @@ class SlotSPE(nn.Module):
         x_wsi_base = self.wsi_mlp(x_wsi)
         if self.gc_rsm_feature is not None:
             x_wsi_clean = self.gc_rsm_feature(x_wsi, x_wsi_base, omics_context)
+        elif self.static_lora_feature is not None:
+            x_wsi_clean = self.static_lora_feature(x_wsi, x_wsi_base)
         else:
             x_wsi_clean = x_wsi_base
         x_wsi_proj = self.wsi_projection_dropout(x_wsi_clean)

@@ -86,7 +86,7 @@ def _process_args():
         help='dropout applied to the fused representation before survival prediction'
     )
     parser.add_argument('--gc_rsm_mode', type=str, default='none',
-                        choices=['none', 'feature'],
+                        choices=['none', 'feature', 'static_lora_feature'],
                         help='Gene-conditioned rank-space modulation placement')
     parser.add_argument('--gc_rsm_rank', type=int, default=16,
                         help='Rank used by GC-RSM low-rank adapters')

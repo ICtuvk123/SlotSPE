@@ -68,3 +68,42 @@ class GeneConditionedRankSpaceModulation(nn.Module):
         gates = self.gene_modulator(gene_context.float()).unsqueeze(1)
         delta = self.up(rank_tokens * gates)
         return base_tokens + self.residual_scale * delta
+
+
+class StaticLowRankResidualAdapter(nn.Module):
+    """LoRA-style low-rank residual adapter without gene-conditioned gates."""
+
+    def __init__(
+        self,
+        in_dim: int,
+        out_dim: int,
+        rank: int = 16,
+        residual_scale: float = 1.0,
+    ) -> None:
+        super().__init__()
+        if in_dim <= 0 or out_dim <= 0:
+            raise ValueError("in_dim and out_dim must be positive")
+        if rank <= 0:
+            raise ValueError("rank must be positive")
+
+        self.in_dim = int(in_dim)
+        self.out_dim = int(out_dim)
+        self.rank = int(rank)
+        self.residual_scale = float(residual_scale)
+
+        self.down = nn.Linear(self.in_dim, self.rank, bias=False)
+        self.up = nn.Linear(self.rank, self.out_dim, bias=False)
+
+        # Match LoRA practice: start as an exact no-op residual branch.
+        nn.init.zeros_(self.up.weight)
+
+    def forward(self, tokens: torch.Tensor, base_tokens: torch.Tensor) -> torch.Tensor:
+        if tokens.ndim != 3 or tokens.shape[-1] != self.in_dim:
+            raise ValueError(f"tokens must be [B, N, {self.in_dim}]")
+        if base_tokens.ndim != 3 or base_tokens.shape[-1] != self.out_dim:
+            raise ValueError(f"base_tokens must be [B, N, {self.out_dim}]")
+        if tokens.shape[:2] != base_tokens.shape[:2]:
+            raise ValueError("tokens and base_tokens must share batch and token dimensions")
+
+        delta = self.up(self.down(tokens.float()))
+        return base_tokens + self.residual_scale * delta
