@@ -33,7 +33,7 @@ def main() -> int:
     images = torch.randn(args.batch_size, 3, 448, 448, device=device)
 
     with torch.no_grad():
-        before = conch.encode_image(images, proj_contrast=True, normalize=True)
+        before = conch(images)
 
     summary = inject_conch_qv_lora(
         conch,
@@ -42,7 +42,7 @@ def main() -> int:
         dropout=0.0,
         freeze_non_lora=True,
     )
-    after = conch.encode_image(images, proj_contrast=True, normalize=True)
+    after = conch(images)
     if not torch.equal(before, after):
         raise RuntimeError("zero-initialized CONCH Q/V LoRA changed initial output")
 
