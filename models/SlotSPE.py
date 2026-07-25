@@ -176,8 +176,8 @@ class SlotSPE(nn.Module):
             raise ValueError("vl_adapter_type must be 'none' or 'dyko'")
         if self.lambda_vl_alignment < 0.0:
             raise ValueError("lambda_vl_alignment must be non-negative")
-        if self.gc_rsm_mode not in {"none", "feature"}:
-            raise ValueError("gc_rsm_mode must be 'none' or 'feature'")
+        if self.gc_rsm_mode not in {"none", "feature", "slot_qv"}:
+            raise ValueError("gc_rsm_mode must be 'none', 'feature', or 'slot_qv'")
 
         # ---> omics props
         self.omics_input_dim = omic_input_dim
@@ -198,9 +198,20 @@ class SlotSPE(nn.Module):
         # ---> wsi mlp
         self.wsi_mlp = WSI_Mlp(dim_in=self.wsi_embedding_dim, feat_dim=self.wsi_projection_dim)
         self.gc_rsm_feature = None
+        self.gc_rsm_slot_qv = None
         if self.gc_rsm_mode == "feature":
             self.gc_rsm_feature = GeneConditionedRankSpaceModulation(
                 in_dim=self.wsi_embedding_dim,
+                out_dim=self.wsi_projection_dim,
+                gene_dim=self.wsi_projection_dim,
+                rank=self.gc_rsm_rank,
+                hidden_dim=self.gc_rsm_hidden_dim,
+                dropout=self.gc_rsm_dropout,
+                residual_scale=self.gc_rsm_residual_scale,
+            )
+        elif self.gc_rsm_mode == "slot_qv":
+            self.gc_rsm_slot_qv = GeneConditionedRankSpaceModulation(
+                in_dim=self.wsi_projection_dim,
                 out_dim=self.wsi_projection_dim,
                 gene_dim=self.wsi_projection_dim,
                 rank=self.gc_rsm_rank,
@@ -411,6 +422,8 @@ class SlotSPE(nn.Module):
         else:
             x_wsi_clean = x_wsi_base
         x_wsi_proj = self.wsi_projection_dropout(x_wsi_clean)
+        if self.gc_rsm_slot_qv is not None:
+            x_wsi_proj = self.gc_rsm_slot_qv(x_wsi_proj, x_wsi_proj, omics_context)
 
         if not self.training:
             if not omic_missing:

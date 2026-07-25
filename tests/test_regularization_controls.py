@@ -271,6 +271,23 @@ class SlotSPERegularizationTest(unittest.TestCase):
         self.assertTrue(all(gradient is not None for gradient in gradients))
         self.assertGreater(sum(float(gradient.abs().sum()) for gradient in gradients), 0.0)
 
+    def test_slot_qv_gc_rsm_initializes_as_noop_and_backpropagates(self):
+        model = SlotSPE(self._args(gc_rsm_mode="slot_qv", gc_rsm_rank=4)).train()
+        inputs = self._inputs(training=True)
+
+        with torch.no_grad():
+            x_omics = model._encode_omics(inputs)
+            context = model._pool_omics_context(x_omics)
+            projected = model.wsi_mlp(inputs["x_wsi"])
+            modulated = model.gc_rsm_slot_qv(projected, projected, context)
+        self.assertTrue(torch.equal(projected, modulated))
+
+        logits, auxiliary = model(**inputs)
+        (logits.sum() + auxiliary).backward()
+        gradients = [p.grad for p in model.gc_rsm_slot_qv.parameters()]
+        self.assertTrue(all(gradient is not None for gradient in gradients))
+        self.assertGreater(sum(float(gradient.abs().sum()) for gradient in gradients), 0.0)
+
     def test_auxiliary_loss_components_use_decoder_weight(self):
         model = SlotSPE(
             self._args(
