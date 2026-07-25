@@ -85,6 +85,17 @@ def _process_args():
         '--fusion_dropout', type=float, default=0.0,
         help='dropout applied to the fused representation before survival prediction'
     )
+    parser.add_argument('--gc_rsm_mode', type=str, default='none',
+                        choices=['none', 'feature'],
+                        help='Gene-conditioned rank-space modulation placement')
+    parser.add_argument('--gc_rsm_rank', type=int, default=16,
+                        help='Rank used by GC-RSM low-rank adapters')
+    parser.add_argument('--gc_rsm_hidden_dim', type=int, default=128,
+                        help='Hidden width of the GC-RSM gene modulator')
+    parser.add_argument('--gc_rsm_dropout', type=float, default=0.0,
+                        help='Dropout inside the GC-RSM gene modulator')
+    parser.add_argument('--gc_rsm_residual_scale', type=float, default=1.0,
+                        help='Scale applied to the GC-RSM residual branch')
 
     # lr_scheduler
     parser.add_argument('--scheduler', type=str, default='cosine', choices=['cosine','step'], help='lr scheduler')

@@ -4,6 +4,7 @@ from models.slot_attention import MultiHeadSlotAttention, gumbel_topk_st, parall
 from models.event_gated_slot_attention import EventGatedSlotAttention
 from models.event_grounding import FrozenEventBank
 from models.cross_modal_adapter import DyKoAdapter
+from models.gc_rsm import GeneConditionedRankSpaceModulation
 from models.transformer import IterativeCrossAttTransformer, Transformer
 from models.omics_encoder import SNN_Block, WSI_Mlp
 from utils.loss_func import NLLSurvLoss
@@ -158,6 +159,11 @@ class SlotSPE(nn.Module):
         self.vl_adapter_type = str(getattr(args, "vl_adapter_type", "none")).casefold()
         self.vl_adapter_reduction = int(getattr(args, "vl_adapter_reduction", 4))
         self.lambda_vl_alignment = float(getattr(args, "lambda_vl_alignment", 0.0))
+        self.gc_rsm_mode = str(getattr(args, "gc_rsm_mode", "none")).casefold()
+        self.gc_rsm_rank = int(getattr(args, "gc_rsm_rank", 16))
+        self.gc_rsm_hidden_dim = int(getattr(args, "gc_rsm_hidden_dim", 128))
+        self.gc_rsm_dropout = float(getattr(args, "gc_rsm_dropout", 0.0))
+        self.gc_rsm_residual_scale = float(getattr(args, "gc_rsm_residual_scale", 1.0))
         for name, value in (
             ("wsi_projection_dropout", self.wsi_projection_dropout_p),
             ("fusion_dropout", self.fusion_dropout_p),
@@ -170,6 +176,8 @@ class SlotSPE(nn.Module):
             raise ValueError("vl_adapter_type must be 'none' or 'dyko'")
         if self.lambda_vl_alignment < 0.0:
             raise ValueError("lambda_vl_alignment must be non-negative")
+        if self.gc_rsm_mode not in {"none", "feature"}:
+            raise ValueError("gc_rsm_mode must be 'none' or 'feature'")
 
         # ---> omics props
         self.omics_input_dim = omic_input_dim
@@ -189,6 +197,17 @@ class SlotSPE(nn.Module):
 
         # ---> wsi mlp
         self.wsi_mlp = WSI_Mlp(dim_in=self.wsi_embedding_dim, feat_dim=self.wsi_projection_dim)
+        self.gc_rsm_feature = None
+        if self.gc_rsm_mode == "feature":
+            self.gc_rsm_feature = GeneConditionedRankSpaceModulation(
+                in_dim=self.wsi_embedding_dim,
+                out_dim=self.wsi_projection_dim,
+                gene_dim=self.wsi_projection_dim,
+                rank=self.gc_rsm_rank,
+                hidden_dim=self.gc_rsm_hidden_dim,
+                dropout=self.gc_rsm_dropout,
+                residual_scale=self.gc_rsm_residual_scale,
+            )
         self.wsi_projection_dropout = nn.Dropout(self.wsi_projection_dropout_p)
         self.fusion_dropout = nn.Dropout(self.fusion_dropout_p)
         self.last_loss_components = {}
@@ -346,6 +365,24 @@ class SlotSPE(nn.Module):
         else:
             raise ValueError('omics_format should be pathways, gene or groups')
 
+    def _encode_omics(self, kwargs):
+        if self.args.rna_format == "Pathways":
+            x_omic = [kwargs['x_omic%d' % i] for i in range(1, self.num_pathways + 1)]
+            h_omic = [self.sig_networks[idx].forward(sig_feat) for idx, sig_feat in
+                        enumerate(x_omic)]
+            x_omics = torch.stack(h_omic)
+            return x_omics.permute(1, 0, 2)
+        x_omic = kwargs["x_omics"]
+        return self.sig_networks(x_omic)
+
+    @staticmethod
+    def _pool_omics_context(x_omics):
+        if x_omics.ndim == 3:
+            return x_omics.mean(dim=1)
+        if x_omics.ndim == 2:
+            return x_omics
+        raise ValueError(f"Unexpected omics tensor shape: {tuple(x_omics.shape)}")
+
 
 
     def forward(self, **kwargs):
@@ -362,26 +399,18 @@ class SlotSPE(nn.Module):
                     raise ValueError("Reused CONCH v1.5 patch tokens changed shape unexpectedly")
                 x_wsi = z_event
 
-        x_wsi_clean = self.wsi_mlp(x_wsi)
-        x_wsi_proj = self.wsi_projection_dropout(x_wsi_clean)
         self.last_loss_components = {}
         # Encoder
         omic_missing = kwargs["omic_missing"]
+        x_omics = self._encode_omics(kwargs)
+        omics_context = self._pool_omics_context(x_omics)
 
-        if self.args.rna_format == "Pathways":
-            x_omic = [kwargs['x_omic%d' % i] for i in range(1, self.num_pathways + 1)]  # omic features list (omic_size)
-            # ---> get
-            h_omic = [self.sig_networks[idx].forward(sig_feat) for idx, sig_feat in
-                        enumerate(x_omic)]  # each omic signature goes through it's own FC layer
-            x_omics = torch.stack(h_omic)  # omic embeddings are stacked (to be used in co-attention)
-            x_omics = x_omics.permute(1, 0, 2)  # (batch_size, num_pathways, 256)
-
-            # # Strategy 2: shared MLP
-            # x_omics = torch.stack(x_omic, dim=1)  # [B, P, max_size]
-            # x_omics = self.sig_networks(x_omics)
+        x_wsi_base = self.wsi_mlp(x_wsi)
+        if self.gc_rsm_feature is not None:
+            x_wsi_clean = self.gc_rsm_feature(x_wsi, x_wsi_base, omics_context)
         else:
-            x_omic = kwargs["x_omics"]
-            x_omics = self.sig_networks(x_omic)
+            x_wsi_clean = x_wsi_base
+        x_wsi_proj = self.wsi_projection_dropout(x_wsi_clean)
 
         if not self.training:
             if not omic_missing:

@@ -13,6 +13,7 @@ from torch.utils.data import DataLoader, Dataset
 from sksurv.util import Surv
 
 from models.SlotSPE import SlotSPE
+from models.gc_rsm import GeneConditionedRankSpaceModulation
 from models.slot_attention import MultiHeadSlotAttention
 from utils.core_utils import (
     _build_weight_decay_param_groups,
@@ -253,6 +254,23 @@ class SlotSPERegularizationTest(unittest.TestCase):
         actual = explicit(**inputs)[0]
         self.assertTrue(torch.equal(expected, actual))
 
+    def test_feature_gc_rsm_initializes_as_noop_and_backpropagates(self):
+        model = SlotSPE(self._args(gc_rsm_mode="feature", gc_rsm_rank=4)).train()
+        inputs = self._inputs(training=True)
+
+        with torch.no_grad():
+            x_omics = model._encode_omics(inputs)
+            context = model._pool_omics_context(x_omics)
+            base = model.wsi_mlp(inputs["x_wsi"])
+            modulated = model.gc_rsm_feature(inputs["x_wsi"], base, context)
+        self.assertTrue(torch.equal(base, modulated))
+
+        logits, auxiliary = model(**inputs)
+        (logits.sum() + auxiliary).backward()
+        gradients = [p.grad for p in model.gc_rsm_feature.parameters()]
+        self.assertTrue(all(gradient is not None for gradient in gradients))
+        self.assertGreater(sum(float(gradient.abs().sum()) for gradient in gradients), 0.0)
+
     def test_auxiliary_loss_components_use_decoder_weight(self):
         model = SlotSPE(
             self._args(
@@ -270,6 +288,20 @@ class SlotSPERegularizationTest(unittest.TestCase):
         )
         self.assertTrue(torch.allclose(auxiliary_loss.detach(), expected))
         self.assertTrue(torch.allclose(auxiliary_loss.detach(), components["aux_loss"]))
+
+
+class GcRsmModuleTest(unittest.TestCase):
+    def test_shape_validation_and_noop_initialization(self):
+        module = GeneConditionedRankSpaceModulation(
+            in_dim=8, out_dim=4, gene_dim=6, rank=3
+        )
+        tokens = torch.randn(2, 5, 8)
+        base = torch.randn(2, 5, 4)
+        context = torch.randn(2, 6)
+
+        output = module(tokens, base, context)
+        self.assertEqual(output.shape, base.shape)
+        self.assertTrue(torch.equal(output, base))
 
 
 if __name__ == "__main__":
