@@ -184,6 +184,7 @@ def inject_conch_qv_lora(
                 alpha=alpha,
                 dropout=dropout,
             )
+        wrapped = wrapped.to(device=base_qkv.weight.device, dtype=base_qkv.weight.dtype)
         setattr(parent, child_name, wrapped)
 
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
