@@ -268,6 +268,16 @@ parser.add_argument('--num_workers', type=int, default=4,
                     help='Patch loader workers; set 0 or 1 on memory-constrained hosts.')
 parser.add_argument('--save_dtype', type=str, default='float32', choices=['float16', 'float32'],
                     help='Storage dtype for output feature tensors.')
+parser.add_argument('--conch_qv_lora_layers', type=int, default=0,
+                    help='For CONCH_v1.5, inject Q/V LoRA into the last N visual attention qkv layers.')
+parser.add_argument('--conch_qv_lora_rank', type=int, default=8,
+                    help='Rank for CONCH_v1.5 Q/V LoRA.')
+parser.add_argument('--conch_qv_lora_alpha', type=float, default=None,
+                    help='Alpha scaling for CONCH_v1.5 Q/V LoRA; defaults to rank.')
+parser.add_argument('--conch_qv_lora_dropout', type=float, default=0.0,
+                    help='Dropout inside CONCH_v1.5 Q/V LoRA.')
+parser.add_argument('--conch_qv_lora_weights', type=str, default=None,
+                    help='Optional adapter-only state dict to load after CONCH_v1.5 Q/V LoRA injection.')
 parser.add_argument('--auto_skip', default=False, action='store_true')
 parser.add_argument('--custom_downsample', type=int, default=1)
 parser.add_argument('--target_patch_size', type=int, default=256)
@@ -414,9 +424,37 @@ if __name__ == '__main__':
         if str(repo_root) not in sys.path:
             sys.path.insert(0, str(repo_root))
         from tools.titan_local import load_local_titan
+        from tools.conch_qv_lora import inject_conch_qv_lora
         _, model, preprocess = load_local_titan(
             args.ckpt_path, device="cpu", return_conch=True
         )
+        if args.conch_qv_lora_layers > 0:
+            summary = inject_conch_qv_lora(
+                model,
+                layers=args.conch_qv_lora_layers,
+                rank=args.conch_qv_lora_rank,
+                alpha=args.conch_qv_lora_alpha,
+                dropout=args.conch_qv_lora_dropout,
+                freeze_non_lora=True,
+            )
+            if args.conch_qv_lora_weights:
+                adapter_state = torch.load(args.conch_qv_lora_weights, map_location="cpu")
+                missing, unexpected = model.load_state_dict(adapter_state, strict=False)
+                unexpected = [
+                    key for key in unexpected
+                    if any(part in key for part in (".q_down.", ".q_up.", ".v_down.", ".v_up."))
+                ]
+                if unexpected:
+                    raise RuntimeError(
+                        f"Unexpected CONCH Q/V LoRA adapter keys: {unexpected}"
+                    )
+                print(f"[info] loaded CONCH Q/V LoRA adapter: {args.conch_qv_lora_weights}")
+            print(
+                "[info] injected CONCH v1.5 Q/V LoRA: "
+                f"layers={summary.replaced}, rank={args.conch_qv_lora_rank}, "
+                f"targets={list(summary.target_names)}, "
+                f"trainable_params={summary.trainable_parameters}"
+            )
         color_normalizer = None
         args_imagenet_pretrained = False
         args_sampler = None
