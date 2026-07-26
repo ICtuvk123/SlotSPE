@@ -68,6 +68,12 @@ def _process_args():
     parser.add_argument('--seed', type=int, default=3, help='random seed for reproducible experiment (default: 1)')
     parser.add_argument('--opt', type=str, default="adam", help="Optimizer (adam, adamw, sgd)")
     parser.add_argument('--batch_size', type=int, default=32, help='batch_size')
+    parser.add_argument('--gradient_accumulation_steps', type=int, default=None,
+                        help='Optimizer step interval; defaults to 32 for batch size 1, else 1')
+    parser.add_argument('--gradient_clip_norm', type=float, default=1.0,
+                        help='Clip trainable gradient norm before each optimizer step; <=0 disables')
+    parser.add_argument('--conch_lora_lr', type=float, default=None,
+                        help='Optional learning rate for online CONCH LoRA/modulator parameters')
     parser.add_argument('--bag_loss', type=str, choices=["nll_surv", "rank_surv", "cox_surv","sinkhorn_surv"], default="nll_surv",
                         help='survival loss function (default: ce)')
     parser.add_argument('--alpha_surv', type=float, default=0.5, help='weight given to uncensored patients')

@@ -197,10 +197,35 @@ def _init_optim(args, model):
     optimizer_name = args.opt.casefold()
     explicit_weight_decay = getattr(args, "weight_decay", None)
 
+    conch_lora_lr = getattr(args, "conch_lora_lr", None)
+    parameter_source = model.parameters()
+    if conch_lora_lr is not None:
+        if not getattr(args, "online_conch_model_dir", None):
+            raise ValueError("--conch_lora_lr requires online CONCH training")
+        if conch_lora_lr <= 0.0:
+            raise ValueError("conch_lora_lr must be positive")
+        conch_parameters = []
+        downstream_parameters = []
+        for name, parameter in model.named_parameters():
+            if not parameter.requires_grad:
+                continue
+            if name.startswith("conch."):
+                conch_parameters.append(parameter)
+            else:
+                downstream_parameters.append(parameter)
+        parameter_source = [
+            {"params": downstream_parameters, "lr": args.lr, "group_name": "downstream"},
+            {"params": conch_parameters, "lr": conch_lora_lr, "group_name": "conch_lora"},
+        ]
+        print(
+            f"Optimizer learning rates: downstream={args.lr:g}, "
+            f"conch_lora={conch_lora_lr:g}"
+        )
+
     if optimizer_name == "adam":
         # Preserve legacy behavior unless the new explicit option is supplied.
         weight_decay = 0.0 if explicit_weight_decay is None else _resolved_weight_decay(args)
-        optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=weight_decay)
+        optimizer = optim.Adam(parameter_source, lr=args.lr, weight_decay=weight_decay)
 
     elif optimizer_name == 'sgd':
         optimizer = optim.SGD(
@@ -373,7 +398,14 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
     args.cur_epoch = epoch
 
 
-    accumulation_steps = 1
+    accumulation_steps = getattr(args, "gradient_accumulation_steps", None)
+    if accumulation_steps is None:
+        accumulation_steps = 32 if args.batch_size == 1 else 1
+    accumulation_steps = int(accumulation_steps)
+    if accumulation_steps <= 0:
+        raise ValueError("gradient_accumulation_steps must be positive")
+    gradient_clip_norm = float(getattr(args, "gradient_clip_norm", 0.0))
+    optimizer.zero_grad(set_to_none=True)
     # one epoch
     for batch_idx, data in enumerate(loader):
 
@@ -395,20 +427,17 @@ def _train_loop_survival(args, epoch, model,loader, optimizer, scheduler, loss_f
         else:
             raise ValueError(f"Method {args.method} not implemented")
 
-        loss = loss / accumulation_steps
-        loss.backward()
+        (loss / accumulation_steps).backward()
 
-
-        if args.batch_size != 1:
+        should_step = (
+            (batch_idx + 1) % accumulation_steps == 0
+            or (batch_idx + 1) == len(loader)
+        )
+        if should_step:
+            if gradient_clip_norm > 0.0:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), gradient_clip_norm)
             optimizer.step()
-            optimizer.zero_grad()
-
-        else:
-            # accumulate gradients, only for batch_size ==1
-            accumulation_steps = 32
-            if (batch_idx + 1) % accumulation_steps == 0:
-                optimizer.step()
-                optimizer.zero_grad()
+            optimizer.zero_grad(set_to_none=True)
 
 
         total_loss += loss.item()
