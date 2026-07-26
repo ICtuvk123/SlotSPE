@@ -3,7 +3,14 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+import sys
+
 import torch
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from dataset.dataset_survival import SurvivalDatasetFactory, _collate_pathways
 from dataset.online_wsi_dataset import OnlineWSISurvivalDataset
