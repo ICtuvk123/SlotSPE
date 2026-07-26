@@ -21,7 +21,9 @@ from utils.process_args import _process_args
 
 
 def main():
-    args = _prepare_for_experiment(_process_args())
+    args = _process_args()
+    Path(args.results_dir).mkdir(parents=True, exist_ok=True)
+    args = _prepare_for_experiment(args)
     if not args.online_conch_model_dir:
         raise ValueError("--online_conch_model_dir is required")
     if args.batch_size != 1:
