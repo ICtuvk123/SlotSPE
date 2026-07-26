@@ -15,6 +15,7 @@ GRADIENT_ACCUMULATION_STEPS=${GRADIENT_ACCUMULATION_STEPS:-8}
 CONCH_LORA_LR=${CONCH_LORA_LR:-0.0001}
 SLOTSPE_LR=${SLOTSPE_LR:-0.0005}
 SEED=${SEED:-3}
+CONCH_QV_LORA_MODE=${CONCH_QV_LORA_MODE:-gene}
 
 RESULTS_ROOT="${EXPERIMENT_ROOT}/results/${EXPERIMENT_NAME}"
 LOG_DIR="${EXPERIMENT_ROOT}/logs"
@@ -24,6 +25,12 @@ mkdir -p "${RESULTS_ROOT}" "${LOG_DIR}"
 echo "[$(date -Is)] START ${EXPERIMENT_NAME}" | tee -a "${LOG_FILE}"
 echo "[info] branch=$(git -C "${ROOT_DIR}" branch --show-current)" | tee -a "${LOG_FILE}"
 echo "[info] commit=$(git -C "${ROOT_DIR}" rev-parse HEAD)" | tee -a "${LOG_FILE}"
+echo "[info] conch_qv_lora_mode=${CONCH_QV_LORA_MODE}" | tee -a "${LOG_FILE}"
+
+CONCH_LORA_LR_ARGS=()
+if [[ "${CONCH_QV_LORA_MODE}" != "none" ]]; then
+    CONCH_LORA_LR_ARGS=(--conch_lora_lr "${CONCH_LORA_LR}")
+fi
 
 python -u "${ROOT_DIR}/survival.py" \
     --data_root_dir "${DATA_REPO}/Pathology/CONCH_v1.5/kirc/pt_files" \
@@ -40,7 +47,7 @@ python -u "${ROOT_DIR}/survival.py" \
     --gradient_accumulation_steps "${GRADIENT_ACCUMULATION_STEPS}" \
     --gradient_clip_norm 1.0 \
     --lr "${SLOTSPE_LR}" \
-    --conch_lora_lr "${CONCH_LORA_LR}" \
+    "${CONCH_LORA_LR_ARGS[@]}" \
     --seed "${SEED}" \
     --eval_slot_seed 100000 \
     --specific_simple "${EXPERIMENT_NAME}" \
@@ -60,7 +67,7 @@ python -u "${ROOT_DIR}/survival.py" \
     --online_conch_model_dir "${DATA_REPO}/checkpoints/TITAN" \
     --online_target_patch_size 448 \
     --online_patch_batch_size "${PATCH_BATCH_SIZE}" \
-    --conch_qv_lora_mode gene \
+    --conch_qv_lora_mode "${CONCH_QV_LORA_MODE}" \
     --conch_qv_lora_layers 2 \
     --conch_qv_lora_rank 8 \
     --conch_gene_hidden_dim 128 \

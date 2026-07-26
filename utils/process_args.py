@@ -47,7 +47,7 @@ def _process_args():
     parser.add_argument('--online_target_patch_size', type=int, default=448)
     parser.add_argument('--online_patch_batch_size', type=int, default=8,
                         help='Number of raw patches per differentiable CONCH microbatch')
-    parser.add_argument('--conch_qv_lora_mode', choices=['static', 'gene'], default='gene')
+    parser.add_argument('--conch_qv_lora_mode', choices=['none', 'static', 'gene'], default='gene')
     parser.add_argument('--conch_qv_lora_layers', type=int, default=2)
     parser.add_argument('--conch_qv_lora_rank', type=int, default=8)
     parser.add_argument('--conch_qv_lora_alpha', type=float, default=None)

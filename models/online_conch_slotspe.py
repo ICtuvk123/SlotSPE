@@ -31,24 +31,33 @@ class OnlineConchSlotSPE(nn.Module):
         self.use_checkpoint = bool(args.conch_gradient_checkpointing)
         if self.patch_batch_size <= 0:
             raise ValueError("online_patch_batch_size must be positive")
-        if self.lora_mode not in {"static", "gene"}:
-            raise ValueError("conch_qv_lora_mode must be 'static' or 'gene'")
+        if self.lora_mode not in {"none", "static", "gene"}:
+            raise ValueError("conch_qv_lora_mode must be 'none', 'static', or 'gene'")
 
         _, conch, _ = load_local_titan(
             args.online_conch_model_dir,
             device="cpu",
             return_conch=True,
         )
-        summary = inject_conch_qv_lora(
-            conch,
-            layers=args.conch_qv_lora_layers,
-            rank=args.conch_qv_lora_rank,
-            alpha=args.conch_qv_lora_alpha,
-            dropout=args.conch_qv_lora_dropout,
-            gene_dim=args.wsi_projection_dim if self.lora_mode == "gene" else None,
-            gene_hidden_dim=args.conch_gene_hidden_dim,
-            freeze_non_lora=True,
-        )
+        if self.lora_mode == "none":
+            for parameter in conch.parameters():
+                parameter.requires_grad = False
+            summary = {
+                "mode": "none",
+                "targets": [],
+                "trainable_conch_params": 0,
+            }
+        else:
+            summary = inject_conch_qv_lora(
+                conch,
+                layers=args.conch_qv_lora_layers,
+                rank=args.conch_qv_lora_rank,
+                alpha=args.conch_qv_lora_alpha,
+                dropout=args.conch_qv_lora_dropout,
+                gene_dim=args.wsi_projection_dim if self.lora_mode == "gene" else None,
+                gene_hidden_dim=args.conch_gene_hidden_dim,
+                freeze_non_lora=True,
+            )
         self.conch = conch
         self.lora_summary = summary
 
@@ -99,7 +108,11 @@ class OnlineConchSlotSPE(nn.Module):
         if pixels.ndim != 5 or pixels.shape[0] != 1:
             raise ValueError("online raw patches must have shape [1,N,3,H,W]")
         encoded_omics = self.slotspe.encode_omics_from_kwargs(kwargs)
-        gene_context = self.slotspe.pool_omics_context(encoded_omics)
+        gene_context = (
+            self.slotspe.pool_omics_context(encoded_omics)
+            if self.lora_mode == "gene"
+            else None
+        )
         patch_features = self._encode_patches(pixels[0], gene_context)
 
         slotspe_kwargs = dict(kwargs)
