@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from types import SimpleNamespace
 
 import torch
 import torch.nn.functional as F
@@ -42,11 +43,10 @@ class OnlineConchSlotSPE(nn.Module):
         if self.lora_mode == "none":
             for parameter in conch.parameters():
                 parameter.requires_grad = False
-            summary = {
-                "mode": "none",
-                "targets": [],
-                "trainable_conch_params": 0,
-            }
+            summary = SimpleNamespace(
+                target_names=(),
+                trainable_parameters=0,
+            )
         else:
             summary = inject_conch_qv_lora(
                 conch,
