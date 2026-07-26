@@ -122,10 +122,26 @@ def _get_split(args, dataset_factory, cur):
         "slot_feature_encoder": args.slot_feature_encoder,
         "require_conch_alignment": args.require_conch_alignment,
     }
-    train_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'train', cur, args.encoding_dim,
-                                 **event_dataset_args)
-    test_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'val', cur, args.encoding_dim,
-                                **event_dataset_args)
+    if getattr(args, "online_conch_model_dir", None):
+        from dataset.online_wsi_dataset import OnlineWSISurvivalDataset
+        common = {
+            "raw_wsi_dir": args.raw_wsi_dir,
+            "patch_coords_dir": args.patch_coords_dir,
+            "fold": cur,
+            "target_patch_size": args.online_target_patch_size,
+            "sample_seed": args.seed,
+        }
+        train_data = OnlineWSISurvivalDataset(
+            dataset_factory, split_key="train", **common
+        )
+        test_data = OnlineWSISurvivalDataset(
+            dataset_factory, split_key="val", **common
+        )
+    else:
+        train_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'train', cur, args.encoding_dim,
+                                     **event_dataset_args)
+        test_data = SurvivalDataset(dataset_factory, args.data_root_dir, 'val', cur, args.encoding_dim,
+                                    **event_dataset_args)
     if args.rna_format == "Pathways" or args.rna_format == "RankedGenes":
         train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, num_workers=0, drop_last=True, collate_fn=_collate_pathways, pin_memory=False)
         test_loader = torch.utils.data.DataLoader(test_data, batch_size=1, shuffle=False, num_workers=0, collate_fn=_collate_pathways, pin_memory=False)

@@ -346,6 +346,25 @@ class SlotSPE(nn.Module):
         else:
             raise ValueError('omics_format should be pathways, gene or groups')
 
+    def encode_omics_from_kwargs(self, kwargs):
+        """Encode omics once so online CONCH conditioning can reuse the tokens."""
+        if self.args.rna_format == "Pathways":
+            x_omic = [kwargs['x_omic%d' % i] for i in range(1, self.num_pathways + 1)]
+            h_omic = [
+                self.sig_networks[idx].forward(sig_feat)
+                for idx, sig_feat in enumerate(x_omic)
+            ]
+            return torch.stack(h_omic).permute(1, 0, 2)
+        return self.sig_networks(kwargs["x_omics"])
+
+    @staticmethod
+    def pool_omics_context(x_omics):
+        if x_omics.ndim == 3:
+            return x_omics.mean(dim=1)
+        if x_omics.ndim == 2:
+            return x_omics
+        raise ValueError(f"Unexpected omics tensor shape: {tuple(x_omics.shape)}")
+
 
 
     def forward(self, **kwargs):
@@ -368,20 +387,9 @@ class SlotSPE(nn.Module):
         # Encoder
         omic_missing = kwargs["omic_missing"]
 
-        if self.args.rna_format == "Pathways":
-            x_omic = [kwargs['x_omic%d' % i] for i in range(1, self.num_pathways + 1)]  # omic features list (omic_size)
-            # ---> get
-            h_omic = [self.sig_networks[idx].forward(sig_feat) for idx, sig_feat in
-                        enumerate(x_omic)]  # each omic signature goes through it's own FC layer
-            x_omics = torch.stack(h_omic)  # omic embeddings are stacked (to be used in co-attention)
-            x_omics = x_omics.permute(1, 0, 2)  # (batch_size, num_pathways, 256)
-
-            # # Strategy 2: shared MLP
-            # x_omics = torch.stack(x_omic, dim=1)  # [B, P, max_size]
-            # x_omics = self.sig_networks(x_omics)
-        else:
-            x_omic = kwargs["x_omics"]
-            x_omics = self.sig_networks(x_omic)
+        x_omics = kwargs.get("encoded_omics")
+        if x_omics is None:
+            x_omics = self.encode_omics_from_kwargs(kwargs)
 
         if not self.training:
             if not omic_missing:

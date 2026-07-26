@@ -38,6 +38,23 @@ def _process_args():
     parser.add_argument('--rna_format', type=str, default="Pathways", choices=["RNASeq", "Pathways", "GeneEmbedding"],
                         help='format of omics data')
     parser.add_argument("--signature", type=str, default="combine",choices=["all", "six", "hallmarks", "combine", "xena"])
+    parser.add_argument('--raw_wsi_dir', type=str, default=None,
+                        help='Recursive raw .svs root used by online CONCH training')
+    parser.add_argument('--patch_coords_dir', type=str, default=None,
+                        help='Recursive CLAM coordinate .h5 root used by online CONCH training')
+    parser.add_argument('--online_conch_model_dir', type=str, default=None,
+                        help='Local TITAN snapshot containing the CONCH v1.5 checkpoint')
+    parser.add_argument('--online_target_patch_size', type=int, default=448)
+    parser.add_argument('--online_patch_batch_size', type=int, default=8,
+                        help='Number of raw patches per differentiable CONCH microbatch')
+    parser.add_argument('--conch_qv_lora_mode', choices=['static', 'gene'], default='gene')
+    parser.add_argument('--conch_qv_lora_layers', type=int, default=2)
+    parser.add_argument('--conch_qv_lora_rank', type=int, default=8)
+    parser.add_argument('--conch_qv_lora_alpha', type=float, default=None)
+    parser.add_argument('--conch_qv_lora_dropout', type=float, default=0.0)
+    parser.add_argument('--conch_gene_hidden_dim', type=int, default=128)
+    parser.add_argument('--conch_gradient_checkpointing', action=argparse.BooleanOptionalAction,
+                        default=True)
 
     #----> split related
     parser.add_argument('--k', type=int, default=5, help='number of folds (default: 10)')

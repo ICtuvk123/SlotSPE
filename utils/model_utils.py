@@ -36,6 +36,15 @@ def _init_model(args, dataset_factory):
     else:
         raise ValueError(f"Method {args.method} not implemented")
 
+    if getattr(args, "online_conch_model_dir", None):
+        from models.online_conch_slotspe import OnlineConchSlotSPE
+        model = OnlineConchSlotSPE(model, args)
+        print(
+            "\nCONCH Q/V LoRA: "
+            f"mode={model.lora_mode}, targets={list(model.lora_summary.target_names)}, "
+            f"trainable_conch_params={model.lora_summary.trainable_parameters}"
+        )
+
     if torch.cuda.is_available():
         model = model.to(torch.device('cuda'))
 
@@ -43,4 +52,3 @@ def _init_model(args, dataset_factory):
     _print_network(args.results_dir, model)
 
     return model
-
