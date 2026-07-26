@@ -25,7 +25,7 @@ echo "[$(date -Is)] START ${EXPERIMENT_NAME}" | tee -a "${LOG_FILE}"
 echo "[info] branch=$(git -C "${ROOT_DIR}" branch --show-current)" | tee -a "${LOG_FILE}"
 echo "[info] commit=$(git -C "${ROOT_DIR}" rev-parse HEAD)" | tee -a "${LOG_FILE}"
 
-python "${ROOT_DIR}/survival.py" \
+python -u "${ROOT_DIR}/survival.py" \
     --data_root_dir "${DATA_REPO}/Pathology/CONCH_v1.5/kirc/pt_files" \
     --results_dir "${RESULTS_ROOT}" \
     --data_path "${DATA_REPO}/dataset_csv" \
