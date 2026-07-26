@@ -62,23 +62,39 @@ def main():
     loss = survival_loss + auxiliary_loss
     loss.backward()
 
-    adapter_grads = {
-        name: float(parameter.grad.detach().norm().cpu())
-        for name, parameter in model.named_parameters()
-        if parameter.requires_grad
-        and parameter.grad is not None
-        and any(part in name for part in (".q_up.", ".v_up."))
-    }
-    nonzero = {name: value for name, value in adapter_grads.items() if value > 0.0}
-    if not nonzero:
-        raise RuntimeError("CONCH Q/V LoRA did not receive a non-zero gradient")
+    if args.conch_qv_lora_mode == "none":
+        trainable_grads = {
+            name: float(parameter.grad.detach().norm().cpu())
+            for name, parameter in model.named_parameters()
+            if parameter.requires_grad
+            and parameter.grad is not None
+            and not name.startswith("conch.")
+        }
+        nonzero = {
+            name: value for name, value in trainable_grads.items() if value > 0.0
+        }
+        if not nonzero:
+            raise RuntimeError("online frozen CONCH baseline did not backpropagate")
+    else:
+        adapter_grads = {
+            name: float(parameter.grad.detach().norm().cpu())
+            for name, parameter in model.named_parameters()
+            if parameter.requires_grad
+            and parameter.grad is not None
+            and any(part in name for part in (".q_up.", ".v_up."))
+        }
+        nonzero = {
+            name: value for name, value in adapter_grads.items() if value > 0.0
+        }
+        if not nonzero:
+            raise RuntimeError("CONCH Q/V LoRA did not receive a non-zero gradient")
 
     print("[ok] online CONCH GC-RSM smoke test passed")
     print(f"patches={tuple(batch[0].shape)}")
     print(f"logits={tuple(logits.shape)}")
     print(f"loss={float(loss.detach().cpu()):.6f}")
-    print(f"nonzero_qv_adapter_gradients={len(nonzero)}")
-    print(f"max_qv_adapter_gradient={max(nonzero.values()):.6f}")
+    print(f"nonzero_checked_gradients={len(nonzero)}")
+    print(f"max_checked_gradient={max(nonzero.values()):.6f}")
     print(f"compact_checkpoint_tensors={len(model.state_dict())}")
 
 
